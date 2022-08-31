@@ -1,0 +1,98 @@
+{% load customtags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psign-KC</title>
+    <link rel="icon" href="https://pvssolution.com/wp-content/uploads/2022/07/P-sign_logo_gold.png" type="image/gif" sizes="16x16">
+    <!-- CSS -->
+    <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="nav_left">
+            <a href="./index.html">
+                <img class="logo" src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
+            </a>
+            <nav>
+                <ul class="nav_links " id="navLink">
+                    <li class="nav_item active">
+                        <a href="{% url 'KCTool:kcToolPage' %}" > <img class="icon-vb" src="{% static 'image/nav-icon_exl.png' %}" alt="cho-ky"> File excel</a>
+                    </li>
+                    <li class="nav_item">
+                        <a href="{% url 'KCTool:waitSignDoc' %}" > <img class="icon-vb" src="{% static 'image/cho-ky.png'%}" alt="cho-ky"> Văn bản chờ ký</a>
+                    </li>
+                    <li class="nav_item">
+                        <a href="{% url 'KCTool:signedDoc' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
+                    </li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="nav_right">
+            <div class="header_search">
+                <input type="search" class="input_search" placeholder="Tìm kiếm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="header_info dropdown">
+                <button onclick="myFunction()" class="btn_info" >
+                    <img class="dropbtn" src="{% static 'image/avatar-icon.png'%} " alt="avatar-icon">
+                
+                    <i class="fa-solid fa-angle-down dropbtn"></i>
+                </button>
+                
+               
+                <div id="navDropdown" class="dropdown-content">
+                    <a href="#info">
+                        <img src="{% static 'image/UserList.png' %}" alt="UserList">
+                        Thông tin tài khoản
+                    </a>
+                    <a href="#eSign">
+                        <img src="{% static 'image/edit.png' %}" alt="edit-icon">
+                        Tạo chữ ký số
+                    </a>
+                    <hr class="hr_submenu">
+                    <a href="#logout">
+                        <img src="{% static 'image/log-out.png' %}" alt="log-out">
+                        Đăng xuất
+                    </a>
+                </div>
+
+            </div>
+        </div>
+     </header>
+     {% block content %}
+
+     {% endblock %}
+      <!-- JS -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
+ <script>
+    // toggle password visibility
+    $('#password + .showpass').on('click', function() {
+    $(this).toggleClass('show-eye-close').toggleClass('show-eye-open'); // toggle our classes for the eye icon
+    $('#password').togglePassword(); // activate the hideShowPassword plugin
+    });
+ </script>
+ <script type="text/javascript">
+    $(function(){
+        /*Check & uncheck all*/
+        $(document).on('change', '.checkall', function(){
+            var $_this = $(this);
+            $('.checkitem').prop('checked', $_this.prop('checked'));
+        });
+    });
+ </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+ <script src="{% static 'js/main.js' %}"></script>
+    </body>
+    </html>

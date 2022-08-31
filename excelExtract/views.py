@@ -12,13 +12,21 @@ def kcToolPage(request):
     form=uploadDocumentForm()
     files=document.objects.all()
     pdffiles=pdfFile.objects.all().order_by("-id")
-    demoPdfFiles=pdfFile.objects.first()
+    demoPdfFiles=pdfFile.objects.last()
+    unsignedocs=len(pdfFile.objects.filter(signed=False))
     if request.method=='POST':
         form=uploadDocumentForm(request.POST,request.FILES)
         if form.is_valid():
             file=request.FILES.get('document')
             excelExtract.importDataExcel(file)
-    return render(request,"KCtool/KCTool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles})
+    return render(request,"KCtool/KCTool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"unsignedocs":unsignedocs})
+
+
+def waitSignDoc(request):
+    return render(request,"KCtool/waitingsigndoc.html")
+
+def signedDoc(request):
+    return render(request,"KCtool/signedDoc.html")
 # def excelToListPdfs(request):  
 #             return Response(request,"KCtool/KCTool.html")
 @api_view(["POST"])

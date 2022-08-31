@@ -1,0 +1,239 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<section>
+    <div class="top_content">
+        <div class="title_content">
+            <p>Danh sách văn bản chờ ký</p>
+            <span class="number_vb">7 văn bản</span>
+        </div>
+        <div class="btn_content">
+            <button class="all-sign">
+                <a href="#">
+                    <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
+                Ký tất cả
+                </a>                
+            </button>
+            
+        </div>
+    </div>
+    <div class="table_content">
+        <table>
+            <tr>
+                <th>
+                    <input type="checkbox" name="check_all" id="check_all" class="checkall">
+                </th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Thời gian tạo</th>
+                <th>Tên file</th>
+                <th>Danh mục</th>
+                <th>Loại account</th>
+                <th>Xem file</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="check" id="check" class="checkitem">
+                </td>
+                <td>Nguyễn Thanh Điền</td>
+                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
+                <td>03/08/2022 6:50</td>
+                <td>Công Văn ký 1</td>
+                <td>Công việc, hóa đơn</td>
+                <td>Account 1, Account 3</td>
+                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <input type="checkbox" name="check" id="check" class="checkitem">
+                </td>
+                <td>Nguyễn Thanh Điền</td>
+                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
+                <td>03/08/2022 6:50</td>
+                <td>Công Văn ký 1</td>
+                <td>Công việc, hóa đơn</td>
+                <td>Account 1, Account 3</td>
+                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="check" id="check" class="checkitem">
+                </td>
+                <td>Nguyễn Thanh Điền</td>
+                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
+                <td>03/08/2022 6:50</td>
+                <td>Công Văn ký 1</td>
+                <td>Công việc, hóa đơn</td>
+                <td>Account 1, Account 3</td>
+                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="check" id="check" class="checkitem">
+                </td>
+                <td>Nguyễn Thanh Điền</td>
+                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
+                <td>03/08/2022 6:50</td>
+                <td>Công Văn ký 1</td>
+                <td>Công việc, hóa đơn</td>
+                <td>Account 1, Account 3</td>
+                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="pagination" id="pagination">
+        <a href="#">«</a>
+        <a href="#" class="numb-page">1</a>
+        <a class="numb-page" href="#">2</a>
+        <a href="#" class="numb-page">3</a>
+        <a href="#" class="numb-page">4</a>
+        <a href="#">»</a>
+      </div>
+ </section>
+ <footer>
+     <div class="copy-right">
+         <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
+        </div>
+</footer>
+<!-- Modal Info -->
+ <div id="info" class="modal">
+    <form action="/" method="post">
+        <div class="modal__content">
+            <div class="modal__title">
+                <img src="{% static 'image/UserList.png' %}" alt="UserList">
+                <p>Thông tin tài khoản</p>          
+            </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    <span class="avarta_name">D</span>
+                    <div class="info_name">
+                        <p>Nguyễn Thanh Điền</p>
+                        <small>User: 07/08/2022</small>
+                    </div>
+                </div>
+
+                <div class="input_group">
+                    <label for="full_name">
+                        Họ và tên
+                        <input type="text" name="full_name" placeholder="Họ và tên">
+                    </label>
+                    <label for="phone">
+                        Số điện thoại
+                        <input type="tel" id="numbPhone" name="phone" placeholder="909 999 999" >
+                    </label>
+                    <label for="email">
+                        Email
+                        <input type="email" name="email" placeholder="Nhập email" required>
+                    </label>
+                    <label for="passwd">
+                        Mật khẩu
+                        <div class="form-group has-feedback">
+                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
+                            <i class="showpass show-eye-open fas fa-eye"></i>
+                          </div>
+                    </label>
+                </div>   
+            </div>
+
+            <div class="modal__title-child">
+                <p>Thông tin công ty</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group">
+                    <label for="company_name">
+                        Tên công ty
+                        <input type="text" name="company_name" placeholder="Nhập tên công ty">
+                    </label>
+    
+                    <label for="title_name">
+                        Chức danh
+                        <input type="text" name="title_name" placeholder="Nhập chức danh">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__title-child">
+                <p>Thông tin địa chỉ</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group input_address">
+                    <label for="company_address">
+                        Địa chỉ
+                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save">Lưu</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+<!-- Modal Upload E-Sign -->
+<div id="eSign" class="modal">
+    <form action="/" method="post">
+        <div class="modal__content">
+            <div class="modal__title">
+                <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
+                <p>Thêm chữ ký</p>          
+            </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    <span class="avarta_name">D</span>
+                    <div class="info_name">
+                        <p>Nguyễn Thanh Điền</p>
+                        <small>User: 07/08/2022</small>
+                    </div>
+                </div>
+
+                <div class="input_group">
+                    <div class="upload-btn-wrapper">
+                        <button class="btn">Upload chữ ký số</button>
+                        <input type="file" name="myfile" />
+                    </div>
+                </div>   
+            </div>
+
+            
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save">Lưu</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+<!-- Modal view PDF -->
+<div id="viewPDF" class="modal">
+    <form action="/" method="post">
+        <div class="modal__content">
+            <div class="modal__title">
+                <i class="fa-solid fa-file-pdf"></i>
+                <p>View file</p>          
+            </div>
+
+            <div class="modal__detail">
+                <embed src="https://pvssolution.com/wp-content/uploads/2020/05/HDSD-PM-%C4%90%E1%BB%8CC-KQ-SI%C3%8AU-%C3%82M-HEALTHY-CARE.pdf" width="800" height="500" type="application/pdf"> 
+            </div>
+
+            
+            <div class="modal__footer">
+                <button class="btn_save">Xong</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
