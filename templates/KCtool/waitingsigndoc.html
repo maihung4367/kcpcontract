@@ -10,7 +10,7 @@
         </div>
         <div class="btn_content">
             <button class="all-sign">
-                <a href="#">
+                <a href="#"  onclick="sign_all_pdf()">
                     <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
                 Ký tất cả
                 </a>                
@@ -35,7 +35,7 @@
             {% for pdf in unsignedpdfs %}
             <tr>
                 <td>
-                    <input type="checkbox" name="check" value="pdf.pk" id="check" class="checkitem">
+                    <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
                 <td>............</td>
                 <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> ...........</td>
@@ -208,6 +208,17 @@
         //alert(id)
         $("#change_link_pdf").html(`<embed src="${id}" width="800" height="500" type="application/pdf">`)
     }
-</script>
 
+    
+</script>
+<script>
+    function sign_all_pdf(){
+        var arr_pk_pdf_file = [];
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });
+        alert(arr_pk_pdf_file )
+    }
+   
+</script>
 {% endblock %}
