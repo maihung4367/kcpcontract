@@ -138,7 +138,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 			ws.column_dimensions['C'].width=14
 			ws.column_dimensions['D'].width=14
 			# INSERT IMAGE
-			img=Image("static\image\kimberlylogo.png")
+			img=Image("image\kimberlylogo.png")
+			print("image\kimberlylogo.png")
 			img.width=270
 			img.height=30
 			ws.add_image(img,"A1")	
@@ -230,7 +231,7 @@ def exportFiles(loaict,fileID,loaiAccount):
 			xl.close()
 			pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
 			os.remove(os.getcwdb().decode('utf-8') + "\\{}".format(fileName))
-			pdffile=pdfFile()
+			pdffile=pdfFile()	
 			pdffile.masterFile=file
 			pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))	
 			pdf.close()
@@ -370,7 +371,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.column_dimensions['C'].width=14
 		ws.column_dimensions['D'].width=14
 		# INSERT IMAGE
-		img=Image("static\image\kimberlylogo.png")
+		img=Image("image\kimberlylogo.png")
+		
 		img.width=270
 		img.height=30
 		ws.add_image(img,"A1")	
@@ -486,7 +488,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.column_dimensions['C'].width=14
 		ws.column_dimensions['D'].width=14
 		# INSERT IMAGE
-		img=Image("static\image\kimberlylogo.png")
+		# img=Image("static\image\kimberlylogo.png")
+		img=Image("{}".format(str(os.path.join(os.path.dirname(__file__),"../static/image/kimberlylogo.png"))))
 		img.width=270
 		img.height=30
 		ws.add_image(img,"A1")	
@@ -576,8 +579,11 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
 		ws.page_setup.paperSize = ws.PAPERSIZE_A4
 		wb.save(fileName)
-		sw.App.visible = False
+		# sw.App.visible = False
+		app = sw.App()
+		# app=sw.App(visible=False)
 		xl = sw.Book(fileName)
+		app.visible=False
 		xl.sheets("Thư thông báo").to_pdf(path=r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx","")))
 		xl.close()
 		pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
@@ -587,6 +593,17 @@ def exportFiles(loaict,fileID,loaiAccount):
 		pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))	
 		pdf.close()
 		os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
+		# app = sw.App(visible=False)
+		# wb = app.books.open(fileName)    
+		# wb.sheets("Thư thông báo").to_pdf(path=r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx","")))
+		# wb.close()
+		# pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
+		# pdffile=pdfFile()
+		# pdffile.masterFile=file
+		# pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))
+		# pdf.close()
+		# os.remove(os.getcwdb().decode('utf-8') + "\\{}".format(fileName))
+		# os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
 	return "Success"
 
 # def pdfConvert(file):
