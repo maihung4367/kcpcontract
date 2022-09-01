@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
 from excelExtract.models import document,pdfFile
 from . import excelExtract
+from django.db import transaction
+from rest_framework import status
 from django.http import HttpResponse
 from rest_framework.response import Response
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -47,4 +49,17 @@ def getIdList(request):
         #     excelExtract.exportFiles(loaict=loaict,fileID=f,loaiAccount=loaiAccount)  
         return redirect("KCTool:kcToolPage")
     
+
+@api_view(["POST"])
+def create_pdf(request):
+    try:
+        with transaction.atomic():
+            id_excel = int(request.data["pk_excel"])
+            excelExtract.exportFiles(loaict='ALL',fileID=id_excel,loaiAccount='ALL')  
+            return Response({"code":"00"}, status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
     

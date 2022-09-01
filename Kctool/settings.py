@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "excelExtract.apps.ExcelextractConfig",
+    "user.apps.UserConfig",
     'rest_framework'
 ]
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -134,3 +135,5 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
+
+AUTH_USER_MODEL = 'user.User'

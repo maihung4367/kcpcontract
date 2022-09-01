@@ -47,7 +47,7 @@
                 <td>.............</td>
                 <td>{{file.uploadTime}}</td>
                 <td class="td-action"><button class="btn-clear"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                <td class="td-action"><a data-toggle="modal"  data-target="#modal"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf" ></a></td>
+                <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
             </tr>
             {% endfor %}
            
@@ -55,7 +55,7 @@
     </div>
      <!-- Modal Create PDF -->
      <div id="createPDF" class="modal">
-        <form action="{% url 'KCTool:getIdList' %}" method="post">
+        <form method="post">
             {% csrf_token %}
             <div class="modal__content">
                 <div class="modal__title">
@@ -93,8 +93,8 @@
     
                 
                 <div class="modal__footer">
-                    <button class="btn_cancel">Huỷ</button>
-                    <button class="btn_save">Lưu</button>
+                    {% comment %} <button class="btn_cancel">Huỷ</button> {% endcomment %}
+                    <button class="btn_save" id="create-pdf-modal">Tạo</button>
                 </div>
                 
                 <a href="#" class="modal__close">&times;</a>
@@ -296,4 +296,41 @@
 });
  </script>
  <script src="{% static 'js/main.js' %}"></script>
+
+
+<script>
+    function create_pdf_function(id){
+        //ajax
+        $('#create-pdf-modal').click(function(event){
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            
+            var postData = new FormData();
+            postData.append("pk_excel", id);
+        
+            var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:create_pdf' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                
+                success: function(resp) {
+                    alert(id)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    window.location.replace(``);
+                }
+            }) //end ajax
+        })
+    }
+  
+</script>
 {% endblock %}

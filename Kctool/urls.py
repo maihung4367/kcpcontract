@@ -19,8 +19,10 @@ from django.contrib import admin
 from django.urls import path,include
 from .import views
 from excelExtract import urls as KCtool_url
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index),
-    path('KcTool',include(KCtool_url,namespace="KCTool"))
+    path('project',views.index),
+    path('KCTool',include(KCtool_url,namespace="KCTool")),
+    path('', include('user.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
