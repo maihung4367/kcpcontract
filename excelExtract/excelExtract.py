@@ -104,6 +104,7 @@ def exportFiles(loaict,fileID,loaiAccount):
 	listloaict=[]
 	listAccount=[]
 	file=document.objects.get(pk=int(fileID))
+	print(file)
 	for f in excel.objects.filter(filename=file):
 		if f.loaiCt not in listloaict:
 			listloaict.append(f.loaiCt)
@@ -129,8 +130,6 @@ def exportFiles(loaict,fileID,loaiAccount):
 			ws.title="Thư Thông Báo"
 			rirSumLine=0
 
-			
-			
 			ws.merge_cells("A8:C8")
 			
 			# FORMAT COLUMN'S WIDTH
