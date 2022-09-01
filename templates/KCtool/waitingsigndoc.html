@@ -1,11 +1,12 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load customtags%}
 {% block content %}
 <section>
     <div class="top_content">
         <div class="title_content">
             <p>Danh sách văn bản chờ ký</p>
-            <span class="number_vb">7 văn bản</span>
+            <span class="number_vb">{{numberUnsignepdfs}} văn bản</span>
         </div>
         <div class="btn_content">
             <button class="all-sign">
@@ -31,55 +32,20 @@
                 <th>Loại account</th>
                 <th>Xem file</th>
             </tr>
+            {% for pdf in unsignedpdfs %}
             <tr>
                 <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
+                    <input type="checkbox" name="check" value="pdf.pk" id="check" class="checkitem">
                 </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
-                <td>03/08/2022 6:50</td>
-                <td>Công Văn ký 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
+                <td>............</td>
+                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> ...........</td>
+                <td>{{pdf.createdTime}}</td>
+                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td>..............</td>
+                <td>.................</td>
                 <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
-            
-            <tr>
-                <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
-                </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
-                <td>03/08/2022 6:50</td>
-                <td>Công Văn ký 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
-                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
-                </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
-                <td>03/08/2022 6:50</td>
-                <td>Công Văn ký 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
-                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
-                </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> diennt@pvs.com.vn</td>
-                <td>03/08/2022 6:50</td>
-                <td>Công Văn ký 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
-                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-            </tr>
+            {% endfor %}
             
         </table>
     </div>

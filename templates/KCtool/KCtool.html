@@ -1,292 +1,97 @@
-{% load customtags %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>KCtool</h1>
-    <div>
-        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <div >
-          <div >
-            <button type="submit" class="btn btn-secondary" > Submit</button>
-          </div>
-        </div>
-      </form></div>
-      <div>
-        <h2>List Files</h2>     
-    </div>
-    <form   id="listFiles" action= "{% url 'KCTool:getIdList' %}" method="post" >
-      {% csrf_token %}
-    <label for="loaict">LoaiCT</label>
-     <select  id="loaict" name="loaict" >
-      <option value="All" >All</option>
-      <option value="Claimback">Claimback</option>
-      <option value="Gift assignment">Gift assignment</option>
-      <option value="Primary">Primary</option>
-     </select>
-     
-     <hr>
-      {% for file in files%}
-    <input type="checkbox"  id="{{file.pk}}" name="file" value="{{file.pk}}" class="checkitem">
-      <label for="{{file.pk}}"> {{file|nameFileFilter}}:{{file.pk}}</label>
-      <br>
-      
-      {% if file.pk|accountFilter %}
-      <label for="loaiacc">LoaiACCOUNT</label>
-      <select  id="loaiacc" name="fileID{{file.pk}}" >
-      <option value="All" >All</option>
-        {% for f in file.pk|accountFilter %}
-        <option value="{{f}}" >{{f}}</option>
-        {% endfor%}
-      </select>
-      {% else %}
-      <p>NO ACCOUNTS</p>
-      {% endif%}
-      <hr>
-      {% endfor %}
-      <input type="submit" value="Submit" onchange="doalert(this)">
-    </form>
-    <hr>
-    <div>
-      {% for f in pdffiles%}
-      <li><a href="{{f.slaveFile}}">{{f.slaveFile|subNameFileFilter}}:{{f.createdTime}}</a></li>
-      {%endfor%}
-      
-    </div>
-
-</body>
-</html> -->
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P-Sign KC</title>
-    <link rel="icon" href="https://pvssolution.com/wp-content/uploads/2022/07/P-sign_logo_gold.png" type="image/gif" sizes="16x16">
-    <!-- CSS -->
-    <link
-     rel="stylesheet"
-     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header>
-        <div class="nav_left">
-            <a href="./index.html">
-                <img class="logo" src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
-            </a>
-            <nav>
-                <ul class="nav_links " id="navLink">
-                    <li class="nav_item active">
-                        <a href="./index.html" > <img class="icon-vb" src="{% static 'image/cho-ky.png' %} " alt="cho-ky"> Văn bản chờ ký</a>
-                    </li>
-                    <li class="nav_item">
-                        <a href="./signed-doc.html" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
-                    </li>
-                    
-                </ul>
-            </nav>
+{% load customtags %}
+{% block content %}
+
+<section>
+    <div class="top_content">
+        <div class="title_content">
+            <p>Danh sách văn bản chờ ký</p>
+            <span class="number_vb">{{numberUnsignepdfs}} văn bản</span>
         </div>
- 
-        <div class="nav_right">
-            <div class="header_search">
-                <input type="search" class="input_search" placeholder="Tìm kiếm">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            <div class="header_info dropdown">
-                <button onclick="myFunction()" class="btn_info" >
-                    <img class="dropbtn" src="{% static 'image/avatar-icon.png' %}" alt="avatar-icon">
-                
-                    <i class="fa-solid fa-angle-down dropbtn"></i>
-                </button>
-                
-               
-                <div id="navDropdown" class="dropdown-content">
-                    <a href="#info">
-                        <img src="{% static 'image/UserList.png' %}" alt="UserList">
-                        Thông tin tài khoản
-                    </a>
-                    <a href="#eSign">
-                        <img src="{% static 'image/edit.png' %}" alt="edit-icon">
-                        Tạo chữ ký số
-                    </a>
-                    <hr class="hr_submenu">
-                    <a href="#logout">
-                        <img src="{% static 'image/log-out.png' %}" alt="log-out">
-                        Đăng xuất
-                    </a>
-                </div>
-            </div>
-        </div>
-     </header>
-     <section>
-        <div class="top_content">
-            <div class="title_content">
-                <p>Danh sách văn bản chờ ký</p>
-                <span class="number_vb">7 văn bản</span>
-            </div>
-            <div class="btn_content">
-                <button class="all-sign">
-                    <a href="#">
-                        <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                    Ký tất cả
-                    </a>                
-                </button>
-                <button class="create_vb">
-                    <a href="#addDoc">
-                        <img src="{% static 'image/add-vb.png' %}" alt="add-vb">
-                    Tạo văn bản mới
-                    </a>
-                </button>
-            </div>
-        </div>
-        <div class="table_content">
-            <table>
-                <tr>
-                    <th>
-                        <input type="checkbox" name="check_all" id="check_all" class="checkall">
-                    </th>
-                    <th>Họ và tên</th>
-                    <th>Email</th>
-                    <th>Thời gian tạo</th>
-                    <th>Thời gian gửi</th>
-                    <th>Tên file</th>
-                    <th>Xem file</th>
-                </tr>
-                {% for f in pdffiles %}
-                <tr>
-                    <td>
-                        <input type="checkbox" name="check" id="check" class="checkitem">
-                    </td>
-                    <td>{{f.emailExtracted}}</td>
-                    <td>.....</td>
-                    <td>{{f.createdTime}}</td>
-                    <td>{{f.sendingTime}}</td>
-                    <td>{{f.slaveFile|subNameFileFilter}}</td>
-                    <td><a href="#{{f.slaveFile}}" onclick="clickdoc()"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-                </tr>
-                <!-- Modal view PDF -->
-                <div id="{{f.slaveFile}}" class="modal">
-                    <form action="/" method="post">
-                        {% csrf_token %}
-                        <div class="modal__content">
-                            <div class="modal__title">
-                                <i class="fa-solid fa-file-pdf"></i>
-                                <p>View file</p>          
-                            </div>
-                
-                            <div class="modal__detail">
-                                <embed src="{{f.slaveFile}}" width="800" height="500" type="application/pdf"> 
-                            </div>
-                
-                            
-                            <div class="modal__footer">
-                                <button class="btn_save">Xong</button>
-                            </div>
-                            
-                            <a href="#" class="modal__close">&times;</a>
-                        </div>
-                    </form>
-                </div>
-                {% endfor%}
-               
-            </table>
-        </div>
-        <div class="pagination" id="pagination">
-            <a href="#">«</a>
-            <a href="#" class="numb-page">1</a>
-            <a class="numb-page" href="#">2</a>
-            <a href="#" class="numb-page">3</a>
-            <a href="#" class="numb-page">4</a>
-            <a href="#">»</a>
-          </div>
-     </section>
-     <footer>
-         <div class="copy-right">
-             <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
-            </div>
-    </footer>
-    <!-- Modal Info -->
-     <div id="info" class="modal">
-        <form action="/" method="post">
-            <div class="modal__content">
-                <div class="modal__title">
-                    <img src="{% static 'image/UserList.png' %}" alt="UserList">
-                    <p>Thông tin tài khoản</p>          
-                </div>
-    
-                <div class="modal__detail">
-                    <div class="user">
-                        <span class="avarta_name">D</span>
-                        <div class="info_name">
-                            <p>Nguyễn Thanh Điền</p>
-                            <small>User: 07/08/2022</small>
-                        </div>
-                    </div>
-    
-                    <div class="input_group">
-                        <label for="full_name">
-                            Họ và tên
-                            <input type="text" name="full_name" placeholder="Họ và tên">
-                        </label>
-                        <label for="phone">
-                            Số điện thoại
-                            <input type="tel" id="numbPhone" name="phone" placeholder="909 999 999" >
-                        </label>
-                        <label for="email">
-                            Email
-                            <input type="email" name="email" placeholder="Nhập email" required>
-                        </label>
-                        <label for="passwd">
-                            Mật khẩu
-                            <div class="form-group has-feedback">
-                                <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
-                                <i class="showpass show-eye-open fas fa-eye"></i>
-                              </div>
-                        </label>
-                    </div>   
-                </div>
-    
-                <div class="modal__title-child">
-                    <p>Thông tin công ty</p>          
-                </div>
-                <div class="modal__detail">
-                    <div class="input_group">
-                        <label for="company_name">
-                            Tên công ty
-                            <input type="text" name="company_name" placeholder="Nhập tên công ty">
-                        </label>
         
-                        <label for="title_name">
-                            Chức danh
-                            <input type="text" name="title_name" placeholder="Nhập chức danh">
-                        </label>
-                        
-                    </div>   
+        <div id="btn-upload" class="btn_content">
+            <div class="upload-btn-wrapper">
+                <button class="btn btn-up">
+                    <a h class="dropbtn">
+                        <img src="{% static 'image/add-vb_white.png'%} " alt="add-vb">
+                    Tải tài liệu lên
+                    </a>
+                </button>
+                <form href="{% url 'KCTool:kcToolPage' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}            
+                <input type="file" name="document" onchange='this.form.submit();' /> 
+                 </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="table_content">
+        <table>
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>Tên file</th>
+                <th>Người tải lên</th>
+                <th>Thời gian tải lên</th>
+                <th>Xóa</th>
+                <th>Tạo PDF</th>
+            </tr>
+            {%  for file in files%}
+            <tr>
+                <td class="td-action">
+                    {{file.pk}}
+                </td>
+                <td class="td-filename"><a href="#"><img src="{% static 'image/icon-exl.png' %}" alt="document"></a><span>{{file.document|nameFileFilter}}</span></td>
+                <td>.............</td>
+                <td>{{file.uploadTime}}</td>
+                <td class="td-action"><button class="btn-clear"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                <td class="td-action"><a data-toggle="modal"  data-target="#modal"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf" ></a></td>
+            </tr>
+            {% endfor %}
+           
+        </table>
+    </div>
+     <!-- Modal Create PDF -->
+     <div id="createPDF" class="modal">
+        <form action="{% url 'KCTool:getIdList' %}" method="post">
+            {% csrf_token %}
+            <div class="modal__content">
+                <div class="modal__title">
+                    <img src="{% static 'image/icon-pdf.png' %}" alt="vb-sign">
+                    <p class="title">Tạo PDF</p>          
                 </div>
-                <div class="modal__title-child">
-                    <p>Thông tin địa chỉ</p>          
-                </div>
+    
                 <div class="modal__detail">
-                    <div class="input_group input_address">
-                        <label for="company_address">
-                            Địa chỉ
-                            <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ">
-                        </label>
+                    <div class="input_group">
+                        <div class="input_item">
+                            <p class="label">Danh mục</p>
+                            <select class="select-category" multiple="multiple" name="loaict"
+
+                                <option value="Công việc" data-badge="">Công việc</option>
+                                <option value="Hóa đơn" data-badge="">Hóa đơn</option>
+                                <option value="Khách hàng VIP" data-badge="">Khách hàng VIP</option>
+                                <option value="Khách hàng tiềm năng" data-badge="">Khách hàng tiềm năng</option>
+                                <option value="Văn bản ký" data-badge="">Văn bản ký</option>
+                
+                            </select>
+                        </div>
+                        <div class="input_item">
+                            <p class="label">Loại Account</p>
+                            <select class="select-account" multiple="multiple" name="accounts">
+
+                                <option value="Account 1" data-badge="">Account 1</option>
+                                <option value="Account 2" data-badge="">Account 2</option>
+                                <option value="Account 3" data-badge="">Account 3</option>
+                
+                            </select>
+                        </div>
                         
-                    </div>   
+                    </div>
                 </div>
+    
+                
                 <div class="modal__footer">
                     <button class="btn_cancel">Huỷ</button>
                     <button class="btn_save">Lưu</button>
@@ -296,116 +101,199 @@
             </div>
         </form>
     </div>
-    <!-- Modal Upload E-Sign -->
-    <div id="eSign" class="modal">
-        <form action="/" method="post">
-            <div class="modal__content">
-                <div class="modal__title">
-                    <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                    <p>Thêm chữ ký</p>          
-                </div>
-    
-                <div class="modal__detail">
-                    <div class="user">
-                        <span class="avarta_name">D</span>
-                        <div class="info_name">
-                            <p>Nguyễn Thanh Điền</p>
-                            <small>User: 07/08/2022</small>
-                        </div>
-                    </div>
-    
-                    <div class="input_group">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn">Upload chữ ký số</button>
-                            <input type="file" name="myfile" />
-                        </div>
-                    </div>   
-                </div>
-    
-                
-                <div class="modal__footer">
-                    <button class="btn_cancel">Huỷ</button>
-                    <button class="btn_save">Lưu</button>
-                </div>
-                
-                <a href="#" class="modal__close">&times;</a>
+    <div class="pagination" id="pagination">
+        <a href="#">«</a>
+        <a href="#" class="numb-page">1</a>
+        <a class="numb-page" href="#">2</a>
+        <a href="#" class="numb-page">3</a>
+        <a href="#" class="numb-page">4</a>
+        <a href="#">»</a>
+      </div>
+ </section>
+ <footer>
+     <div class="copy-right">
+         <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
+        </div>
+</footer>
+<!-- Modal Info -->
+ <div id="info" class="modal">
+    <form action="/" method="post">
+        {% csrf_token %}
+        <div class="modal__content">
+            <div class="modal__title">
+                <img src="{% static 'image/UserList.png' %}" alt="UserList">
+                <p>Thông tin tài khoản</p>          
             </div>
-        </form>
-    </div>
-    
-    <!-- Modal Add Doc -->
-    <div id="addDoc" class="modal">
-        <form action="/" method="post">
-            <div class="modal__content">
-                <div class="modal__title">
-                    <img src="{% static 'image/add-vb.png' %}" alt="add-vb">
-                    <p>Tạo văn bản mới</p>          
-                </div>
-    
-                <div class="modal__detail">
-                    <embed src="{{demoPdfFiles.slaveFile.url}}" width="500" height="500" type="application/pdf"> 
-                    <div class="input_group">
-                        
-                        <div class="input_item">
-                            <label for="title_doc">
-                                Tiêu đề 
-                                <input type="text" name="title_doc" placeholder="Nhập tiêu đề" required>
-                            </label>
-                        </div>
-                        <div class="input_item">
-                            <label for="desc_content">
-                                Mô tả nội dung
-                                <input type="text" name="desc_content" placeholder="Nhập mô tả nội dung" required>
-                            </label>
-                        </div>
-                        <div class="input_item">
-                            <label for="type_doc">
-                                Loại văn bản
-                                <input type="text" name="type_doc" placeholder="Nhập loại văn bản" required>
-                            </label>
-                        </div>
-                        <div class="input_item">
-                            <label for="passwd">
-                                Thêm file <br>
-                                <div class="upload-btn-wrapper">
-                                    <button class="btn"><i class="fa-solid fa-file-circle-plus"></i></button>
-                                    <input type="file" name="myfile" />
-                                </div>
-                            </label>
-                        </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    <span class="avarta_name">D</span>
+                    <div class="info_name">
+                        <p>Nguyễn Thanh Điền</p>
+                        <small>User: 07/08/2022</small>
                     </div>
                 </div>
-    
-                
-                <div class="modal__footer">
-                    <button class="btn_cancel">Huỷ</button>
-                    <button class="btn_save">Gửi</button>
-                </div>
-                
-                <a href="#" class="modal__close">&times;</a>
+
+                <div class="input_group">
+                    <label for="full_name">
+                        Họ và tên
+                        <input type="text" name="full_name" placeholder="Họ và tên">
+                    </label>
+                    <label for="phone">
+                        Số điện thoại
+                        <input type="tel" id="numbPhone" name="phone" placeholder="909 999 999" >
+                    </label>
+                    <label for="email">
+                        Email
+                        <input type="email" name="email" placeholder="Nhập email" required>
+                    </label>
+                    <label for="passwd">
+                        Mật khẩu
+                        <div class="form-group has-feedback">
+                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
+                            <i class="showpass show-eye-open fas fa-eye"></i>
+                          </div>
+                    </label>
+                </div>   
             </div>
-        </form>
-    </div>
-     <!-- JS -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
-     <script>
-        // toggle password visibility
-        $('#password + .showpass').on('click', function() {
-        $(this).toggleClass('show-eye-close').toggleClass('show-eye-open'); // toggle our classes for the eye icon
-        $('#password').togglePassword(); // activate the hideShowPassword plugin
+
+            <div class="modal__title-child">
+                <p>Thông tin công ty</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group">
+                    <label for="company_name">
+                        Tên công ty
+                        <input type="text" name="company_name" placeholder="Nhập tên công ty">
+                    </label>
+    
+                    <label for="title_name">
+                        Chức danh
+                        <input type="text" name="title_name" placeholder="Nhập chức danh">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__title-child">
+                <p>Thông tin địa chỉ</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group input_address">
+                    <label for="company_address">
+                        Địa chỉ
+                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save">Lưu</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+<!-- Modal Upload E-Sign -->
+<div id="eSign" class="modal">
+    <form action="/" method="post">
+        {% csrf_token %}
+        <div class="modal__content">
+            <div class="modal__title">
+                <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
+                <p>Thêm chữ ký</p>          
+            </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    <span class="avarta_name">D</span>
+                    <div class="info_name">
+                        <p>Nguyễn Thanh Điền</p>
+                        <small>User: 07/08/2022</small>
+                    </div>
+                </div>
+
+                <div class="input_group">
+                    <div class="upload-btn-wrapper">
+                        <button class="btn">Upload chữ ký số</button>
+                        <input type="file" name="myfile" />
+                    </div>
+                </div>   
+            </div>
+
+            
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save">Lưu</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+<!-- Modal view PDF -->
+<div id="viewPDF" class="modal">
+    <form action="/" method="post">
+        {% csrf_token %}
+        <div class="modal__content">
+            <div class="modal__title">
+                <i class="fa-solid fa-file-pdf"></i>
+                <p>View file</p>          
+            </div>
+
+            <div class="modal__detail">
+                <embed src="https://pvssolution.com/wp-content/uploads/2020/05/HDSD-PM-%C4%90%E1%BB%8CC-KQ-SI%C3%8AU-%C3%82M-HEALTHY-CARE.pdf" width="800" height="500" type="application/pdf"> 
+            </div>
+
+            
+            <div class="modal__footer">
+                <button class="btn_save">Xong</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </form>
+</div>
+
+   
+ <!-- JS -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
+ <script>
+    // toggle password visibility
+    $('#password + .showpass').on('click', function() {
+    $(this).toggleClass('show-eye-close').toggleClass('show-eye-open'); // toggle our classes for the eye icon
+    $('#password').togglePassword(); // activate the hideShowPassword plugin
+    });
+ </script>
+ <script type="text/javascript">
+    $(function(){
+        /*Check & uncheck all*/
+        $(document).on('change', '.checkall', function(){
+            var $_this = $(this);
+            $('.checkitem').prop('checked', $_this.prop('checked'));
         });
-     </script>
-     <script type="text/javascript">
-        $(function(){
-            /*Check & uncheck all*/
-            $(document).on('change', '.checkall', function(){
-                var $_this = $(this);
-                $('.checkitem').prop('checked', $_this.prop('checked'));
-            });
-        });
-     </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-     <script src="{% static 'js/main.js' %}"></script>
-</body>
-</html>
+    });
+ </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+</head>
+ <script> // multi seclect
+    $(".select-category").select2({
+    closeOnSelect : false,
+    placeholder : "Chọn danh mục",
+    allowHtml: true,
+    allowClear: true,
+    tags: true
+});
+    $(".select-account").select2({
+    closeOnSelect : false,
+    placeholder : "Chọn loại account",
+    allowHtml: true,
+    allowClear: true,
+    tags: true
+});
+ </script>
+ <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
