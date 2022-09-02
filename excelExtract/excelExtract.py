@@ -50,7 +50,7 @@ def importDataExcel(path):
 			for i,row in enumerate(ws.rows):
 				
 				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
 				elif i> lineEnd:
 					break
 		if f=="MnB Promotion Plan BCC_for SO":
@@ -81,7 +81,7 @@ def importDataExcel(path):
 			rangeline=lineEnd-1
 			for i,row in enumerate(ws.rows):
 				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
 				elif i> lineEnd:
 					break
 			
@@ -138,7 +138,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 			ws.column_dimensions['C'].width=14
 			ws.column_dimensions['D'].width=14
 			# INSERT IMAGE
-			img=Image("static\image\kimberlylogo.png")
+			img=Image("image\kimberlylogo.png")
+			print("image\kimberlylogo.png")
 			img.width=270
 			img.height=30
 			ws.add_image(img,"A1")	
@@ -230,7 +231,7 @@ def exportFiles(loaict,fileID,loaiAccount):
 			xl.close()
 			pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
 			os.remove(os.getcwdb().decode('utf-8') + "\\{}".format(fileName))
-			pdffile=pdfFile()
+			pdffile=pdfFile()	
 			pdffile.masterFile=file
 			pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))	
 			pdf.close()
@@ -370,7 +371,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.column_dimensions['C'].width=14
 		ws.column_dimensions['D'].width=14
 		# INSERT IMAGE
-		img=Image("static\image\kimberlylogo.png")
+		img=Image("image\kimberlylogo.png")
+		
 		img.width=270
 		img.height=30
 		ws.add_image(img,"A1")	
@@ -486,7 +488,8 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.column_dimensions['C'].width=14
 		ws.column_dimensions['D'].width=14
 		# INSERT IMAGE
-		img=Image("static\image\kimberlylogo.png")
+		# img=Image("static\image\kimberlylogo.png")
+		img=Image("{}".format(str(os.path.join(os.path.dirname(__file__),"../static/image/kimberlylogo.png"))))
 		img.width=270
 		img.height=30
 		ws.add_image(img,"A1")	
@@ -576,8 +579,11 @@ def exportFiles(loaict,fileID,loaiAccount):
 		ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
 		ws.page_setup.paperSize = ws.PAPERSIZE_A4
 		wb.save(fileName)
-		sw.App.visible = False
+		# sw.App.visible = False
+		app = sw.App()
+		# app=sw.App(visible=False)
 		xl = sw.Book(fileName)
+		app.visible=False
 		xl.sheets("Thư thông báo").to_pdf(path=r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx","")))
 		xl.close()
 		pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
@@ -587,6 +593,17 @@ def exportFiles(loaict,fileID,loaiAccount):
 		pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))	
 		pdf.close()
 		os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
+		# app = sw.App(visible=False)
+		# wb = app.books.open(fileName)    
+		# wb.sheets("Thư thông báo").to_pdf(path=r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx","")))
+		# wb.close()
+		# pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
+		# pdffile=pdfFile()
+		# pdffile.masterFile=file
+		# pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))
+		# pdf.close()
+		# os.remove(os.getcwdb().decode('utf-8') + "\\{}".format(fileName))
+		# os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
 	return "Success"
 
 # def pdfConvert(file):
