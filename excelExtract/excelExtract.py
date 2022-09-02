@@ -50,7 +50,7 @@ def importDataExcel(path):
 			for i,row in enumerate(ws.rows):
 				
 				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
 				elif i> lineEnd:
 					break
 		if f=="MnB Promotion Plan BCC_for SO":
@@ -81,7 +81,7 @@ def importDataExcel(path):
 			rangeline=lineEnd-1
 			for i,row in enumerate(ws.rows):
 				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
 				elif i> lineEnd:
 					break
 			

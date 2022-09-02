@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 import os
 def fileExtensionValidate(value):
     from django.core.exceptions import ValidationError
@@ -22,6 +20,7 @@ class excel(models.Model):
     postEndDate             =models.DateField(null=True,blank=True)
     mechanicsGetORDiscount  =models.TextField(null=True,blank=True)
     noiDungChuongTrinh      =models.TextField(null=True,blank=True)
+    product                 =models.TextField(null=True,blank=True)
     budgetRir               =models.CharField(max_length=20,null=True,blank=True)
     loaiCt                  =models.CharField(max_length=20,null=True,blank=True)
 
