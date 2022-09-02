@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-kl!zq0&z444x3!3k4n7%=q++)ft*35f@&o^n#msm9l+&+lo0nh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['psign-kc.pvssolution.com', '*']
 
 
 # Application definition
