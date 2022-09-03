@@ -8,7 +8,7 @@ from rest_framework import status
 from django.http import HttpResponse
 from rest_framework.response import Response
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-import requests
+# import requests
 import json
 # Create your views here.
 @xframe_options_sameorigin
@@ -28,7 +28,7 @@ def kcToolPage(request):
 					excelExtract.importDataExcel(file)
 			except:
 				pass
-	return render(request,"KCtool/KCTool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs})
+	return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs})
 
 
 def waitSignDoc(request):
