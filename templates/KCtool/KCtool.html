@@ -55,7 +55,7 @@
     </div>
      <!-- Modal Create PDF -->
      <div id="createPDF" class="modal">
-        <form method="post">
+        <form>
             {% csrf_token %}
             <div class="modal__content">
                 <div class="modal__title">
@@ -67,23 +67,19 @@
                     <div class="input_group">
                         <div class="input_item">
                             <p class="label">Danh mục</p>
-                            <select class="select-category" multiple="multiple" name="loaict"
-
-                                <option value="Công việc" data-badge="">Công việc</option>
-                                <option value="Hóa đơn" data-badge="">Hóa đơn</option>
-                                <option value="Khách hàng VIP" data-badge="">Khách hàng VIP</option>
-                                <option value="Khách hàng tiềm năng" data-badge="">Khách hàng tiềm năng</option>
-                                <option value="Văn bản ký" data-badge="">Văn bản ký</option>
-                
-                            </select>
+                                <select class="select-category" multiple="multiple" name="loaict">
+                                    <span id= "list-categories" >
+                                        {% comment %} <option value="Công việc" data-badge="">Công việc</option>
+                                        <option value="Hóa đơn" data-badge="">Hóa đơn</option> {% endcomment %}
+                                    </span>
+                                </select>
+                           
                         </div>
                         <div class="input_item">
                             <p class="label">Loại Account</p>
                             <select class="select-account" multiple="multiple" name="accounts">
-
-                                <option value="Account 1" data-badge="">Account 1</option>
-                                <option value="Account 2" data-badge="">Account 2</option>
-                                <option value="Account 3" data-badge="">Account 3</option>
+                                    {% comment %} <option value="Account 1" data-badge="">Account 1</option>
+                                    <option value="Account 2" data-badge="">Account 2</option> {% endcomment %}
                 
                             </select>
                         </div>
@@ -300,8 +296,34 @@
 
 <script>
     function create_pdf_function(id){
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        var postData = new FormData();
+        postData.append("pk_excel", id);
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:getListAccount' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                $(".select-category").html(`${resp.list_loaiCt}`)
+                $(".select-account").html(`${resp.list_accounts}`)
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                window.location.replace(``);
+            }
+        }) //end ajax
+        // click create pdf
         //ajax
         $('#create-pdf-modal').click(function(event){
+            var conceptName = $('#.select-category').find(":selected").val();
+            alert(conceptName)
             event.stopImmediatePropagation();
             event.preventDefault();
             
@@ -322,11 +344,11 @@
                 
                 success: function(resp) {
                     alert(id)
-                    window.location.replace(``);
+                    //window.location.replace(``);
                 },
                 error:function(xhr, status, error){            
                     alert(status,error); 
-                    window.location.replace(``);
+                    //window.location.replace(``);
                 }
             }) //end ajax
         })

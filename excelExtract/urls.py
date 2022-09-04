@@ -6,5 +6,6 @@ urlpatterns = [
     path("getIdList",views.getIdList,name="getIdList"),
     path("waitingSignDocs/",views.waitSignDoc,name="waitSignDoc"),
     path("signedDocs/",views.signedDoc,name="signedDoc"),
-    path("create-pdf", views.create_pdf, name="create_pdf")
+    path("create-pdf", views.create_pdf, name="create_pdf"),
+    path("getListAccount", views.getListAccount, name="getListAccount")
 ]

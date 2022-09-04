@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
-from excelExtract.models import document,pdfFile
+from excelExtract.models import document,pdfFile, excel
 from . import excelExtract
 from django.db import transaction
 from rest_framework import status
@@ -59,38 +59,7 @@ def create_pdf(request):
 		with transaction.atomic():
 			print(request.data)
 			id_excel = int(request.data["pk_excel"])
-			# # loaiCt= request.POST.getlist('loaiCt')
-			# # loaiAccount =request.POST.getlist('loaiAccount')
-			# loaiAccount=['acc1','acc2']
-			# data_send = {
-			# 		"master_file_id": id_excel,
-			# 		# "is_publish_now": True,
-					
-					
-			# 	}	
-			# for account in loaiAccount:
-			# 	if item["taxPercentage"] == 0:
-			# 		item["taxPercentage"] = None
-			# 	data_send["lines"].append({
-			# 				"name": item["itemName"],
-			# 				"code": "1",
-			# 				"unit": item["unitName"],
-			# 				"quantity": int(item["quantity"]),
-			# 				"price": int(item["unitPrice"]),
-			# 				"type": "HANG_HOA",
-			# 				"rate": item["taxPercentage"]
-			# 				})
-			# print(data_send)
-			# api_url = settings.E_INVOICE_API_URL +"/e-invoice-service-api/api/e-invoices/replace/{}".format(int(invoice.id_invoice_eInvoice))
-
-			# response_obj = requests.post(api_url, data=json.dumps(data_send), headers=headers)
-			# print(response_obj.json())
-
-			# if response_obj.status_code >= 200 and response_obj.status_code<300:
-				# return Response(response_obj.json(), status=status.HTTP_200_OK)
-			# return Response({"code":"00"}, status=status.HTTP_200_OK)
-			# else:
-			# 	return Response(response_obj.json()['message'], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+			
 
 			excelExtract.exportFiles(loaict='ALL',fileID=id_excel,loaiAccount='ALL') 
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
@@ -98,5 +67,30 @@ def create_pdf(request):
 		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@api_view(["POST"])
+def getListAccount(request):
+	# try:
+		arr_listaccounts=[]
+		arr_loaiCt = []
+		list_accounts = ""
+		list_loaiCt = ""
+		pk = request.data["pk_excel"]
+		file=document.objects.get(pk=int(pk))
 
+		for f in excel.objects.filter(filename=file):
+			if f.account not in arr_listaccounts:
+
+				arr_listaccounts.append(f.account)
+				list_accounts += f'''
+					<option group="list_accounts_group" value="{f.account}" data-badge="">{f.account}</option>
+				'''
+			if f.loaiCt not in arr_loaiCt:
+				arr_loaiCt.append(f.loaiCt)
+				list_loaiCt += f'''
+					<option group="list_LoaiCT_group" value="{f.loaiCt}" data-badge="">{f.loaiCt}</option>
+				'''
 	
+
+		return Response({"Status":"Success", "list_accounts": list_accounts, "list_loaiCt":list_loaiCt},  status=status.HTTP_200_OK)
+	# except:
+	# 	return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
