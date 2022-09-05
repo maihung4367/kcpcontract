@@ -59,9 +59,11 @@ def create_pdf(request):
 		with transaction.atomic():
 			print(request.data)
 			id_excel = int(request.data["pk_excel"])
-			
-
-			excelExtract.exportFiles(loaict='ALL',fileID=id_excel,loaiAccount='ALL') 
+			values_category = request.data["values_category"]
+			values_account = request.data["values_account"]
+			print(values_account)
+			print(values_category)
+			#excelExtract.exportFiles(loaict='ALL',fileID=id_excel,loaiAccount='ALL') 
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
