@@ -372,7 +372,7 @@ def exportFiles(loaict,fileID,loaiAccount):
 			pdf.close()
 			os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
 	elif loaiAccount!="All" and loaict=="All":
-		print("3")
+		
 		wb=	openpyxl.Workbook()
 		ws = wb.active
 		ws.title="Thư Thông Báo"
@@ -425,249 +425,173 @@ def exportFiles(loaict,fileID,loaiAccount):
 			_.fill=fillCellStyle
 
 		fileData= excel.objects.filter(filename=file,account=loaiAccount)
-		rirSumLine=len(fileData)+14
-		sumRir=0
-		for row,data in enumerate(fileData,start=14):
-			for col,colAlphabet in enumerate(["A","B","C","D"],start=1):
-				if headers[col-1]=='Mechanics: get/discount':
-					
-					cell=ws["{}{}".format(colAlphabet,row)]
-					cell.alignment=textFitCell
-					cell.border=thin_border
-					c = ws.cell(column=col,row=row,value=data.mechanicsGetORDiscount)				
-				# elif headers[col-1]=="Noi dung chuong trinh":
-				# 	c = ws.cell(column=col,row=row,value=data.noiDungChuongTrinh)
-				if headers[col-1]=='Product':
-			
-					cell=ws["{}{}".format(colAlphabet,row)]
-					cell.alignment=textFitCell
-					c = ws.cell(column=col,row=row,value=data.product)	
-				elif headers[col-1]=="Post start date":
-					cell=ws["{}{}".format(colAlphabet,row)]
-					cell.alignment=bottomRightVertical
-					c=ws.cell(column=col,row=row,value=data.postStartDate.strftime("%d/%m/%y"))
-				elif headers[col-1]=="Post end date":
-					cell=ws["{}{}".format(colAlphabet,row)]
-					cell.alignment=bottomRightVertical
-					c=ws.cell(column=col,row=row,value=data.postEndDate.strftime("%d/%m/%y"))
-				# elif  headers[col-1]== "Sum of Budget RIR":
-				# 	cell=ws["{}{}".format(colAlphabet,row)]
-				# 	cell.alignment=bottomRightVertical
-				# 	c=ws.cell(column=col,row=row,value=data.budgetRir)
-				# 	if data.budgetRir != None:
-				# 		sumRir=sumRir+int(float(data.budgetRir))
-		# ws['A{}'.format(str(rirSumLine))]="Grand Total"
-		# ws['E{}'.format(str(rirSumLine))]=str(sumRir)
-		ws['A{}'.format(str(rirSumLine))].font=boldFont
-		ws['E{}'.format(str(rirSumLine))].font=boldFont
-		ws['E{}'.format(str(rirSumLine))].alignment=bottomRightVertical
-		ws['A{}'.format(str(rirSumLine))].fill=fillCellStyle
-		ws['B{}'.format(str(rirSumLine))].fill=fillCellStyle
-		ws['C{}'.format(str(rirSumLine))].fill=fillCellStyle
-		ws['D{}'.format(str(rirSumLine))].fill=fillCellStyle
-		# ws['E{}'.format(str(rirSumLine))].fill=fillCellStyle
-		ws.merge_cells("A{}:C{}".format(str(rirSumLine+3),str(rirSumLine+3)))
-		ws.merge_cells("A{}:C{}".format(str(rirSumLine+4),str(rirSumLine+4)))
-		ws['A{}'.format(str(rirSumLine+3))]="Mong Quý Khách Hàng cùng hợp tác với Công ty để đảm bảo các chương trình thực thi hiệu quả trong thời gian tới."
-		ws['A{}'.format(str(rirSumLine+4))]="Nếu Quý Khách Hàng có bất kỳ vấn đề nào cần làm rõ, vui lòng cho KCV được biết để cùng trao đổi"
-		ws['A{}'.format(str(rirSumLine+6))]="Trân trọng cảm ơn Quý Khách Hàng"
-		ws['A{}'.format(str(rirSumLine+7))]="Trưởng bộ phận quản lý kênh hiện đại"
 		
-		fileName="{}{}_{}.xlsx".format(loaiAccount,"all",str(datetime.now().date()))
-		ws.print_area = 'A1:D{}'.format(str(rirSumLine+7))
-		# Printer Settings
-		ws.page_setup.orientation = ws.ORIENTATION_LANDSCAPE
-		ws.page_setup.paperSize = ws.PAPERSIZE_A4
-		wb.save(fileName)
-		sw.App.visible = False
-		xl = sw.Book(fileName)
-		xl.sheets("Thư thông báo").to_pdf(path=r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx","")))
-		xl.close()
-		pdf=open(r'{}\\PDFs\\{}'.format( os.getcwdb().decode('utf-8'),fileName.replace(".xlsx",".pdf")), "rb")
-		os.remove(os.getcwdb().decode('utf-8') + "\\{}".format(fileName))
-		pdffile=pdfFile()
-		pdffile.masterFile=file
-		pdffile.slaveFile.save(fileName.replace(".xlsx",".pdf"),File(pdf))	
-		pdf.close()
-		os.remove(os.getcwdb().decode('utf-8')+"\\PDFs\\{}.pdf".format(fileName.replace(".xlsx","")))
 	elif loaiAccount!="All" and loaict!="All":
 		print("4")
-		title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
-		date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
-		pdf = PDF()
-		pdf.add_font('Roboto','',r"static/Fonts/Roboto-Italic.ttf",uni=True)
-		pdf.add_font('Roboto','B',r"static/Fonts/Roboto-BoldItalic.ttf",uni=True)
-		pdf.add_font('Roboto','I',r"static/Fonts/Roboto-Italic.ttf",uni=True)
-		pdf.set_font('Roboto','', size=10)
-		# pdf=FPDF("L", "mm", "A4")
+		listAcc=loaiAccount.split(',')
+		listCt=loaict.split(',')
+		for f in listAcc:
+			
+			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
+			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
+			pdf = PDF()
+			pdf.add_font('Roboto','',r"static/Fonts/Roboto-Italic.ttf",uni=True)
+			pdf.add_font('Roboto','B',r"static/Fonts/Roboto-BoldItalic.ttf",uni=True)
+			pdf.add_font('Roboto','I',r"static/Fonts/Roboto-Italic.ttf",uni=True)
+			pdf.set_font('Roboto','', size=10)
+			# pdf=FPDF("L", "mm", "A4")
 
-		pdf.add_page()
-		title_w = pdf.get_string_width(title) + 6
+			pdf.add_page()
+			title_w = pdf.get_string_width(title) + 6
 
-		doc_w = pdf.w
-		center = (doc_w - title_w) / 2
-		#tittle
-		pdf.text(center,15,title)
-		#logo
-		pdf.image('static/image/kimberlylogo.png', x = 2, w = 50,h=10, y=2)
-		# date year
+			doc_w = pdf.w
+			center = (doc_w - title_w) / 2
+			#tittle
+			pdf.text(center,15,title)
+			#logo
+			pdf.image('static/image/kimberlylogo.png', x = 2, w = 50,h=10, y=2)
+			# date year
 
-		pdf.set_font('Roboto','', size=8)
-		pdf.text(165,20,date_year)
-		# Kính gửi
-		pdf.set_font('Roboto', 'B', size=9)
-		text = 'Kính gửi: Quý Khách Hàng Kênh Hiện Đại'
+			pdf.set_font('Roboto','', size=8)
+			pdf.text(165,20,date_year)
+			# Kính gửi
+			pdf.set_font('Roboto', 'B', size=9)
+			text = 'Kính gửi: Quý Khách Hàng Kênh Hiện Đại'
 
-		pdf.text(1, 25, text)
-		# Tên chương trình
-		pdf.set_font('Roboto','', size=8)
-		text = "Công ty TNHH Kimberly-Clark Việt Nam (Công ty)  xin trân trọng thông báo chương trình đến Quý Khách Hàng như thông tin đính kèm,"
+			pdf.text(1, 25, text)
+			# Tên chương trình
+			pdf.set_font('Roboto','', size=8)
+			text = "Công ty TNHH Kimberly-Clark Việt Nam (Công ty)  xin trân trọng thông báo chương trình đến Quý Khách Hàng như thông tin đính kèm,"
 
-		pdf.text(1,32,text)
-		# Loại CT
+			pdf.text(1,32,text)
+			# Loại CT
 
-		#loai ct,loai acc
-		print(pdf.get_x())
-		print(pdf.get_y())
-		pdf.set_y(pdf.get_y()+30)
-		pdf.set_fill_color(153,204,255)
-		pdf.cell(60,5,"Loại CT",0,0,"L",1)
+			#loai ct,loai acc
+			print(pdf.get_x())
+			print(pdf.get_y())
+			pdf.set_y(pdf.get_y()+30)
+			pdf.set_fill_color(153,204,255)
+			pdf.cell(60,5,"Loại CT",0,0,"L",1)
 
-		pdf.cell(60,5,"{}".format(loaict),0,1,"L",1)
-		pdf.set_fill_color(153,204,255)
-		pdf.set_fill_color(153,204,255)
-		pdf.cell(60,5,"Account","B",0,"L",1)
-		pdf.set_fill_color(153,204,255)
-		pdf.cell(60,5,"{}".format(loaiAccount),"B",1,"L",1)
-		pdf.set_y(pdf.get_y()+5)
-		#table header
-		headers=['Mechanics: get/discount',"Product","Post start date","Post end date"]
-		for i,header in enumerate(headers):
-			if i==0:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(60,5,"{}".format(headers[i]),"B",0,"L",1)
-			elif i==1:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(60,5,"{}".format(headers[i]),"B",0,"L",1)
-			elif i ==2:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(30,5,"{}".format(headers[i]),"B",0,"L",1)
-			else:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(30,5,"{}".format(headers[i]),"B",1,"L",1)
-
-		#table data
-		datas=excel.objects.filter(filename=file,account=loaiAccount,loaiCt=loaict)
-		for row,data in enumerate(datas):
-			for col,colAlphabet in enumerate(["A","B","C","D"]):
-				mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
-				cellWitdhMax=60
-				if pdf.get_string_width(mechanicsString) < cellWitdhMax:
-					if headers[col]=='Mechanics: get/discount':
-						string=data.mechanicsGetORDiscount
-						pdf.cell(60,5,string,"B",0,"L")
-					if headers[col]=='Product':
-						string=data.product
-						if string== None:
-							pdf.cell(60,5,"","B",0,"L",1)
-						else:
-							pdf.cell(60,5,string,"B",0,"L")
-					elif headers[col]=="Post start date":
-						pdf.cell(30,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),"B",0,"L")
-					elif headers[col]=="Post end date":
-						pdf.cell(30,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),"B",1,"L")
+			pdf.cell(60,5,"{}".format(loaict),0,1,"L",1)
+			pdf.set_fill_color(153,204,255)
+			pdf.set_fill_color(153,204,255)
+			pdf.cell(60,5,"Account","B",0,"L",1)
+			pdf.set_fill_color(153,204,255)
+			pdf.cell(60,5,"{}".format(f),"B",1,"L",1)
+			pdf.set_y(pdf.get_y()+5)
+			#table header
+			headers=['Mechanics: get/discount',"Product","Post start date","Post end date"]
+			for i,header in enumerate(headers):
+				if i==0:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(60,5,"{}".format(headers[i]),"B",0,"L",1)
+				elif i==1:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(60,5,"{}".format(headers[i]),"B",0,"L",1)
+				elif i ==2:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(30,5,"{}".format(headers[i]),"B",0,"L",1)
 				else:
-					mechanicsStringLen=len(mechanicsString)
-					startChar=0
-					maxChar=0
-					holdStringEachLine=[]
-					holdStringTemp=""
-					while (startChar<=mechanicsStringLen):
-						while (pdf.get_string_width(holdStringTemp) < cellWitdhMax) and ((startChar+maxChar)<=mechanicsStringLen):
-							maxChar=maxChar+1
-							holdStringTemp= mechanicsString[startChar:(maxChar+startChar)]						
-						startChar=startChar+maxChar
-						holdStringEachLine.append(holdStringTemp)
-						#reset
-						maxChar=0
-						holdStringTemp=""					
-					print(holdStringEachLine)
-					line=len(holdStringEachLine) #Numbers of line
-					if headers[col]=='Mechanics: get/discount':
-						
-						xPos=pdf.get_x()
-						yPos=pdf.get_y()
-						pdf.multi_cell(cellWitdhMax,5,mechanicsString,"B")
-						pdf.set_xy(xPos+cellWitdhMax,yPos)
-					if headers[col]=='Product':
-						string=data.product
-						if string== None:
-							pdf.cell(60,5*line,"","B",0,"L")
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(30,5,"{}".format(headers[i]),"B",1,"L",1)
+
+			#table data
+			for ct in listCt:
+				datas=excel.objects.filter(filename=file,account=f,loaiCt=ct)
+				for row,data in enumerate(datas):
+					for col,colAlphabet in enumerate(["A","B","C","D"]):
+						mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
+						cellWitdhMax=60
+						if pdf.get_string_width(mechanicsString) < cellWitdhMax:
+							if headers[col]=='Mechanics: get/discount':
+								string=data.mechanicsGetORDiscount
+								pdf.cell(60,5,string,"B",0,"L")
+							if headers[col]=='Product':
+								string=data.product
+								if string== None:
+									pdf.cell(60,5,"","B",0,"L",1)
+								else:
+									pdf.cell(60,5,string,"B",0,"L")
+							elif headers[col]=="Post start date":
+								pdf.cell(30,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),"B",0,"L")
+							elif headers[col]=="Post end date":
+								pdf.cell(30,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),"B",1,"L")
 						else:
-							pdf.cell(60,5*line,string,"B",0,"L",)
-					elif headers[col]=="Post start date":
-						pdf.cell(30,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),"B",0,"L")
-					elif headers[col]=="Post end date":
-						pdf.cell(30,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),"B",1,"L")
+							mechanicsStringLen=len(mechanicsString)
+							startChar=0
+							maxChar=0
+							holdStringEachLine=[]
+							holdStringTemp=""
+							while (startChar<=mechanicsStringLen):
+								while (pdf.get_string_width(holdStringTemp) < cellWitdhMax) and ((startChar+maxChar)<=mechanicsStringLen):
+									maxChar=maxChar+1
+									holdStringTemp= mechanicsString[startChar:(maxChar+startChar)]						
+								startChar=startChar+maxChar
+								holdStringEachLine.append(holdStringTemp)
+								#reset
+								maxChar=0
+								holdStringTemp=""					
+							print(holdStringEachLine)
+							line=len(holdStringEachLine) #Numbers of line
+							if headers[col]=='Mechanics: get/discount':
+								
+								xPos=pdf.get_x()
+								yPos=pdf.get_y()
+								pdf.multi_cell(cellWitdhMax,5,mechanicsString,"B")
+								pdf.set_xy(xPos+cellWitdhMax,yPos)
+							if headers[col]=='Product':
+								string=data.product
+								if string== None:
+									pdf.cell(60,5*line,"","B",0,"L")
+								else:
+									pdf.cell(60,5*line,string,"B",0,"L",)
+							elif headers[col]=="Post start date":
+								pdf.cell(30,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),"B",0,"L")
+							elif headers[col]=="Post end date":
+								pdf.cell(30,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),"B",1,"L")
 
-		#table footer
-		for i,header in enumerate(headers):
-			if i==0:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(60,5,"","B",0,"L",1)
-			elif i==1:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(60,5,"","B",0,"L",1)
-			elif i ==2:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(30,5,"","B",0,"L",1)
-			else:
-				pdf.set_font('Roboto', 'B', size=9)
-				pdf.set_fill_color(153,204,255)
-				pdf.cell(30,5,"","B",1,"L",1)
-				
+			#table footer
+			for i,header in enumerate(headers):
+				if i==0:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(60,5,"","B",0,"L",1)
+				elif i==1:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(60,5,"","B",0,"L",1)
+				elif i ==2:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(30,5,"","B",0,"L",1)
+				else:
+					pdf.set_font('Roboto', 'B', size=9)
+					pdf.set_fill_color(153,204,255)
+					pdf.cell(30,5,"","B",1,"L",1)
+					
+			#add footer
+			pdf.set_y(pdf.get_y()+30)
+			pdf.cell(100,5,"Mong Quý Khách Hàng cùng hợp tác với Công ty để đảm bảo các chương trình thực thi hiệu quả trong thời gian tới.",0,1)
+			pdf.cell(100,5,"Nếu Quý Khách Hàng có bất kỳ vấn đề nào cần làm rõ, vui lòng cho KCV được biết để cùng trao đổi",0,1)
 
+			pdf.set_y(pdf.get_y()+20)
+			pdf.cell(40,5,"Trân trọng cảm ơn Quý Khách Hàng",0,1)
+			pdf.cell(40,5,"Trưởng bộ phận quản lý kênh hiện đại",0,1)
 
-		# <br>
-		# <br>
-		# <br>
-		# <br>
-		# <br>
-		# <br>
-		# <br>
-		# <br>
-		# <table  align="left" border="1"  width = "50%" >
-		#     <thead >
-		#        <td>1</td>
-		#        <td>2</td>
-		#     </thead>
-		#     <tbody>
-		#         <tr ">
-		#         <td align="left" width="30%" style="color:blue;">Loại CT</td>
-		#         <td align="left" width="70%">Claimback</td>
-		#         </tr>
-		#         <tr>
-		#         <td style="color: #000; text-decoration: none">Account</td>
-		#         <td>BlueKids</td>
-		#         </tr>
-		#     </tbody>
-		#     </table>
-		# <br>
-		# <br>
-		# """
-		pdf.output("pdffile")
-		# pdf.write_html(html)
-		filename="{}{}_{}.pdf".format(loaiAccount,loaict,str(datetime.now().date()))
-		with open("pdffile",'rb') as pdf:
-			pdffile=pdfFile()
-			pdffile.masterFile=file
-			pdffile.slaveFile.save(filename,File(pdf))	
+			pdf.set_y(pdf.get_y()+20)
+			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			
+			pdf.output("pdffile")
+			# pdf.write_html(html)
+			filename="{}{}_{}.pdf".format(f,loaict,str(datetime.now().date()))
+			with open("pdffile",'rb') as pdf:
+				pdffile=pdfFile()
+				pdffile.masterFile=file
+				pdffile.slaveFile.save(filename,File(pdf))	
 	return "Success"
 
