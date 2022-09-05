@@ -33,7 +33,7 @@ def kcToolPage(request):
 
 def waitSignDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))
-	unsignedpdfs=pdfFile.objects.filter(signed=False)
+	unsignedpdfs=pdfFile.objects.filter(signed=False).order_by("-id")
 	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs})
 
 def signedDoc(request):
