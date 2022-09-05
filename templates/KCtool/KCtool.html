@@ -55,7 +55,7 @@
     </div>
      <!-- Modal Create PDF -->
      <div id="createPDF" class="modal">
-        <form>
+        {% comment %} <form> {% endcomment %}
             {% csrf_token %}
             <div class="modal__content">
                 <div class="modal__title">
@@ -95,7 +95,7 @@
                 
                 <a href="#" class="modal__close">&times;</a>
             </div>
-        </form>
+        {% comment %} </form> {% endcomment %}
     </div>
     <div class="pagination" id="pagination">
         <a href="#">«</a>
@@ -293,7 +293,11 @@
  </script>
  <script src="{% static 'js/main.js' %}"></script>
 
-
+<script>
+    function test_create_pdf_function(id) {
+        alert(id)
+    }
+</script>
 <script>
     function create_pdf_function(id){
         var csrftoken = $("[name=csrfmiddlewaretoken]").val();
@@ -316,20 +320,32 @@
             },
             error:function(xhr, status, error){            
                 alert(status,error); 
-                window.location.replace(``);
+                //window.location.replace(``);
             }
         }) //end ajax
         // click create pdf
         //ajax
         $('#create-pdf-modal').click(function(event){
-            var conceptName = $('#.select-category').find(":selected").val();
-            alert(conceptName)
-            event.stopImmediatePropagation();
-            event.preventDefault();
+         
+            var options_category = $('.select-category option:selected');
+
+            var values_category = $.map(options_category ,function(option) {
+                return option.value;
+            });
+            var options_account = $('.select-account option:selected');
+
+            var values_account = $.map(options_account ,function(option) {
+                return option.value;
+            });
+            //alert(values_category)
+            //alert(values_account)
+            //event.stopImmediatePropagation();
+            //event.preventDefault();
             
             var postData = new FormData();
             postData.append("pk_excel", id);
-        
+            postData.append("values_category", values_category);
+            postData.append("values_account", values_account);
             var csrftoken = $("[name=csrfmiddlewaretoken]").val();
             $.ajax({
                 type: "post",
@@ -343,12 +359,12 @@
                 },
                 
                 success: function(resp) {
-                    alert(id)
-                    //window.location.replace(``);
+                    alert("ok")
+                    window.location.replace(``);
                 },
                 error:function(xhr, status, error){            
                     alert(status,error); 
-                    //window.location.replace(``);
+                    window.location.replace(``);
                 }
             }) //end ajax
         })
