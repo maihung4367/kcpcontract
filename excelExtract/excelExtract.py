@@ -586,10 +586,10 @@ def exportFiles(loaict,fileID,loaiAccount):
 			pdf.set_y(pdf.get_y()+20)
 			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
 			
-			pdf.output("pdffile")
+			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
 			filename="{}{}_{}.pdf".format(f,loaict,str(datetime.now().date()))
-			with open("pdffile",'rb') as pdf:
+			with open("pdffile.pdf",'rb') as pdf:
 				pdffile=pdfFile()
 				pdffile.masterFile=file
 				pdffile.slaveFile.save(filename,File(pdf))	
