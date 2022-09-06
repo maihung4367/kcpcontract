@@ -5,6 +5,7 @@ from excelExtract.models import document,pdfFile, excel
 from . import excelExtract
 from django.db import transaction
 from rest_framework import status
+from django.conf import settings
 from django.http import HttpResponse
 from rest_framework.response import Response
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -34,7 +35,7 @@ def kcToolPage(request):
 def waitSignDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))
 	unsignedpdfs=pdfFile.objects.filter(signed=False).order_by("-id")
-	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs})
+	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs, "URL":settings.URL})
 
 def signedDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))

@@ -43,7 +43,7 @@
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
                 <td>..............</td>
                 <td>.................</td>
-                <td><a href="#viewPDF" id="http://127.0.0.1:8000/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+                <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             {% endfor %}
             
