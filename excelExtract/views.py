@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
+import sys
 from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
 from excelExtract.models import document,pdfFile, excel
 from . import excelExtract
 from django.db import transaction
 from rest_framework import status
+from django.conf import settings
 from django.http import HttpResponse
 from rest_framework.response import Response
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -34,7 +36,7 @@ def kcToolPage(request):
 def waitSignDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))
 	unsignedpdfs=pdfFile.objects.filter(signed=False).order_by("-id")
-	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs})
+	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs, "URL":settings.URL})
 
 def signedDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))
@@ -95,3 +97,18 @@ def getListAccount(request):
 		return Response({"Status":"Success", "list_accounts": list_accounts, "list_loaiCt":list_loaiCt},  status=status.HTTP_200_OK)
 	# except:
 	# 	return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(["POST"])
+def sign_pdf(request):
+	try:
+		list_id_pdf_file = request.data["list_id_pdf_file"]
+		for i in list_id_pdf_file:
+			pdf = pdfFile.objects.get(pk = i)
+			pdf.signed = True
+			pdf.save()
+		print(list_id_pdf_file)
+		return Response({"code":"00"}, status=status.HTTP_200_OK)
+	except:
+		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
+		print(err_mess)
+		return Response({"err":err_mess},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -43,7 +43,7 @@
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
                 <td>..............</td>
                 <td>.................</td>
-                <td><a href="#viewPDF" id="http://127.0.0.1:8000/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+                <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             {% endfor %}
             
@@ -181,6 +181,7 @@
 <!-- Modal view PDF -->
 <div id="viewPDF" class="modal">
     <form action="/" method="post">
+        {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
                 <i class="fa-solid fa-file-pdf"></i>
@@ -214,10 +215,34 @@
 <script>
     function sign_all_pdf(){
         var arr_pk_pdf_file = [];
+        var postData = new FormData();
         $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
             arr_pk_pdf_file.push($(this).val());
         });
-        alert(arr_pk_pdf_file )
+        alert(arr_pk_pdf_file)
+        
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:sign_pdf' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                alert("ok")
+                window.location.replace(``);
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
     }
    
 </script>
