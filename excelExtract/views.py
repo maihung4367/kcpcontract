@@ -61,8 +61,9 @@ def create_pdf(request):
 			id_excel = int(request.data["pk_excel"])
 			values_category = request.data["values_category"]
 			values_account = request.data["values_account"]
-			excelExtract.exportFiles(loaict=values_category,fileID=id_excel,loaiAccount=values_account) 
-			return Response({"code":"00"}, status=status.HTTP_200_OK)
+			annouce=excelExtract.exportFiles(loaict=values_category,fileID=id_excel,loaiAccount=values_account) 
+			print(annouce)
+			return Response({"annouce":annouce}, status=status.HTTP_200_OK)
 	except:
 		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
