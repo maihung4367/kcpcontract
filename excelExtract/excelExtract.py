@@ -1,17 +1,10 @@
 import openpyxl
 from datetime import datetime
-from excelExtract.models import document,excel,pdfFile
-from openpyxl.styles import Font,PatternFill,Alignment,Border,Side
-from openpyxl.drawing.image import Image
-# import pythoncom
+from excelExtract.models import document,excel,pdfFile,accountEmail,excelAccount
 import os
-# from win32com import client
-# import win32com
 from django.core.files import File
 # import json
 # import pdfkit 
-import pandas as pd
-import xlwings as sw
 from fpdf import FPDF, HTMLMixin
 from datetime import datetime
 import re
@@ -57,6 +50,25 @@ def importDataExcel(path):
 				
 				if i>=3 and i<=rangeline:
 					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					try:				
+						acc=excelAccount.objects.filter(account=row[1].value)
+						print(acc)
+						if not acc :
+							print("1")
+							newAccount=excelAccount.objects.create(account=row[1].value)
+							newAccount.save()
+							if row[70].value !=None:
+								email=accountEmail.objects.create(email=row[70].value)	
+								email.save()
+						else:
+							print("2")
+							emailfilter=accountEmail.objects.filter(account=acc[0],email=row[70].value)
+							if not emailfilter:
+								email=accountEmail.objects.create(account=acc[0],email=row[70].value)
+								email.save()
+					except:
+						pass
+					
 				elif i> lineEnd:
 					break
 		if f=="MnB Promotion Plan BCC_for SO":
@@ -88,6 +100,24 @@ def importDataExcel(path):
 			for i,row in enumerate(ws.rows):
 				if i>=3 and i<=rangeline:
 					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+					try:				
+						acc=excelAccount.objects.filter(account=row[1].value)
+						print(acc)
+						if not acc :
+							print("1")
+							newAccount=excelAccount.objects.create(account=row[1].value)
+							newAccount.save()
+							if row[70].value !=None:
+								email=accountEmail.objects.create(email=row[70].value)	
+								email.save()
+						else:
+							print("2")
+							emailfilter=accountEmail.objects.filter(account=acc[0],email=row[70].value)
+							if not emailfilter:
+								email=accountEmail.objects.create(account=acc[0],email=row[70].value)
+								email.save()
+					except:
+						pass
 				elif i> lineEnd:
 					break
 			
@@ -134,6 +164,11 @@ def exportFiles(loaict,fileID,loaiAccount):
 		
 		for f in listAcc:
 			emptyList=[]
+			pdfAccount=excelAccount.objects.get(account=f)
+			try:
+				pdfEmail=accountEmail.filter(account=pdfAccount)
+			except:
+				pdfEmail=[]
 			for chuongTrinh in listCt:
 				if excel.objects.filter(filename=file,account=f,loaiCt=chuongTrinh).exists():
 					continue
@@ -357,9 +392,17 @@ def exportFiles(loaict,fileID,loaiAccount):
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
 			filename="{}{}_{}.pdf".format(f,loaict,str(datetime.now().date()))
+			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
+				print(1)
 				pdffile=pdfFile()
 				pdffile.masterFile=file
+				pdffile.account=pdfAccount
+				pdffile.loaict=loaict
 				pdffile.slaveFile.save(filename,File(pdf))	
+				for email in pdfEmail:
+					pdffile.emailExtracted.add(email)
+				pdffile.save()
 	return annouceExist
+
 

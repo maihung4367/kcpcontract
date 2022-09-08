@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load customtags %}
 {% load static %}
 {% block content %}
 <section>
@@ -8,8 +9,8 @@
             <span class="number_vb">{{numberUnsignepdfs}} văn bản</span>
         </div>
         <div class="btn_content">
-            <button class="all-sign">
-                <a href="#">
+            <button class="all-sign" > 
+                <a href="#" onclick="send_all_pdf()">
                     <img src="{% static 'image/icon-email.png' %}" alt="email">
                 Gửi mail tất cả
                 </a>                
@@ -32,44 +33,30 @@
                 <th>Xem file</th>
             </tr>
             <tr>
+                {% for pdf in pdfs %}
                 <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
+                    <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td>diennt@pvs.com.vn</td>
-                <td>03/08/2022 9:20</td>
-                <td>Công Văn 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
-                <td>
+                <td>..............</td>
+                <td>{% for email in pdf.emailExtracted.all %}
+                    {{email}}<br>
+                    {% endfor %}
+                </td>
+                <td>{{pdf.sendingTime}}</td>
+                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td>{{pdf.account}}</td>
+                <td>{{pdf.loaict}}</td>
+                <td>{{pdf.sended|signedValue}}</td>
+                <!-- <td>
                     <select name="" id="" class="select-status">
                         <option value=""></option>
                         <option value="Đã gửi" class="status-success">Đã gửi</option>
                         <option value="Chưa gửi" class="status-fail">Chưa gửi</option>
                     </select>
-                </td>
-                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+                </td> -->
+                <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
-            <tr>
-                <td>
-                    <input type="checkbox" name="check" id="check" class="checkitem">
-                </td>
-                <td>Nguyễn Thanh Điền</td>
-                <td>diennt@pvs.com.vn</td>
-                <td>03/08/2022 9:20</td>
-                <td>Công Văn 1</td>
-                <td>Công việc, hóa đơn</td>
-                <td>Account 1, Account 3</td>
-                <td>
-                    <select name="" id="" class="select-status">
-                        <option value=""></option>
-                        <option value="Đã gửi" class="status-success">Đã gửi</option>
-                        <option value="Chưa gửi" class="status-fail">Chưa gửi</option>
-                    </select>
-                </td>
-                <td><a href="#viewPDF"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-            </tr>
-            
+                {% endfor %}
         </table>
     </div>
     <div class="pagination" id="pagination">
@@ -90,6 +77,7 @@
  <!-- Modal Info -->
  <div id="info" class="modal">
     <form action="/" method="post">
+        {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
                 <img src="./image/UserList.png" alt="UserList">
@@ -169,6 +157,7 @@
 <!-- Modal Upload E-Sign -->
 <div id="eSign" class="modal">
     <form action="/" method="post">
+        {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
                 <img src="./image/vb-sign.png" alt="vb-sign">
@@ -205,6 +194,7 @@
 <!-- Modal view PDF -->
 <div id="viewPDF" class="modal">
     <form action="/" method="post">
+        {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
                 <i class="fa-solid fa-file-pdf"></i>
@@ -212,7 +202,9 @@
             </div>
 
             <div class="modal__detail">
-                <embed src="https://pvssolution.com/wp-content/uploads/2020/05/HDSD-PM-%C4%90%E1%BB%8CC-KQ-SI%C3%8AU-%C3%82M-HEALTHY-CARE.pdf" width="800" height="500" type="application/pdf"> 
+                <span id="change_link_pdf">
+                    <embed src="https://pvssolution.com/wp-content/uploads/2020/05/HDSD-PM-%C4%90%E1%BB%8CC-KQ-SI%C3%8AU-%C3%82M-HEALTHY-CARE.pdf" width="800" height="500" type="application/pdf"> 
+                   </span>
             </div>
 
             
@@ -224,4 +216,44 @@
         </div>
     </form>
 </div>
+<script>
+    function view_pdf_modal(id) {
+        //alert(id)
+        $("#change_link_pdf").html(`<embed src="${id}" width="800" height="500" type="application/pdf">`)
+    }
+</script>
+<script>
+    function send_all_pdf(){
+        var arr_pk_pdf_file = [];
+        var postData = new FormData();
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });
+        alert(arr_pk_pdf_file)
+        
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:send_pdf' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                alert("ok")
+                window.location.replace(``);
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+    }
+   
+</script>
 {% endblock %}

@@ -11,6 +11,15 @@ class document(models.Model):
     document = models.FileField(upload_to="documents",validators=[fileExtensionValidate])
     def __str__(self):
         return "{}".format(str(self.document))
+class excelAccount(models.Model):
+    account=models.CharField(max_length=30,unique=True)  
+    def __str__(self):
+        return "{}".format(str(self.account))      
+class accountEmail(models.Model):
+    account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
+    email=models.EmailField(blank=True,null=True)
+    def __str__(self):
+        return "{}".format(str(self.email)) 
 class excel(models.Model):
     filename                =models.ForeignKey(document, on_delete=models.CASCADE)
     #group,account,postStartDate,postEndDate,mechanicsGetORDiscount,noiDungChuongTrinh,budgetRir,loaiCt
@@ -29,9 +38,11 @@ class excel(models.Model):
 class pdfFile(models.Model):
     masterFile=models.ForeignKey(document, on_delete=models.CASCADE)
     slaveFile=models.FileField(upload_to="documents/slavefiles")
+    account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
+    loaict=models.TextField(blank=True,null=True)
     createdTime=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     sendingTime=models.DateTimeField(blank=True,null=True)
-    emailExtracted=models.EmailField(blank=True,null=True)
+    emailExtracted=models.ManyToManyField(accountEmail,blank=True)
     signed=models.BooleanField(default=False)   
     sended=models.BooleanField(default=False) 
     def __str__(self):

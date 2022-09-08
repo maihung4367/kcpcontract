@@ -38,11 +38,19 @@
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
                 <td>............</td>
-                <td><button class="btn-edit"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></button> ...........</td>
+                <!-- <a class="btn-edit" onclick="()"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a> -->
+                <td>
+                    {% for email in pdf.emailExtracted.all %}
+                        {{email}}<br>
+                        {% endfor %}
+                    </td>
+                
+                </td>
                 <td>{{pdf.createdTime}}</td>
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>..............</td>
-                <td>.................</td>
+                <td>{{pdf.account}}</td>
+                <td>{{pdf.loaict}}</td>
+                
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             {% endfor %}
