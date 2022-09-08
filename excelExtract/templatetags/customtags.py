@@ -22,3 +22,11 @@ def accountFilter(value):
 		# if f.loaiCt not in listloaict:
 		# 	listloaict.append(f.loaiCt)
 	return 	listaccount
+@register.filter(name="signedValue")
+def signedValue(value):
+	if value==True:
+		signedValue="Đã gửi"
+	else:
+		signedValue="Chưa gửi"
+	return 	signedValue
+
