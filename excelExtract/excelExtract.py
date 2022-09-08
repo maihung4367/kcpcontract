@@ -168,7 +168,7 @@ def exportFiles(loaict,fileID,loaiAccount):
 			emptyList=[]
 			pdfAccount=excelAccount.objects.get(account=f)
 			try:
-				pdfEmail=accountEmail.filter(account=pdfAccount)
+				pdfEmail=accountEmail.objects.filter(account=pdfAccount)
 			except:
 				pdfEmail=[]
 			for chuongTrinh in listCt:
@@ -402,8 +402,10 @@ def exportFiles(loaict,fileID,loaiAccount):
 				pdffile.account=pdfAccount
 				pdffile.loaict=loaict
 				pdffile.slaveFile.save(filename,File(pdf))	
-				for email in pdfEmail:
-					pdffile.emailExtracted.add(email)
+				if pdfEmail:			
+					for email in pdfEmail:
+						print(email)
+						pdffile.emailExtracted.add(email)
 				pdffile.save()
 	return annouceExist
 
