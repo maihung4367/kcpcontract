@@ -20,18 +20,30 @@
 <body>
     <header>
         <div class="nav_left">
-            <a href="./index.html">
+            <a href="#">
                 <img class="logo" src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
             </a>
             <nav>
                 <ul class="nav_links " id="navLink">
-                    <li class="nav_item active">
+                    <li class="nav_item 
+                    {% if active_id == 1 %}
+                    active
+                    {% endif %}
+                    ">
                         <a href="{% url 'KCTool:kcToolPage' %}" > <img class="icon-vb" src="{% static 'image/nav-icon_exl.png' %}" alt="cho-ky"> File excel</a>
                     </li>
-                    <li class="nav_item">
+                    <li class="nav_item
+                    {% if active_id == 2 %}
+                    active
+                    {% endif %}
+                    ">
                         <a href="{% url 'KCTool:waitSignDoc' %}" > <img class="icon-vb" src="{% static 'image/cho-ky.png'%}" alt="cho-ky"> Văn bản chờ ký</a>
                     </li>
-                    <li class="nav_item">
+                    <li class="nav_item
+                    {% if active_id == 3 %}
+                    active
+                    {% endif %}
+                    ">
                         <a href="{% url 'KCTool:signedDoc' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
                     </li>
                     

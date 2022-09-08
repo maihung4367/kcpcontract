@@ -12,9 +12,11 @@ class PDF(FPDF, HTMLMixin):
 	# FPDF("L", "mm", "A4")
 	
 	pass
-def importDataExcel(path):
+def importDataExcel(path, user=None):
 	wb=openpyxl.load_workbook(path,data_only=True)
 	file=document(document=path)
+	if user != None:
+		file.upload_by = user
 	file.save()
 	
 	#TÌM HEADERS,LOẠI CT TRONG SHEET CẦN TÌM/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

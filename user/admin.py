@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  User
+from .models import  User, Profile
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
@@ -29,3 +29,4 @@ class CustomUserAdmin(UserAdmin):
     group.short_description = "Groups"
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Profile)

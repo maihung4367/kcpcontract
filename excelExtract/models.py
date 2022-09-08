@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import Profile
 import os
 def fileExtensionValidate(value):
     from django.core.exceptions import ValidationError
@@ -7,6 +8,7 @@ def fileExtensionValidate(value):
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
 class document(models.Model):
+    upload_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     uploadTime=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     document = models.FileField(upload_to="documents",validators=[fileExtensionValidate])
     def __str__(self):

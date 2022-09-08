@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
 from excelExtract.models import document,pdfFile, excel
 from . import excelExtract
+from user.models import Profile
 from django.db import transaction
 from rest_framework import status
 from django.conf import settings
@@ -27,21 +28,26 @@ def kcToolPage(request):
 				file=request.FILES['document']
 				print(file)
 				if file:
-					excelExtract.importDataExcel(file)
+					try:
+						user = request.user
+						profile = Profile.objects.get(user=user)
+						excelExtract.importDataExcel(file, user=profile)
+					except:
+						excelExtract.importDataExcel(file)
 			except:
 				pass
-	return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs})
+	return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs, "active_id":1})
 
 
 def waitSignDoc(request):
 	numberUnsignepdfs=len(pdfFile.objects.filter(signed=False))
 	unsignedpdfs=pdfFile.objects.filter(signed=False).order_by("-id")
-	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs, "URL":settings.URL})
+	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs, "URL":settings.URL, "active_id":2})
 
 def signedDoc(request):
 	numberSignepdfs=len(pdfFile.objects.filter(signed=False))
 	pdfs=pdfFile.objects.filter(signed=True).order_by("-id")
-	return render(request,"KCtool/signedDoc.html",{"numberSignepdfs":numberSignepdfs,"pdfs":pdfs})
+	return render(request,"KCtool/signedDoc.html",{"numberSignepdfs":numberSignepdfs,"pdfs":pdfs, "active_id":3})
 
 # def excelToListPdfs(request):  
 #             return Response(request,"KCtool/KCTool.html")

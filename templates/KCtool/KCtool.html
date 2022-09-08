@@ -44,7 +44,11 @@
                     {{file.pk}}
                 </td>
                 <td class="td-filename"><a href="#"><img src="{% static 'image/icon-exl.png' %}" alt="document"></a><span>{{file.document|nameFileFilter}}</span></td>
-                <td>.............</td>
+                {% if file.upload_by %}
+                <td>{{file.upload_by.full_name}}</td>
+                {% else %}
+                <td>{{............}}</td>
+                {% endif %}
                 <td>{{file.uploadTime}}</td>
                 <td class="td-action"><button class="btn-clear"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
