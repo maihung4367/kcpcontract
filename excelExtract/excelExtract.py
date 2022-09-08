@@ -115,8 +115,9 @@ def importDataExcel(path):
 							print("2")
 							emailfilter=accountEmail.objects.filter(account=acc[0],email=row[70].value)
 							if not emailfilter:
-								email=accountEmail.objects.create(account=acc[0],email=row[70].value)
-								email.save()
+								if row[70].value != None:
+									email=accountEmail.objects.create(account=acc[0],email=row[70].value)
+									email.save()
 					except:
 						pass
 				elif i> lineEnd:
