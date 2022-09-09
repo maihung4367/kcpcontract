@@ -45,9 +45,9 @@ def waitSignDoc(request):
 	return render(request,"KCtool/waitingsigndoc.html",{"numberUnsignepdfs":numberUnsignepdfs,"unsignedpdfs":unsignedpdfs, "URL":settings.URL, "active_id":2})
 
 def signedDoc(request):
-	numberSignepdfs=len(pdfFile.objects.filter(signed=False))
+	numbersignepdfs=len(pdfFile.objects.filter(signed=False))
 	pdfs=pdfFile.objects.filter(signed=True).order_by("-id")
-	return render(request,"KCtool/signedDoc.html",{"numberSignepdfs":numberSignepdfs,"pdfs":pdfs, "active_id":3})
+	return render(request,"KCtool/signedDoc.html",{"numbersignepdfs":numbersignepdfs,"pdfs":pdfs, "active_id":3})
 
 # def excelToListPdfs(request):  
 #             return Response(request,"KCtool/KCTool.html")
