@@ -9,26 +9,59 @@
             <span class="number_vb">{{numbersignepdfs}} văn bản</span>
         </div>
         <div class="btn_content">
+            {% if user.is_signer or user.is_admin %}
             <button class="all-sign" > 
                 <a href="#" onclick="send_all_pdf()">
                     <img src="{% static 'image/icon-email.png' %}" alt="email">
                 Gửi mail tất cả
                 </a>                
             </button>
+            {% else %}
+            <button class="all-sign" > 
+                <a href="#" onclick="alert('Not allowed!!')">
+                    <img src="{% static 'image/icon-email.png' %}" alt="email">
+                Gửi mail tất cả
+                </a>                
+            </button>
+            {% endif %}
+            
         </div>
     </div>
+      
+    <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?menu=menu_hnk_team_ticket" method="GET" id="form">
+        <div class="form-group col-md-8">
+            <input type="search" class="input_search" placeholder="Tìm kiếm"  id="key_word" name="key_word" value="{{ key_word }}">
+            <button type="button" class="btn btn-primary mb-3" id="search"> <i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+    
     <div class="table_content">
         <table>
             <tr>
                 <th>
                     <input type="checkbox" name="check_all" id="check_all" class="checkall">
                 </th>
-                <th>Họ và tên</th>
+                <th>Thời gian tạo</th>
                 <th>Email</th>
                 <th>Thời gian gửi</th>
                 <th>Tên file</th>
                 <th>Danh mục</th>
-                <th>Loại account</th>
+                <th> <select id="account" 
+                    style="
+                    font-size:17px;
+                    font-weight: 600; 
+                    border: none;
+                    outline: none;
+                    border-radius: 4px;
+                    background: #E6ECF4;" >
+                        <option>Loại account</option>
+                            {% for account in accountList %}
+                            <option value="{{account}}"
+                            {% if account == value %}
+                                selected
+                            {% endif %}>
+                                {{account}}
+                            </option>
+                        {% endfor %}
                 <th>Trạng thái</th>
                 <th>Xem file</th>
             </tr>
@@ -37,16 +70,20 @@
                 <td>
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
-                <td>..............</td>
+                <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
                 <td>{% for email in pdf.emailExtracted.all %}
-                    {{email}}<br>
+                    {{email}}<hr>
                     {% endfor %}
                 </td>
-                <td>{{pdf.sendingTime}}</td>
+                <td>{{pdf.sendingTime|date:"d/m/Y"}} {{pdf.sendingTime|time:"H:i"}}</td>
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
+                <td value="{{pdf.account}}">{{pdf.account}}</td>
+                {% if pdf.sended %}
                 <td>{{pdf.sended|signedValue}}</td>
+                {% else%}
+                <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.sended|signedValue}}</td>
+                {% endif %}
                 <!-- <td>
                     <select name="" id="" class="select-status">
                         <option value=""></option>
@@ -216,6 +253,7 @@
         </div>
     </form>
 </div>
+
 <script>
     function view_pdf_modal(id) {
         //alert(id)
@@ -255,5 +293,48 @@
         }) //end ajax
     }
    
-</script>
+</script> 
+<script>
+    $(document).ready(function() {
+        $("#account").change(function() {
+            var account = $("#account option:selected").val();
+            var key_word = $("#key_word").val();
+            console.log(account);
+            var url = "{% url 'KCTool:signedDoc' %}?";
+            if (account !== "Loại account") {
+                url += "&account=" + account;
+            }
+            if (key_word !== "") {
+                url += "&key_word=" + key_word;
+            }
+    
+            console.log(url);
+            
+            
+            window.location.replace(url);
+            // form.submit();
+        });
+    
+        $("#search").click(function(){
+            var account = $("#account option:selected").val();
+            var key_word = $("#key_word").val();
+            // console.log(value);
+            var url = "{% url 'KCTool:signedDoc' %}?";
+            if (account !== "Loại account") {
+                url += "&account=" + account;
+            }
+            if (key_word !== "") {
+                url += "&key_word=" + key_word;
+            }
+    
+            console.log(url);
+            
+            
+            window.location.replace(url);
+        })
+        
+    }); // end ready
+    </script>    
+
+
 {% endblock %}

@@ -6,11 +6,12 @@
 <section>
     <div class="top_content">
         <div class="title_content">
-            <p>Danh sách văn bản chờ ký</p>
+            <p>Danh sách văn bản chờ xác nhận</p>
             <span class="number_vb">{{numberUnsignepdfs}} văn bản</span>
         </div>
         
         <div id="btn-upload" class="btn_content">
+            {% if user.is_staff or user.is_admin    %}
             <div class="upload-btn-wrapper">
                 <button class="btn btn-up">
                     <a h class="dropbtn">
@@ -23,7 +24,7 @@
                 <input type="file" name="document" onchange='this.form.submit();' /> 
                  </form>
             </div>
-
+            {% endif %}
         </div>
     </div>
     <div class="table_content">
@@ -50,8 +51,14 @@
                 <td>{{............}}</td>
                 {% endif %}
                 <td>{{file.uploadTime}}</td>
-                <td class="td-action"><button class="btn-clear"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                {% if user.is_admin  %}
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
+                {% elif user.is_staff %}
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "warnning_delete(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "warnning_delete(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
+                {% endif%}
+                
             </tr>
             {% endfor %}
            
@@ -374,5 +381,12 @@
         })
     }
   
+</script>
+<script>
+       
+    function  warnning_delete(id){
+    alert("You not allowed!!")
+}
+
 </script>
 {% endblock %}

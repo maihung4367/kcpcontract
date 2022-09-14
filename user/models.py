@@ -13,7 +13,8 @@ class Profile(models.Model):
     email = models.EmailField(null=True, blank = True)
     address = models.CharField(max_length=255, null=True, blank = True)
     company_name = models.CharField(max_length=255, null=True, blank = True)
-
+    def __str__(self):        
+        return self.full_name
 
 class User(AbstractBaseUser, PermissionsMixin):
     user_name = models.CharField("user name",max_length=254,unique=True)
@@ -21,6 +22,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField("staff status", default=False)
     is_active = models.BooleanField(
         "active", default=True)
+    is_signer = models.BooleanField(
+        "signer", default=False)
     is_admin = models.BooleanField(
         "admin PVS", default=False)
 

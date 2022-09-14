@@ -424,11 +424,11 @@ section .table_content td .btn-edit{
   background: none;
 }
 
-section .table_content td .status-success{
+section .table_content .status-success{
   color: #003A8C;
   font-style: italic;
 }
-section .table_content td .status-fail{
+section .table_content .status-fail{
   color: #d02d2c;
   font-style: italic;
 }
@@ -438,6 +438,17 @@ section .table_content td .select-status{
   outline: none;
   border-radius: 4px;
   padding: 5px;
+}
+
+#statusSelector{
+  font-size: 17px;
+  font-weight: 600;
+  /* border: 1px solid #b4b4b4; */
+  border: none;
+  outline: none;
+  /* padding: 5px; */
+  border-radius: 4px;
+  background: #E6ECF4;
 }
 
 section .pagination {

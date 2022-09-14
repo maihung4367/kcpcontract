@@ -5,14 +5,14 @@
 <section>
     <div class="top_content">
         <div class="title_content">
-            <p>Danh sách văn bản chờ ký</p>
-            <span class="number_vb">{{numberUnsignepdfs}} văn bản</span>
+            <p>Danh sách văn bản chờ xác nhận</p>
+            <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
             <button class="all-sign">
                 <a href="#"  onclick="sign_all_pdf()">
                     <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                Ký tất cả
+                Xác nhận 
                 </a>                
             </button>
             
@@ -29,28 +29,53 @@
                 <th>Thời gian tạo</th>
                 <th>Tên file</th>
                 <th>Danh mục</th>
-                <th>Loại account</th>
+                <!-- <th>Loại account</th> -->
+                <th> <select id="account_type" 
+                style="
+                font-size:17px;
+                font-weight: 600; 
+                border: none;
+                outline: none;
+                border-radius: 4px;
+                background: #E6ECF4;" >
+                    <option>Loại account</option>
+                        {% for account in accountList %}
+                        <option value="{{account.pk}}"
+                        {% if account.pk == account_id %}
+                            selected
+                        {% endif %}>
+                            {{account}}
+                        </option>
+                    {% endfor %}
+                </select></th>
+                <th>Xóa</th>
                 <th>Xem file</th>
             </tr>
-            {% for pdf in unsignedpdfs %}
+            {% for pdf in unconfirmpdfs %}
             <tr>
                 <td>
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
-                <td>............</td>
-                <!-- <a class="btn-edit" onclick="()"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a> -->
-                <td>
+                <td>{{pdf.creator}}</td>
+                
+                <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
                     {% for email in pdf.emailExtracted.all %}
-                        {{email}}<br>
+                        {{email}}<hr>
                         {% endfor %}
                     </td>
                 
                 </td>
-                <td>{{pdf.createdTime}}</td>
+                <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
-                
+                <td>{{pdf.account}}</td>
+                {% if user.is_admin  %}
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                {% elif user.is_staff %}
+
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                {% endif %}
+
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             {% endfor %}
@@ -218,7 +243,7 @@
         $("#change_link_pdf").html(`<embed src="${id}" width="800" height="500" type="application/pdf">`)
     }
 
-    
+  
 </script>
 <script>
     function sign_all_pdf(){
@@ -254,4 +279,56 @@
     }
    
 </script>
+<script>
+    function delete_file(id){
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        var postData = new FormData();
+        postData.append("pdfFileID", id);
+        if (postData){
+            var result = confirm("Want to delete?");
+            if (result) {
+            //Logic to delete the item
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:delete_file' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                
+                success: function(resp) {
+                    alert(resp.msg)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    //window.location.replace(``);
+                }
+            }) //end ajax
+    }
+    
+        }
+        
+    }
+    </script>
+    <script>
+       
+        function  warnning_delete(id){
+        alert("You not allowed!!")
+    }
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#account_type").change(function() {
+                var account_id = $("#solved_by option:selected").val();
+               
+                console.log(account_id);
+               
+            });     
+        }); // end ready
+    </script>    
 {% endblock %}

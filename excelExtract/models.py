@@ -15,6 +15,7 @@ class document(models.Model):
         return "{}".format(str(self.document))
 class excelAccount(models.Model):
     account=models.CharField(max_length=30,unique=True)  
+    responsibleBy=models.ManyToManyField(Profile, null=True, blank=True)
     def __str__(self):
         return "{}".format(str(self.account))      
 class accountEmail(models.Model):
@@ -40,11 +41,15 @@ class excel(models.Model):
 class pdfFile(models.Model):
     masterFile=models.ForeignKey(document, on_delete=models.CASCADE)
     slaveFile=models.FileField(upload_to="documents/slavefiles")
+    pos=models.CharField(max_length=30,blank=True,null=True)
+    page_number=models.IntegerField(blank=True,null=True)
     account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
+    creator=models.ForeignKey(Profile,on_delete=models.SET_NULL,blank=True,null=True)
     loaict=models.TextField(blank=True,null=True)
     createdTime=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     sendingTime=models.DateTimeField(blank=True,null=True)
     emailExtracted=models.ManyToManyField(accountEmail,blank=True)
+    confirmed=models.BooleanField(default=False) 
     signed=models.BooleanField(default=False)   
     sended=models.BooleanField(default=False) 
     def __str__(self):
