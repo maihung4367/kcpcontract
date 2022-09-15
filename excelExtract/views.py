@@ -229,11 +229,11 @@ def send_pdf(request):
 							linkfile=settings.URL+"/"+str(pdffile)
 							
 							data_send ={
-								"pdf_url":linkfile,
-								"sign_pos": "{}x{}".format(detect_position(pdffile)[0],detect_position(pdffile)[1]),
+								"pdf_url":"https://taxcode.pvssolution.com/media/invoice/t008_gftth_longdt36-CDT-AX_21E6429697_VA0n9JZ.pdf",
+								"sign_pos": "{}x{}".format(detect_position(linkfile)[0],detect_position(linkfile)[1]),
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
-								"page_number":detect_position(pdffile)[2]
+								"page_number":detect_position(linkfile)[2]
 							}
 							
 							headers2 = { 'Content-Type':'application/json', 
