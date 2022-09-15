@@ -139,10 +139,6 @@ def importDataExcel(path, user=None):
 
 # excelExtract.exportFiles(loaict,fileID,loaiAccount)
 def exportFiles(loaict,fileID,loaiAccount,user):
-	print("fileID :{}".format(fileID))
-	print("loaict :{}".format(loaict))
-	print("loaiAccount :{}".format(loaiAccount))
-	print(type(loaiAccount))
 	annouceExist=""
 	#XÁC ĐỊNH LOẠI CT  FILE
 	listloaict=[]
@@ -157,6 +153,10 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 	print(listloaict)
 	print(listAccount)
 	# print(listNoiDungCt)
+	print(type(loaiAccount),loaiAccount)
+	print(type(loaict),loaict)
+	print(type(loaiAccount.split(',')),loaiAccount.split(','))
+
 	if loaiAccount=="all" and loaict=="all": 
 		
 		for f in listAccount:
@@ -170,7 +170,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			for chuongTrinh in listloaict:
 				if excel.objects.filter(filename=file,account=f,loaiCt=chuongTrinh).exists():
 					emptyList=[]
-					continue
+					break
 				else:
 					emptyList.append("{}".format(str(chuongTrinh)))
 
@@ -178,7 +178,6 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
 			else:
-				print("111111111111111111111111111")
 				annouceExist=annouceExist+" {}_Success ".format(str(f))
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
@@ -414,7 +413,8 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 						pdffile.emailExtracted.add(email)
 				pdffile.save()
 	elif  loaiAccount=="all" and loaict!="all":
-		print("22222222222222222222222222222")
+
+	# 	print("22222222222222222222222222222")
 		listCt=loaict.split(',')
 		for f in listAccount:
 			emptyList=[]
@@ -426,7 +426,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			for chuongTrinh in listCt:
 				if excel.objects.filter(filename=file,account=f,loaiCt=chuongTrinh).exists():
 					emptyList=[]
-					continue
+					break
 				else:
 					emptyList.append("{}".format(str(chuongTrinh)))
 
@@ -645,7 +645,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			
 			pdf.set_y(pdf.get_y()+30)
 			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
-			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			
 			
 			pdf.set_y(pdf.get_y()+5)
 		
@@ -675,7 +675,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 	elif loaiAccount!="all" and loaict=="all":
 		print("#33333333333333333333333")
 		listAcc=loaiAccount.split(',')	
-		print(listAcc)
+	# 	print(listAcc)
 		for f in listAcc:
 			emptyList=[]
 			pdfAccount=excelAccount.objects.get(account=f)
@@ -686,9 +686,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			for chuongTrinh in listloaict:
 				if excel.objects.filter(filename=file,account=f,loaiCt=chuongTrinh).exists():
 					emptyList=[]
-					continue
+					break
 				else:
-					emptyList.append("{}".format(str(chuongTrinh)))
+					emptyList.append("{}{}".format(f,str(chuongTrinh)))
 
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
@@ -736,14 +736,14 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_fill_color(153,204,255)
 			pdf.cell(80,5,"Loại CT",0,0,"L",1)
 
-			pdf.cell(80,5,"{}".format(",".join(listloaict),0,1,"L",1))
+			pdf.cell(80,5,",".join(listloaict),0,1,"L",1)
 			pdf.set_fill_color(153,204,255)
 			pdf.set_fill_color(153,204,255)
 			pdf.cell(80,5,"Account","B",0,"L",1)
 			pdf.set_fill_color(153,204,255)
 			pdf.cell(80,5,"{}".format(f),"B",1,"L",1)
 			pdf.set_y(pdf.get_y()+5)
-			#table header
+	# 		#table header
 			headers=['Mechanics: get/discount',"Product","Post start date","Post end date"]
 			for i,header in enumerate(headers):
 				if i==0:
@@ -763,7 +763,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 					pdf.set_fill_color(153,204,255)
 					pdf.cell(60,5,"{}".format(headers[i]),"B",1,"L",1)
 
-			#table data
+	# 		#table data
 			for ct in listloaict:
 				listMecha=excel.objects.filter(filename=file,account=f,loaiCt=ct).values("mechanicsGetORDiscount").distinct()
 				for mecha in listMecha:
@@ -932,7 +932,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 						pdffile.emailExtracted.add(email)
 				pdffile.save()
 	elif loaiAccount!="all" and loaict!="all":
-		print("4")
+	# 	print("4")
 		listAcc=loaiAccount.split(',')
 		listCt=loaict.split(',')
 		
@@ -946,7 +946,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			for chuongTrinh in listCt:
 				if excel.objects.filter(filename=file,account=f,loaiCt=chuongTrinh).exists():
 					emptyList=[]
-					continue
+					break
 				else:
 					emptyList.append("{}".format(str(chuongTrinh)))
 
@@ -1003,7 +1003,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_fill_color(153,204,255)
 			pdf.cell(80,5,"{}".format(f),"B",1,"L",1)
 			pdf.set_y(pdf.get_y()+5)
-			#table header
+	# 		#table header
 			headers=['Mechanics: get/discount',"Product","Post start date","Post end date"]
 			for i,header in enumerate(headers):
 				if i==0:
