@@ -15,7 +15,7 @@ class document(models.Model):
         return "{}".format(str(self.document))
 class excelAccount(models.Model):
     account=models.CharField(max_length=30,unique=True)  
-    responsibleBy=models.ManyToManyField(Profile, null=True, blank=True)
+    responsibleBy=models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
     def __str__(self):
         return "{}".format(str(self.account))      
 class accountEmail(models.Model):

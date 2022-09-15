@@ -52,7 +52,9 @@ def waitConfirmDoc(request):
 		numberunconfirmpdfs=len(pdfFile.objects.filter(confirmed=False))
 		unconfirmpdfs=pdfFile.objects.filter(confirmed=False).order_by("-id")
 		accountList=excelAccount.objects.all()
-		return render(request,"KCtool/waitingsigndoc.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user})
+		profile=Profile.objects.get(user=user)
+		listaccount=excelAccount.objects.filter(responsibleBy=profile)
+		return render(request,"KCtool/waitingsigndoc.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount})
 	else :
 		return HttpResponse("not authen")
 def signedDoc(request):
@@ -187,29 +189,28 @@ def send_pdf(request):
 					listfile=[]
 					for i in list_id:
 						if account == str(pdfFile.objects.get(pk=int(i)).account):
-							pdf=pdfFile.objects.get(pk=int(i))
-							
+							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
-							name=str(pdffile)
-							
+							linkfile=settings.URL+"/"+str(pdffile)
 							
 							data_send ={
-								"pdf_url":r"https://taxcode.pvssolution.com/media/invoice/t008_gftth_longdt36-CDT-AX_21E6429697_VA0n9JZ.pdf",
+								"pdf_url":linkfile,
 								"sign_pos": pdf.pos,
-								"contact": "abc@xyz.com",
+								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
-								"page_number":0
+								"page_number":pdf.page_number
 							}
 							headers2 = { 'Content-Type':'application/json', 
 							'Authorization': 'Bearer ' + token }
 
 							print(data_send)
-							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)
+							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/58", data=json.dumps(data_send), headers=headers2)
 							binarytext=response_obj2.content
 							
 							with open("file.pdf","wb") as file:
 								file.write(binarytext)
 							with open ("file.pdf","rb") as file:
+								name="ThưThôngBáo_{}_{}".format(account,str(datetime.now().date()))
 								newpdf=pdf.slaveFile.save(name,File(file))
 								pdf.sended=True
 								pdf.sendingTime=datetime.now()
