@@ -392,7 +392,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			
 			
 		
-			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()/10))
+			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
@@ -650,7 +650,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			
 			
 		
-			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()/10))
+			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
@@ -909,7 +909,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			
 			
 		
-			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()/10))
+			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
@@ -1169,7 +1169,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			
 			
 		
-			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()/10))
+			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
