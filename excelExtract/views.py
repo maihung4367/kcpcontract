@@ -230,10 +230,10 @@ def send_pdf(request):
 							
 							data_send ={
 								"pdf_url":linkfile,
-								"sign_pos": "{}x{}".format(detect_position(linkfile)[0],detect_position(linkfile)[1]),
+								"sign_pos": pdf.pos,
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
-								"page_number":detect_position(linkfile)[2]
+								"page_number":pdf.page_number
 							}
 							
 							headers2 = { 'Content-Type':'application/json', 
