@@ -12,13 +12,13 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):
         model = User
-        fields = ('user_name','is_staff','is_active','is_admin')
+        fields = ('user_name','is_staff','is_active','is_admin','is_signer')
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('user_name','is_staff','is_active','is_admin','password',)
+        fields = ('user_name','is_staff','is_active','is_signer','is_admin','password',)
 
 class LoginForm(forms.Form):
 	username = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-user', 'placeholder':"Tên đăng nhập", 'style':'font-size: 16px'}))

@@ -9,14 +9,14 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     list_display = ["user_name", "is_staff",
-    "is_active", "pk", "last_login"]
+    "is_active",'is_signer', "pk", "last_login"]
     model = User
     ordering = ["user_name", "last_login"]
-    fieldsets = ((None, {'fields': ('user_name',)}), ('Password',{'fields': ('password',)}), ('dates',{'fields':('last_login',)}), ('Permissions', {'fields': ('is_admin','is_staff','is_active','is_superuser','user_permissions','groups')}),)
+    fieldsets = ((None, {'fields': ('user_name',)}), ('Password',{'fields': ('password',)}), ('dates',{'fields':('last_login',)}), ('Permissions', {'fields': ('is_admin','is_staff','is_active','is_superuser','is_signer','user_permissions','groups')}),)
 
     add_fieldsets = ((None,{
         'classes': ('wide',),
-        'fields': ('user_name', 'password1', 'password2', 'is_admin','is_staff','is_active','is_superuser','user_permissions','groups')}),
+        'fields': ('user_name', 'password1', 'password2', 'is_admin','is_staff','is_active','is_signer','is_superuser','user_permissions','groups')}),
     )
 
     search_fields = ('user_name',"pk","groups__name")
