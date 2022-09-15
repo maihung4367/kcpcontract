@@ -73,6 +73,35 @@
 
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
+            {% elif user.is_admin %}
+            <tr>
+                <td>
+                   
+                    <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
+                </td>
+                <td>{{pdf.creator}} </td>
+                
+                <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
+                    {% for email in pdf.emailExtracted.all %}
+                        {{email}}<hr>
+                        {% endfor %}
+                    </td>
+                
+                </td>
+                <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
+                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td>{{pdf.loaict}}</td>
+                <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
+                {% if user.is_admin  %}
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                {% elif user.is_staff %}
+
+                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                {% endif %}
+
+                <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+            </tr>
+            
             {% else %}
             <tr>
                 <td>

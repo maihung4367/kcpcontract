@@ -204,7 +204,7 @@ def send_pdf(request):
 							'Authorization': 'Bearer ' + token }
 
 							print(data_send)
-							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/58", data=json.dumps(data_send), headers=headers2)
+							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/ 84", data=json.dumps(data_send), headers=headers2)
 							binarytext=response_obj2.content
 							
 							with open("file.pdf","wb") as file:
