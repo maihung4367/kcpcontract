@@ -28,6 +28,7 @@
         </div>
     </div>
       
+
     <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?menu=menu_hnk_team_ticket" method="GET" id="form">
         <div class="form-group col-md-8">
             <input type="search" class="input_search" placeholder="Tìm kiếm"  id="key_word" name="key_word" value="{{ key_word }}">
@@ -54,12 +55,12 @@
                     border-radius: 4px;
                     background: #E6ECF4;" >
                         <option>Loại account</option>
-                            {% for account in accountList %}
-                            <option value="{{account}}"
-                            {% if account == value %}
+                            {% for accounT in accountList %}
+                            <option value="{{accounT}}"
+                            {% if account == "{{accounT}}" %}
                                 selected
                             {% endif %}>
-                                {{account}}
+                                {{accounT}}
                             </option>
                         {% endfor %}
                 <th>Trạng thái</th>
