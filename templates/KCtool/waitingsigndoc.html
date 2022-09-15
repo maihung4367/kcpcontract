@@ -9,7 +9,9 @@
             <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
+            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
             <button class="all-sign">
+                
                 <a href="#"  onclick="sign_all_pdf()">
                     <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
                 Xác nhận 
@@ -41,7 +43,7 @@
                         </option>
                     {% endfor %}
                 </select></th>
-                <th>Xóa</th>
+                
                 <th>Xem file</th>
             </tr>
             {% for pdf in unconfirmpdfs %}
@@ -64,13 +66,7 @@
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
                 <td>{{pdf.loaict}}</td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
-                {% if user.is_admin  %}
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% elif user.is_staff %}
-
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% endif %}
-
+             
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             {% elif user.is_admin %}
@@ -92,13 +88,6 @@
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
                 <td>{{pdf.loaict}}</td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
-                {% if user.is_admin  %}
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% elif user.is_staff %}
-
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% endif %}
-
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
             
@@ -121,12 +110,6 @@
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
                 <td>{{pdf.loaict}}</td>
                 <td>{{pdf.account}}</td>
-                {% if user.is_admin  %}
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% elif user.is_staff %}
-
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                {% endif %}
 
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
             </tr>
@@ -333,10 +316,14 @@
    
 </script>
 <script>
-    function delete_file(id){
-        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+    function delete_file(){
+        var arr_pk_pdf_file = [];
         var postData = new FormData();
-        postData.append("pdfFileID", id);
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });     
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
         if (postData){
             var result = confirm("Want to delete?");
             if (result) {
