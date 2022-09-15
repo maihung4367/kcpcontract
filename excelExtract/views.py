@@ -195,7 +195,7 @@ def sign_pdf(request):
 			pdf.save()
 		print(list_id_pdf_file)
 		numberunsignepdfs=len(pdfFile.objects.filter(signed=False,confirmed=True))
-		send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "longnld@pvs.com.vn")
+		send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "khang.huynhquoc@kcc.com")
 		return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
