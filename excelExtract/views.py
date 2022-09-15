@@ -18,7 +18,41 @@ import requests
 import json
 from django.core.files import File
 from django.db.models import Q
+import fitz
 # Create your views here.
+def detect_position(pdf_file_location):
+    pdf = fitz.open(pdf_file_location)
+    page_0 = pdf.load_page(0)
+    page_width, page_height = page_0.rect.width, page_0.rect.height
+
+    search_text = 'Trưởng bộ phận quản lý kênh hiện đại'
+
+    page_num = 0
+    marked_page_num = 0
+    y1 = 200
+    x0 = 200
+    for page in pdf:
+        page.clean_contents(sanitize=True)
+        page_num += 1
+        for text_instances in page.search_for(search_text):
+            x0, y0, x1, y1 = text_instances
+            if x0 > 300:
+                marked_page_num = page_num
+                break
+
+    if y1 > 800:
+        marked_page_num = marked_page_num + 1
+        left = x0
+        bottom = 10.5 * 3
+    else:
+        left = x0
+        bottom = y1 
+
+    # convert to milimeter  
+    left = left
+    bottom = (page_height - bottom) - 10.5*2 - 50  # 10.5 la chieu cao 1 dong dong, 50 trong 50x50
+
+    return left, bottom, marked_page_num
 @xframe_options_sameorigin
 def kcToolPage(request):
 	if request.user.is_authenticated:
@@ -196,10 +230,10 @@ def send_pdf(request):
 							
 							data_send ={
 								"pdf_url":linkfile,
-								"sign_pos": pdf.pos,
+								"sign_pos": "{}x{}".format(detect_position(pdffile)[0],detect_position(pdffile)[1]),
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
-								"page_number":pdf.page_number
+								"page_number":detect_position(pdffile)[2]
 							}
 							
 							headers2 = { 'Content-Type':'application/json', 
@@ -249,3 +283,5 @@ def deleteFile(request):
 		print(fileWillBeDel)
 		fileWillBeDel.delete()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+
+
