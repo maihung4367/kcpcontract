@@ -88,7 +88,11 @@ def waitConfirmDoc(request):
 		accountList=excelAccount.objects.all()
 		profile=Profile.objects.get(user=user)
 		listaccount=excelAccount.objects.filter(responsibleBy=profile)
-		return render(request,"KCtool/waitingsigndoc.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount})
+		if request.GET.get("account",None):
+			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
+			print(account.pk)
+			unconfirmpdfs = pdfFile.objects.filter(confirmed=False,account=account).order_by("-id")
+		return render(request,"KCtool/waitingsigndoc.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
 	else :
 		return HttpResponse("not authen")
 def signedDoc(request):

@@ -30,11 +30,11 @@
                 <th>Tên file</th>
                 <th>Danh mục</th>
                 <!-- <th>Loại account</th> -->
-                <th> <select id="account_type" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
+                <th> <select id="account" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
                     <option>Loại account</option>
                         {% for account in accountList %}
-                        <option value="{{account.pk}}"
-                        {% if account.pk == account_id %}
+                        <option value="{{account}}"
+                        {% if account == "{{account}}" %}
                             selected
                         {% endif %}>
                             {{account}}
@@ -384,4 +384,22 @@
             });     
         }); // end ready
     </script>    
+    <script>
+        $(document).ready(function() {
+            $("#account").change(function() {
+                var account = $("#account option:selected").val();
+                console.log(account);
+                var url = "{% url 'KCTool:waitConfirmDoc' %}?";
+                if (account !== "Loại account") {
+                    url += "&account=" + account;
+                }
+                
+                console.log(url);
+                
+                
+                window.location.replace(url);
+                // form.submit();
+            });          
+        }); // end ready
+        </script>    
 {% endblock %}
