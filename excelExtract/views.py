@@ -210,7 +210,7 @@ def send_pdf(request):
 							with open("file.pdf","wb") as file:
 								file.write(binarytext)
 							with open ("file.pdf","rb") as file:
-								name="ThưThôngBáo_{}_{}".format(account,str(datetime.now().date()))
+								name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
 								newpdf=pdf.slaveFile.save(name,File(file))
 								pdf.sended=True
 								pdf.sendingTime=datetime.now()
