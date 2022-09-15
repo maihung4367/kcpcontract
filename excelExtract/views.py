@@ -229,7 +229,7 @@ def send_pdf(request):
 							linkfile=settings.URL+"/"+str(pdffile)
 							
 							data_send ={
-								"pdf_url":"https://taxcode.pvssolution.com/media/invoice/t008_gftth_longdt36-CDT-AX_21E6429697_VA0n9JZ.pdf",
+								"pdf_url":linkfile,
 								"sign_pos": "{}x{}".format(detect_position(linkfile)[0],detect_position(linkfile)[1]),
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
