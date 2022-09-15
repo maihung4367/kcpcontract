@@ -174,6 +174,7 @@ def send_pdf(request):
    }
 	response_obj = requests.post(r"https://api-testing.pvs.com.vn/user-api/api/token/", data=json.dumps(account_data),headers=headers)
 	token=response_obj.json()['data']['access']
+	print(token)
 	if response_obj.status_code >= 200 and response_obj.status_code<300:
 		try:
 			with transaction.atomic():
@@ -200,28 +201,34 @@ def send_pdf(request):
 								"reason": "sign contract",
 								"page_number":pdf.page_number
 							}
+							
 							headers2 = { 'Content-Type':'application/json', 
 							'Authorization': 'Bearer ' + token }
 
 							print(data_send)
-							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/ 84", data=json.dumps(data_send), headers=headers2)
-							binarytext=response_obj2.content
+							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)
 							
-							with open("file.pdf","wb") as file:
-								file.write(binarytext)
-							with open ("file.pdf","rb") as file:
-								name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
-								newpdf=pdf.slaveFile.save(name,File(file))
-								pdf.sended=True
-								pdf.sendingTime=datetime.now()
-								pdf.save()
-								fileurl= settings.URL+"/"+str(pdf.slaveFile)
-						listfile.append(fileurl)
+							if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
+								binarytext=response_obj2.content
+								
+								with open("file.pdf","wb") as file:
+									file.write(binarytext)
+								with open ("file.pdf","rb") as file:
+									name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
+									newpdf=pdf.slaveFile.save(name,File(file))
+									pdf.sended=True
+									pdf.sendingTime=datetime.now()
+									pdf.save()
+									fileurl= settings.URL+"/"+str(pdf.slaveFile)
+								listfile.append(fileurl)
+							for email in pdfFile.objects.get(pk=int(i)).emailExtracted.all():
+								print(listfile)
+								print(email)
+								send_email.send_noti_to_partner_sign_by_email(listfile,str(email))
+					# 			fileurl= settings.URL+"/"+str(pdf.slaveFile)
+					# 	listfile.append(fileurl)
 							
-					for email in pdfFile.objects.get(pk=int(i)).emailExtracted.all():
-						print(listfile)
-						print(email)
-						send_email.send_noti_to_partner_sign_by_email(listfile,str(email))
+					
 					# for email in 
 					# system_pdf_link=settings.URL+"/"+str(pdf)
 					# send_email.send_noti_to_partner_sign_by_email(system_pdf_link,"longnld@pvs.com.vn")
