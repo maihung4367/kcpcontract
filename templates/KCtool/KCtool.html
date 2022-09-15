@@ -56,7 +56,7 @@
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% elif user.is_staff %}
                 <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "warnning_delete(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
-                <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "warnning_delete(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
+                <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% endif%}
                 
             </tr>
