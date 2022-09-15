@@ -214,7 +214,8 @@ def send_pdf(request):
 								newpdf=pdf.slaveFile.save(name,File(file))
 								pdf.sended=True
 								pdf.sendingTime=datetime.now()
-								fileurl= settings.URL+"/"+str(newpdf)
+								pdf.save()
+								fileurl= settings.URL+"/"+str(pdf.slaveFile)
 						listfile.append(fileurl)
 							
 					for email in pdfFile.objects.get(pk=int(i)).emailExtracted.all():
