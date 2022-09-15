@@ -385,15 +385,12 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_y(pdf.get_y()+5)
 			pdf.cell(40,5,"Trân trọng cảm ơn Quý Khách Hàng",0,1)
 			pdf.cell(40,5,"Trưởng bộ phận quản lý kênh hiện đại",0,1)
-			
-			
-			pdf.set_y(pdf.get_y()+5)
-			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
-			
-			
-		
 			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
+			
+			pdf.set_y(pdf.get_y()+30)
+			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
@@ -643,15 +640,16 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_y(pdf.get_y()+5)
 			pdf.cell(40,5,"Trân trọng cảm ơn Quý Khách Hàng",0,1)
 			pdf.cell(40,5,"Trưởng bộ phận quản lý kênh hiện đại",0,1)
-			
-			
-			pdf.set_y(pdf.get_y()+5)
-			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
-			
-			
-		
 			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
+			
+			pdf.set_y(pdf.get_y()+30)
+			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			
+			pdf.set_y(pdf.get_y()+5)
+		
+			
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
@@ -902,14 +900,14 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_y(pdf.get_y()+5)
 			pdf.cell(40,5,"Trân trọng cảm ơn Quý Khách Hàng",0,1)
 			pdf.cell(40,5,"Trưởng bộ phận quản lý kênh hiện đại",0,1)
+			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
+			print(pos)
 			
-			
-			pdf.set_y(pdf.get_y()+5)
+			pdf.set_y(pdf.get_y()+30)
 			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
 			
 			
-		
-			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
+			
 			print(pos)
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
@@ -1162,15 +1160,15 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.set_y(pdf.get_y()+5)
 			pdf.cell(40,5,"Trân trọng cảm ơn Quý Khách Hàng",0,1)
 			pdf.cell(40,5,"Trưởng bộ phận quản lý kênh hiện đại",0,1)
-			
-			
-			pdf.set_y(pdf.get_y()+5)
-			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
-			
-			
-		
 			pos="{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			print(pos)
+			
+			pdf.set_y(pdf.get_y()+30)
+			pdf.cell(40,5,"Phạm Nguyên Thủ",0,1)
+			
+			pdf.set_y(pdf.get_y()+5)
+		
+			
 			maxpageIndex=pdf.page-1
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
