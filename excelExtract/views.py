@@ -235,10 +235,10 @@ def send_pdf(request):
 							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 							linkfile=settings.URL+"/"+str(pdffile)
-							tple=detect_position('t008_gftth_longdt36-CDT-AX_21E6429697_VA0n9JZ.pdf')
+							tple=detect_position(str(pdffile))
 							print(tple)
 							data_send ={
-								"pdf_url":'https://taxcode.pvssolution.com/media/invoice/t008_gftth_longdt36-CDT-AX_21E6429697_VA0n9JZ.pdf',
+								"pdf_url":linkfile,
 								"sign_pos": "{}x{}".format(round(tple[0]),round(tple[1])),
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
