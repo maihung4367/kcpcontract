@@ -223,6 +223,7 @@ def send_pdf(request):
 				
 				list_id=list_id_pdf_file.split(",")
 				accountCate=[]
+				
 				for i in list_id:
 					account = str(pdfFile.objects.get(pk=int(i)).account)
 					if account not in accountCate:
@@ -234,13 +235,13 @@ def send_pdf(request):
 							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 							linkfile=settings.URL+"/"+str(pdffile)
-							
+							tple=detect_position(str(pdffile))
 							data_send ={
 								"pdf_url":linkfile,
-								"sign_pos": pdf.pos,
+								"sign_pos": "{}x{}".format(round(tple[0]),round(tple[1])),
 								"contact": "thach.nguyenphamngoc@kcc.com",
 								"reason": "sign contract",
-								"page_number":pdf.page_number
+								"page_number":tple[2]
 							}
 							
 							headers2 = { 'Content-Type':'application/json', 
