@@ -12,37 +12,53 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-    <div class="app">
+    <div >
         <div class="container">              
                 <!-- Main -->
                 <div class="row main">
-                    <form action="" class="form-signin" method="POST">
+                    <form class="form-signin" action="{% url 'user:login' %}" method="POST">
                         <div style="text-align: center;">
                             <a ><img src="{% static 'image/logo_PVS_Hub_v4.png' %}" alt="Healthy-Care" width="350" height="300"></a>
                             
                           </div>
                         {% csrf_token %} 
+                        <div class="text-center mb-4">
+                            <!-- <h1 class="mb-3 font-weight-bolder">AI HUB</h1> -->
+                            <h6 class="alert-email" style="color: #d9534f;font-size:17px">
+                    
+                              {% if form.errors.as_data %}
+                                {{ form.non_field_errors.0}}
+                              {% endif %}
+                                
+                            </h6>
+                          </div>
                         <div class="form-label-group">
-                            {{form.username}}
+                            
+                                <input type="user" id="user" class="form-control"  required autofocus name="username">
+                                <label for="user">Username</label>
+                              
+                        
                         </div>
-                        <div class="form-label-group">
-                            {{form.password}}
-                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        <div class="form-label-group" >
+                            <input type="password" id="password" class="form-control" required name="password">
+                            <label for="password">Password</label>
                         </div>
-                        <div class="group-link mb-3 d-flex justify-content-between">
-       
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-lg btn-warning" type="submit">Login</button>
                         </div>
                       
-                        <input type="submit" class="input-submit" >
+                        <p class="mt-5 mb-3 text-center">&copy; PVS Software 2021</p>
                     </form>
                     
                 </div>
 
         </div>
     </div>
-
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" ></script>
     
 </body>
 </html>

@@ -105,11 +105,18 @@ def signedDoc(request):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
 			print(account.pk)			
 			pdfs = pdfs.filter(account=account).order_by("sended")
+		if request.GET.get("todate",None):
+			todate=request.GET.get("todate")
+			pdfs = pdfs.filter(createdTime__date__lte=todate).order_by("sended")|pdfs.filter(sendingTime__date__lte=todate).order_by("sended")
+		if request.GET.get("fromdate",None):	
+			fromdate=request.GET.get("fromdate")
+			pdfs = pdfs.filter(createdTime__date__gte=fromdate).order_by("sended")|pdfs.filter(sendingTime__date__gte=fromdate).order_by("sended")
+		
 			
 			
 			
 			
-		return render(request,"KCtool/signedDoc.html",{"numbersignepdfs":numbersignepdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None)})
+		return render(request,"KCtool/signedDoc.html",{"numbersignepdfs":numbersignepdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate")})
 
 	else :
 		return HttpResponse("not authen")
@@ -190,7 +197,7 @@ def sign_pdf(request):
 			pdf.save()
 		print(list_id_pdf_file)
 		numberunsignepdfs=len(pdfFile.objects.filter(signed=False,confirmed=True))
-		# send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "khang.huynhquoc@kcc.com")
+		send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "khang.huynhquoc@kcc.com")
 		return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -209,7 +216,7 @@ def send_pdf(request):
 	print(token)
 	if response_obj.status_code >= 200 and response_obj.status_code<300:
 		try:
-			with transaction.atomic():
+			
 				log=""
 				list_id_pdf_file = request.data["list_id_pdf_file"]
 				
