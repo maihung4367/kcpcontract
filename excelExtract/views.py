@@ -95,7 +95,7 @@ def waitConfirmDoc(request):
 def signedDoc(request):
 	if request.user.is_authenticated:
 		user=request.user
-		numbersignepdfs=len(pdfFile.objects.filter(signed=True))
+		numbersendedpdfs=len(pdfFile.objects.filter(sended=True))
 		pdfs=pdfFile.objects.filter(confirmed=True).order_by("sended")
 		accountList=excelAccount.objects.all()
 		if request.GET.get("key_word",""):
@@ -116,7 +116,7 @@ def signedDoc(request):
 			
 			
 			
-		return render(request,"KCtool/signedDoc.html",{"numbersignepdfs":numbersignepdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate")})
+		return render(request,"KCtool/signedDoc.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate")})
 
 	else :
 		return HttpResponse("not authen")
@@ -260,6 +260,7 @@ def send_pdf(request):
 									name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
 									newpdf=pdf.slaveFile.save(name,File(file))
 									pdf.sended=True
+									pdf.signed=True
 									pdf.sendingTime=datetime.now()
 									pdf.save()
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
