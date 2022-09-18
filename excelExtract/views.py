@@ -40,7 +40,7 @@ def detect_position(pdf_file_location):
 				marked_page_num = page_num
 				break
 
-	if y1 >  800:
+	if y1 >  600:
 		marked_page_num = marked_page_num + 1
 		left = x0
 		bottom = 10.5 * 3
