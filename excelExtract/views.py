@@ -22,25 +22,19 @@ import fitz
 # Create your views here.
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
+	
 	page_0 = pdf.load_page(0)
 	page_width, page_height = page_0.rect.width, page_0.rect.height
-
-	search_text = 'Trưởng bộ phận quản lý kênh hiện đại'
-
-	page_num = 0
-	marked_page_num = 0
 	y1 = 200
 	x0 = 200
-	for page in pdf:
-		page.clean_contents(sanitize=True)
-		page_num += 1
-		for text_instances in page.search_for(search_text):
+	search_text = 'Trưởng bộ phận quản lý kênh hiện đại'
+	for i in range(pdf.page_count):
+		text_instances=pdf.load_page(i).search_for(search_text)
+		if  text_instances != []:
+			marked_page_num = i
 			x0, y0, x1, y1 = text_instances
-			if x0 > 300:
-				marked_page_num = page_num
-				break
-
-	if y1 >  600:
+	
+	if y1 >  595:
 		marked_page_num = marked_page_num + 1
 		left = x0
 		bottom = 10.5 * 3
