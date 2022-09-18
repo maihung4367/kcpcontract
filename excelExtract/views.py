@@ -264,6 +264,7 @@ def send_pdf(request):
 								try:
 									log+=str(response_obj2.json()['message'])
 								except:
+									log+=str(response_obj2.json()['message'])
 									continue
 							if listfile != []:
 								for email in pdf.emailExtracted.all():
