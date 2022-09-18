@@ -261,7 +261,10 @@ def send_pdf(request):
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
 								listfile.append(fileurl)
 							if response_obj2.status_code  >= 300 and response_obj2.status_code <= 500:
-								log+=str(response_obj2.json()['message'])
+								try:
+									log+=str(response_obj2.json()['message'])
+								except:
+									continue
 							if listfile != []:
 								for email in pdf.emailExtracted.all():
 									print(listfile)
