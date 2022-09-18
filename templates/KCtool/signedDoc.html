@@ -29,10 +29,19 @@
     </div>
       
 
-    <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?menu=menu_hnk_team_ticket" method="GET" id="form">
+    <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form">
         <div class="form-group col-md-8">
+            <label for="key_word">File:</label>
             <input type="search" class="input_search" placeholder="Tìm kiếm"  id="key_word" name="key_word" value="{{ key_word }}">
-            <button type="button" class="btn btn-primary mb-3" id="search"> <i class="fa-solid fa-magnifying-glass"></i></button>
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+            <label for="fromdate">From date:</label>
+            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="fromdate" name="fromdate" value="{{ fromdate }}">     
+            <label for="todate">To date:</label>
+            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="todate" name="todate" value="{{ todate }}">
+
+
+            <button type="submit" class="btn btn-primary mb-3" id="search">Xác nhận</button>
     </form>
     
     <div class="table_content">
@@ -284,7 +293,7 @@
             },
             
             success: function(resp) {
-                alert("ok")
+                alert(resp.log)
                 window.location.replace(``);
             },
             error:function(xhr, status, error){            
@@ -300,7 +309,8 @@
         $("#account").change(function() {
             var account = $("#account option:selected").val();
             var key_word = $("#key_word").val();
-            console.log(account);
+            var fromdate = $("#fromdate").val();
+            var todate = $("#todate").val();
             var url = "{% url 'KCTool:signedDoc' %}?";
             if (account !== "Loại account") {
                 url += "&account=" + account;
@@ -308,10 +318,12 @@
             if (key_word !== "") {
                 url += "&key_word=" + key_word;
             }
-    
-            console.log(url);
-            
-            
+            if (fromdate !== "") {
+                url += "&key_word=" + fromdate;
+            }
+            if (todate !== "") {
+                url += "&key_word=" + todate;
+            }        
             window.location.replace(url);
             // form.submit();
         });
@@ -319,7 +331,9 @@
         $("#search").click(function(){
             var account = $("#account option:selected").val();
             var key_word = $("#key_word").val();
-            // console.log(value);
+            var fromdate = $("#fromdate").val();
+            var todate = $("#todate").val();
+    
             var url = "{% url 'KCTool:signedDoc' %}?";
             if (account !== "Loại account") {
                 url += "&account=" + account;
@@ -327,10 +341,13 @@
             if (key_word !== "") {
                 url += "&key_word=" + key_word;
             }
-    
-            console.log(url);
-            
-            
+            if (fromdate !== "") {
+                url += "&key_word=" + fromdate;
+            }
+            if (todate !== "") {
+                url += "&key_word=" + todate;
+            }
+            console.log(url);      
             window.location.replace(url);
         })
         
