@@ -50,7 +50,7 @@
                 {% else %}
                 <td>{{............}}</td>
                 {% endif %}
-                <td>{{file.uploadTime}}</td>
+                <td>{{file.uploadTime|date:"d/m/Y"}} ,{{file.uploadTime|time:"H :i"}}</td>
                 {% if user.is_admin  %}
                 <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
@@ -108,14 +108,7 @@
             </div>
         {% comment %} </form> {% endcomment %}
     </div>
-    <div class="pagination" id="pagination">
-        <a href="#">«</a>
-        <a href="#" class="numb-page">1</a>
-        <a class="numb-page" href="#">2</a>
-        <a href="#" class="numb-page">3</a>
-        <a href="#" class="numb-page">4</a>
-        <a href="#">»</a>
-      </div>
+   
  </section>
  <footer>
      <div class="copy-right">
