@@ -129,7 +129,7 @@
         {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
-                <img src="./image/UserList.png" alt="UserList">
+                <img src="{% static 'image/UserList.png' %}" alt="UserList">
                 <p>Thông tin tài khoản</p>          
             </div>
 
@@ -209,7 +209,7 @@
         {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
-                <img src="./image/vb-sign.png" alt="vb-sign">
+                <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
                 <p>Thêm chữ ký</p>          
             </div>
 
