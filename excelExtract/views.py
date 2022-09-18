@@ -25,7 +25,7 @@ def detect_position(pdf_file_location):
 	page_0 = pdf.load_page(0)
 	page_width, page_height = page_0.rect.width, page_0.rect.height
 
-	search_text = 'Mã số tra cứu'
+	search_text = 'Trưởng bộ phận quản lý kênh hiện đại'
 
 	page_num = 0
 	marked_page_num = 0
