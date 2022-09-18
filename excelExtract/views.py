@@ -99,22 +99,16 @@ def signedDoc(request):
 	if request.user.is_authenticated:
 		user=request.user
 		numbersignepdfs=len(pdfFile.objects.filter(signed=True))
-		
+		pdfs=pdfFile.objects.filter(confirmed=True).order_by("sended")
 		accountList=excelAccount.objects.all()
 		if request.GET.get("key_word",""):
 			key_word = request.GET.get("key_word")
-			pdfs=pdfFile.objects.filter(confirmed=True,slaveFile__icontains=key_word).order_by("sended")
-		else:
-			pdfs=pdfFile.objects.filter(confirmed=True).order_by("sended")
-		
+			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("sended")	
 		if request.GET.get("account",None):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
-			print(account.pk)
-			if request.GET.get("key_word",""):
-				key_word = request.GET.get("key_word")
-				pdfs = pdfFile.objects.filter(confirmed=True,account=account,slaveFile__icontains=key_word).order_by("sended")
-			else:
-				pdfs = pdfFile.objects.filter(confirmed=True,account=account).order_by("sended")
+			print(account.pk)			
+			pdfs = pdfs.filter(account=account).order_by("sended")
+			
 			
 			
 			
@@ -199,7 +193,7 @@ def sign_pdf(request):
 			pdf.save()
 		print(list_id_pdf_file)
 		numberunsignepdfs=len(pdfFile.objects.filter(signed=False,confirmed=True))
-		send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "khang.huynhquoc@kcc.com")
+		# send_email.send_noti_to_partner_sign_by_email(["{} văn bản cần kí".format(str(numberunsignepdfs))], "khang.huynhquoc@kcc.com")
 		return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -219,6 +213,7 @@ def send_pdf(request):
 	if response_obj.status_code >= 200 and response_obj.status_code<300:
 		try:
 			with transaction.atomic():
+				log=""
 				list_id_pdf_file = request.data["list_id_pdf_file"]
 				
 				list_id=list_id_pdf_file.split(",")
@@ -252,6 +247,7 @@ def send_pdf(request):
 							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)
 							
 							if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
+								log+="{}:success ".format(str(pdffile))
 								binarytext=response_obj2.content
 								
 								with open("file.pdf","wb") as file:
@@ -264,18 +260,22 @@ def send_pdf(request):
 									pdf.save()
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
 								listfile.append(fileurl)
-							for email in pdf.emailExtracted.all():
-								print(listfile)
-								print(email)
-								send_email.send_noti_to_partner_sign_by_email(listfile,str(email))
-					# 			fileurl= settings.URL+"/"+str(pdf.slaveFile)
-					# 	listfile.append(fileurl)
+							if response_obj2.status_code  >= 300 and response_obj2.status_code <= 500:
+								log+=response_obj2.content
+							if listfile != []:
+								for email in pdf.emailExtracted.all():
+									print(listfile)
+									print(email)
+									send_email.send_noti_to_partner_sign_by_email(listfile,str(email))
+							else:
+								log+=("listfile=[]")
 							
-					
+					# 			fileurl= settings.URL+"/"+str(pdf.slaveFile)
+					# 	listfile.append(fileurl)				
 					# for email in 
 					# system_pdf_link=settings.URL+"/"+str(pdf)
 					# send_email.send_noti_to_partner_sign_by_email(system_pdf_link,"longnld@pvs.com.vn")
-				return Response({"code":"00"}, status=status.HTTP_200_OK)
+				return Response({"log":log}, status=status.HTTP_200_OK)
 		except:
 			err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
 			print(err_mess)
