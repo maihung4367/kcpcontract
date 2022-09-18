@@ -207,6 +207,7 @@
 <!-- Modal Upload E-Sign -->
 <div id="eSign" class="modal">
     <form action="/" method="post">
+        {% csrf_token %}
         <div class="modal__content">
             <div class="modal__title">
                 <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">

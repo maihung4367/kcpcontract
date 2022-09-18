@@ -26,10 +26,11 @@
             {% endif %}
             
         </div>
+      
     </div>
       
 
-    <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form">
+    <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form" style="display:inline-block;margin-top: 25px;" >
         <div class="form-group col-md-8">
             <label for="key_word">File:</label>
             <input type="search" class="input_search" placeholder="Tìm kiếm"  id="key_word" name="key_word" value="{{ key_word }}">
@@ -43,7 +44,15 @@
 
             <button type="submit" class="btn btn-primary mb-3" id="search">Xác nhận</button>
     </form>
-    
+
+    <form class="form-inline" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form" style="float:right;margin-top: 25px;">
+        
+            <label for="fromdate2">From date:</label>
+            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="fromdate2" name="fromdate2" value="{{ fromdate2 }}">     
+            <label for="todate">To date:</label>
+            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="todate2" name="todate2" value="{{ todate2 }}">
+            <button class="all-sign" id="actlog" type="submit" id="actlog">Act log</button>    
+    </form>
     <div class="table_content">
         <table>
             <tr>
@@ -346,6 +355,25 @@
         
     }); // end ready
     </script>    
-
+<script>
+   $(document).ready(function() {  
+        $("#actlog").click(function(){        
+            var fromdate = $("#fromdate2").val();
+            var todate = $("#todate2").val();
+            var url = "{% url 'KCTool:signedDoc' %}?";
+            
+            if (fromdate !== "") {
+                url += "&key_word=" + fromdate;
+            }
+            if (todate !== "") {
+                url += "&key_word=" + todate;
+            }
+            console.log(url);      
+            window.location.replace(url);
+        })
+        
+    }); // end ready
+   
+</script> 
 
 {% endblock %}

@@ -1,3 +1,4 @@
+from audioop import reverse
 from urllib import response
 from django.shortcuts import render,redirect
 import sys
@@ -19,6 +20,10 @@ import json
 from django.core.files import File
 from django.db.models import Q
 import fitz
+from django.urls import reverse_lazy
+import openpyxl
+from openpyxl.styles import Alignment,NamedStyle
+from openpyxl.writer.excel import save_virtual_workbook
 # Create your views here.
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
@@ -111,12 +116,14 @@ def signedDoc(request):
 		if request.GET.get("fromdate",None):	
 			fromdate=request.GET.get("fromdate")
 			pdfs = pdfs.filter(createdTime__date__gte=fromdate).order_by("sended")|pdfs.filter(sendingTime__date__gte=fromdate).order_by("sended")
-		
+		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
+			fromdate2=request.GET.get("fromdate2")
+			todate2=request.GET.get("todate2")
+			# actlogs = pdfFile.objects.filter(createdTime__date__gte=fromdate2,createdTime__date__lte=todate2)|pdfFile.objects.filter(sendingTime__date__gte=fromdate2,createdTime__date__lte=todate2)
+			return export_hnk_ticket_excel(fromdate2,todate2)
 			
 			
-			
-			
-		return render(request,"KCtool/signedDoc.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate")})
+		return render(request,"KCtool/signedDoc.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
 
 	else :
 		return HttpResponse("not authen")
@@ -304,3 +311,53 @@ def deleteFile(request):
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
 
 
+def export_hnk_ticket_excel(from_date, to_date):
+	col_names = ["","file","creator","createtime","sendingtime"]
+	actlogs = pdfFile.objects.filter(createdTime__date__gte=from_date,createdTime__date__lte=to_date)|pdfFile.objects.filter(sendingTime__date__gte=from_date,createdTime__date__lte=to_date)
+
+	wb = openpyxl.Workbook()
+	wb.iso_dates = True
+	ws = wb.create_sheet(title="actlog")
+
+	# create title
+	for col in range(1, len(col_names)):
+		_ = ws.cell(column=col,row=1,value=col_names[col])
+	
+	alignment=Alignment(horizontal='general')
+	normal_format = NamedStyle(name="normal",alignment=alignment)
+	datetime_format = NamedStyle(name="datetime",number_format="DD/MMM/YYYY h:mm",alignment=alignment)
+	date_format = NamedStyle(name="date",number_format="DD/MMM/YYYY",alignment=alignment)
+	# create content
+	# now = pytz.utc.localize(datetime.utcnow())
+	# now = now.replace(tzinfo=None)
+	# print(now)
+	for row, ticket in enumerate(actlogs, start=2):
+		for col in range(1,5):		
+			if col_names[col] == "file" :
+				if ticket.slaveFile:
+					c = ws.cell(column=col,row=row,value=str(ticket.slaveFile).replace("documents/slavefiles/","") )
+				else:
+					c = ws.cell(column=col,row=row,value="")
+				c.style = datetime_format
+				
+			elif col_names[col] == "creator":
+				c = ws.cell(column=col,row=row,value=str(ticket.creator))
+				c.style = date_format
+			elif col_names[col] == "createtime":
+				if ticket.createdTime:
+					c = ws.cell(column=col,row=row,value=str(ticket.createdTime.date()))
+				else:
+					c = ws.cell(column=col,row=row,value="")
+				c.style = normal_format
+			elif col_names[col] == "sendingtime":
+				if ticket.sendingTime:
+					c = ws.cell(column=col,row=row,value=str(ticket.sendingTime.date()))
+					c.style = normal_format
+				else:
+					c = ws.cell(column=col,row=row,value="")
+	
+
+	response = HttpResponse(content=save_virtual_workbook(wb), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+	response['Content-Disposition'] = 'attachment;filename={}_{}.xlsx'.format(from_date,to_date)
+
+	return response
