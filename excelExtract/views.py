@@ -247,7 +247,7 @@ def send_pdf(request):
 							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)
 							
 							if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
-								log+="{}:success ".format(str(pdffile))
+								log+="{}:success ".format(str(pdffile).replace("documents/slavefiles/",""))
 								binarytext=response_obj2.content
 								
 								with open("file.pdf","wb") as file:
@@ -261,7 +261,7 @@ def send_pdf(request):
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
 								listfile.append(fileurl)
 							if response_obj2.status_code  >= 300 and response_obj2.status_code <= 500:
-								log+=response_obj2.content
+								log+=str(response_obj2.content)
 							if listfile != []:
 								for email in pdf.emailExtracted.all():
 									print(listfile)
