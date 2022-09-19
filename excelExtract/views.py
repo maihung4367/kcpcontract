@@ -301,14 +301,20 @@ def send_pdf(request):
 @api_view(["POST"])
 def deleteFile(request):
 	print(request.data)
-	list_id_pdf_file = request.data["list_id_pdf_file"]
-	list_id=list_id_pdf_file.split(",")
-	print(list_id)
-	for id in list_id:
-		fileWillBeDel=pdfFile.objects.get(pk=int(id))
-		print(fileWillBeDel)
-		fileWillBeDel.delete()
-	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+	if request.data["list_id_pdf_file"]:
+		list_id_pdf_file = request.data["list_id_pdf_file"]
+		list_id=list_id_pdf_file.split(",")
+		print(list_id)
+		for id in list_id:
+			fileWillBeDel=pdfFile.objects.get(pk=int(id))
+			print(fileWillBeDel)
+			fileWillBeDel.delete()
+		return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+	if request.data["excelfile"]:
+		pk=request.data["excelfile"][0]
+		excel=document.objects.get(pk=int(pk))
+		excel.delete()
+		return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
 
 
 def export_hnk_ticket_excel(from_date, to_date):

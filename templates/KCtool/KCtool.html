@@ -52,10 +52,10 @@
                 {% endif %}
                 <td>{{file.uploadTime|date:"d/m/Y"}} ,{{file.uploadTime|time:"H :i"}}</td>
                 {% if file|checkSlaveFile  %}
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                <td class="td-action"><button class="btn-clear" id="{{file.pk}}" onclick = "delete_file(this.id)" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% else %}
-                <td class="td-action"><button class="btn-clear" id="{{pdf.pk}}" onclick = "alert('Slavefiles already sended')" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
+                <td class="td-action"><button class="btn-clear" id="{{file.pk}}" onclick = "alert('Slavefiles already sended')" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear"></button></td>
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% endif%}
                 
@@ -382,4 +382,5 @@
 }
 
 </script>
+
 {% endblock %}
