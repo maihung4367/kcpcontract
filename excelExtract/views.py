@@ -280,6 +280,7 @@ def send_pdf(request):
 								pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 								linkfile=settings.URL+"/"+str(pdffile)
 								listfile.append(linkfile)
+								log+="{}:success ".format(str(pdffile).replace("documents/slavefiles/",""))
 							if listfile != []:
 								for email in pdf.emailExtracted.all():
 									print(listfile)
