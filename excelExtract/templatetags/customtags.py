@@ -1,5 +1,5 @@
 from django import template
-from excelExtract.models import document,excel
+from excelExtract.models import document,excel,pdfFile
 register =template.Library() 
 
 @register.filter(name="nameFileFilter")
@@ -29,4 +29,10 @@ def signedValue(value):
 	else:
 		signedValue="Chưa gửi"
 	return 	signedValue
+@register.filter(name="checkSlaveFile")
+def scheckSlaveFile(excelfile):
+	if pdfFile.objects.filter(masterFile=excelfile).exists():
+		return True
+	else:
+		return False
 
