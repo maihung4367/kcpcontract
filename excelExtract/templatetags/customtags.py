@@ -32,11 +32,11 @@ def signedValue(value):
 	return 	signedValue
 @register.filter(name="checkSlaveFile")
 def scheckSlaveFile(excelfile):
-	if pdfFile.objects.filter(masterFile=excelfile).exists():
-		print(pdfFile.objects.filter(masterFile=excelfile))
-		return True
-	else:
+	if pdfFile.objects.filter(masterFile=excelfile,sended=True).exists():
+		
 		return False
+	else:
+		return True
 
 @register.simple_tag()
 def get_info_profile(user):
