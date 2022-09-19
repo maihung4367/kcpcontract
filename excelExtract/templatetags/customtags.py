@@ -32,7 +32,7 @@ def signedValue(value):
 	return 	signedValue
 @register.filter(name="checkSlaveFile")
 def scheckSlaveFile(excelfile):
-	if pdfFile.objects.filter(masterFile=excelfile,sended=True).exists():
+	if pdfFile.objects.filter(masterFile=excelfile,confirmed=True).exists():
 		
 		return False
 	else:
