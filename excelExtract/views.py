@@ -309,12 +309,20 @@ def deleteFile(request):
 			fileWillBeDel=pdfFile.objects.get(pk=int(id))
 			print(fileWillBeDel)
 			fileWillBeDel.delete()
-		return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
-	if request.data["excelfile"]:
-		pk=request.data["excelfile"][0]
-		excel=document.objects.get(pk=int(pk))
-		excel.delete()
-		return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def deleteExcelFile(request):
+	print(request.data)
+	if request.data["list_id_excel_file"]:
+		list_id_pdf_file = request.data["list_id_excel_file"]
+		list_id=list_id_pdf_file.split(",")
+		print(list_id)
+		for id in list_id:
+			fileWillBeDel=document.objects.get(pk=int(id))
+			print(fileWillBeDel)
+			fileWillBeDel.delete()
+	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
 
 
 def export_hnk_ticket_excel(from_date, to_date):
