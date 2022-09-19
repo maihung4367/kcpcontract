@@ -11,5 +11,6 @@ urlpatterns = [
     path("sign_pdf", views.sign_pdf, name="sign_pdf"),
     path("send_pdf",views.send_pdf, name="send_pdf"),
     path("delete_file",views.deleteFile, name="delete_file"),
+    path('update-profile', views.update_profile, name="update_profile"),
 
 ]

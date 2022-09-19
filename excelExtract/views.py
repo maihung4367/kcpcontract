@@ -367,3 +367,17 @@ def export_hnk_ticket_excel(from_date, to_date):
 	response['Content-Disposition'] = 'attachment;filename={}_{}.xlsx'.format(from_date,to_date)
 
 	return response
+
+@api_view(["POST"])
+def update_profile(request):
+	user = request.user
+	profile = Profile.objects.get(user=user)
+	profile.full_name = request.data['full_name']
+	profile.phone_number = request.data['phone_number']
+	profile.email = request.data['email']
+	profile.company_name = request.data['company_name']
+	profile.position= request.data['position']
+	profile.address = request.data['address']
+	profile.save()
+	print(request.data)
+	return Response({"msg":"success"}, status=status.HTTP_200_OK)

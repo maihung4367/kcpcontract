@@ -116,7 +116,7 @@
         </div>
 </footer>
 <!-- Modal Info -->
- <div id="info" class="modal">
+ {% comment %} <div id="info" class="modal">
     <form action="/" method="post">
         {% csrf_token %}
         <div class="modal__content">
@@ -194,7 +194,7 @@
             <a href="#" class="modal__close">&times;</a>
         </div>
     </form>
-</div>
+</div> {% endcomment %}
 <!-- Modal Upload E-Sign -->
 <div id="eSign" class="modal">
     <form action="/" method="post">
