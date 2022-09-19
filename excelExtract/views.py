@@ -239,45 +239,47 @@ def send_pdf(request):
 					for i in list_id:
 						if account == str(pdfFile.objects.get(pk=int(i)).account):
 							pdf=pdfFile.objects.get(pk=int(i))	
-							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
-							linkfile=settings.URL+"/"+str(pdffile)
-							tple=detect_position(str(pdffile))
-							print(tple)
-							data_send ={
-								"pdf_url":linkfile,
-								"sign_pos": "{}x{}".format(round(tple[0]),round(tple[1])),
-								"contact": "thach.nguyenphamngoc@kcc.com",
-								"reason": "sign contract",
-								"page_number":tple[2]
-							}
-							
-							headers2 = { 'Content-Type':'application/json', 
-							'Authorization': 'Bearer ' + token }
-
-							print(data_send)
-							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)
-							
-							if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
-								log+="{}:success ".format(str(pdffile).replace("documents/slavefiles/",""))
-								binarytext=response_obj2.content
+							if pdf.sended == False:
+								pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
+								linkfile=settings.URL+"/"+str(pdffile)
+								tple=detect_position(str(pdffile))
+								print(tple)
+								data_send ={
+									"pdf_url":linkfile,
+									"sign_pos": "{}x{}".format(round(tple[0]),round(tple[1])),
+									"contact": "thach.nguyenphamngoc@kcc.com",
+									"reason": "sign contract",
+									"page_number":tple[2]
+								}							
+								headers2 = { 'Content-Type':'application/json', 
+								'Authorization': 'Bearer ' + token }
+								print(data_send)
+								response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)				
+								if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
+									log+="{}:success ".format(str(pdffile).replace("documents/slavefiles/",""))
+									binarytext=response_obj2.content
+									with open("file.pdf","wb") as file:
+										file.write(binarytext)
+									with open ("file.pdf","rb") as file:
+										name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
+										newpdf=pdf.slaveFile.save(name,File(file))
+										pdf.sended=True
+										pdf.signed=True
+										pdf.sendingTime=datetime.now()
+										pdf.save()
+										fileurl= settings.URL+"/"+str(pdf.slaveFile)
+									listfile.append(fileurl)
+								if response_obj2.status_code  >= 300 and response_obj2.status_code <= 500:
+									try:
+										log+=str(response_obj2.json()['message'])
+									except:
+										log+=str(response_obj2.json()['message'])
+										continue
 								
-								with open("file.pdf","wb") as file:
-									file.write(binarytext)
-								with open ("file.pdf","rb") as file:
-									name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
-									newpdf=pdf.slaveFile.save(name,File(file))
-									pdf.sended=True
-									pdf.signed=True
-									pdf.sendingTime=datetime.now()
-									pdf.save()
-									fileurl= settings.URL+"/"+str(pdf.slaveFile)
-								listfile.append(fileurl)
-							if response_obj2.status_code  >= 300 and response_obj2.status_code <= 500:
-								try:
-									log+=str(response_obj2.json()['message'])
-								except:
-									log+=str(response_obj2.json()['message'])
-									continue
+							else:
+								pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
+								linkfile=settings.URL+"/"+str(pdffile)
+								listfile.append(linkfile)
 							if listfile != []:
 								for email in pdf.emailExtracted.all():
 									print(listfile)
@@ -285,12 +287,6 @@ def send_pdf(request):
 									send_email.send_noti_to_partner_sign_by_email(listfile,str(email))
 							else:
 								log+=("listfile=[]")
-							
-					# 			fileurl= settings.URL+"/"+str(pdf.slaveFile)
-					# 	listfile.append(fileurl)				
-					# for email in 
-					# system_pdf_link=settings.URL+"/"+str(pdf)
-					# send_email.send_noti_to_partner_sign_by_email(system_pdf_link,"longnld@pvs.com.vn")
 				return Response({"log":log}, status=status.HTTP_200_OK)
 		except:
 			err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
