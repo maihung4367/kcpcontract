@@ -14,14 +14,14 @@
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
-<body style="background-color: #0b50b0">
+<body >
     <div class="app">
         <div class="container">              
                 <!-- Main -->
                 <div class="row main">
                     <form class="form-signin" action="{% url 'user:login' %}" method="POST">
                         <div style="text-align: center;">
-                            <a ><img src="{% static 'image/P-sign_logo_white.png' %}" alt="Healthy-Care" width="350" height="300"></a>
+                            <a ><img src="{% static 'image/P-sign logo blue.png' %}" alt="Healthy-Care" width="350" height="300"></a>
                             
                           </div>
                         {% csrf_token %} 
@@ -47,7 +47,14 @@
                             <label for="password">Password</label>
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-lg btn-warning" type="submit">Login</button>
+                            <button class="btn btn-lg btn-warning"style="
+                            
+                            font-weight: 500;
+                            align-items: center;
+                            border: 1px solid #003A8C;
+                            color: white;
+                            background:#0b0bf0;
+                            border-radius: 3px;"" type="submit">Login</button>
                         </div>
                       
                         <p class="mt-5 mb-3 text-center">&copy; PVS Software 2021</p>
