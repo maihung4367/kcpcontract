@@ -14,14 +14,14 @@
     <link href="{% static 'css/login.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
-<body>
-    <div >
+<body style="background-color: #003a8c">
+    <div class="app">
         <div class="container">              
                 <!-- Main -->
                 <div class="row main">
                     <form class="form-signin" action="{% url 'user:login' %}" method="POST">
                         <div style="text-align: center;">
-                            <a ><img src="{% static 'image/logo_PVS_Hub_v4.png' %}" alt="Healthy-Care" width="350" height="300"></a>
+                            <a ><img src="{% static 'image/P-sign_logo_white.png' %}" alt="Healthy-Care" width="350" height="300"></a>
                             
                           </div>
                         {% csrf_token %} 

@@ -31,27 +31,71 @@
       
 
     <form class="row mt-4 mb-3" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form" style="display:inline-block;margin-top: 25px;" >
-        <div class="form-group col-md-8">
-            <label for="key_word">File:</label>
-            <input type="search" class="input_search" placeholder="Tìm kiếm"  id="key_word" name="key_word" value="{{ key_word }}">
+        <div class="input_group">
+            <label for="key_word">File </label>
+            <input type="search" class="input_search" style="width: 80%;
+            outline: none;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;color: #003A8C;display: inline;" placeholder="Tìm kiếm file"  id="key_word" name="key_word" value="{{ key_word }}">
             <i class="fa-solid fa-magnifying-glass"></i>
         </div>
-            <label for="fromdate">From date:</label>
-            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="fromdate" name="fromdate" value="{{ fromdate }}">     
-            <label for="todate">To date:</label>
-            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="todate" name="todate" value="{{ todate }}">
+            
+            <input type="date" class="input_search" style="width: 30%;
+            outline: none;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            margin-left: 30px;  
+            color: #003A8C;"placeholder="Tìm kiếm"  id="fromdate" name="fromdate" value="{{ fromdate }}">     
+            <label for="todate">Đến</label>
+            <input type="date" class="input_search" style="width: 30%;
+            outline: none;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            color: #003A8C;" placeholder="Tìm kiếm"  id="todate" name="todate" value="{{ todate }}">
 
+            <button type="submit"  id="search " style="width: 15%;height: 30px;padding: 5px 10px;
+            
+            align-items: center;
+            border: 1px solid #003A8C;
+            color: #003A8C;
+            background: #fff;
+            border-radius: 3px;">Lọc</button>
+        
 
-            <button type="submit" class="btn btn-primary mb-3" id="search">Xác nhận</button>
     </form>
 
-    <form class="form-inline" action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form" style="float:right;margin-top: 25px;">
+    <form  action="{% url 'KCTool:signedDoc' %}?" method="GET" id="form" style="float:right;margin-top: 25px;">
         
-            <label for="fromdate2">From date:</label>
-            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="fromdate2" name="fromdate2" value="{{ fromdate2 }}">     
-            <label for="todate">To date:</label>
-            <input type="date" class="input_search" placeholder="Tìm kiếm"  id="todate2" name="todate2" value="{{ todate2 }}">
-            <button class="all-sign" id="actlog" type="submit" id="actlog">Act log</button>    
+            
+            <input type="date" class="input_search" style="width: 30%;
+            outline: none;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            margin-left: 30px;  
+            color: #003A8C;" placeholder="Tìm kiếm"  id="fromdate2" name="fromdate2" value="{{ fromdate2 }}">     
+            <label for="todate">Đến</label>
+            <input type="date" class="input_search" style="width: 30%;
+            outline: none;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px; color: #003A8C;" placeholder="Tìm kiếm"  id="todate2" name="todate2" value="{{ todate2 }}">
+            <button class="all-sign" style="width: 20%;height: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            align-items: center;
+            border: 1px solid #003A8C;
+            color: #003A8C;
+            background: #fff;
+            border-radius: 3px;"id="actlog" type="submit" id="actlog" >Xuất logging</button>    
     </form>
     <div class="table_content">
         <table>
