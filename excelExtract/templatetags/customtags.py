@@ -31,9 +31,9 @@ def signedValue(value):
 		signedValue="Chưa gửi"
 	return 	signedValue
 @register.filter(name="checkSlaveFile")
-def scheckSlaveFile(pk):
-	excel=document.objects.filter(pk=int(pk))
-	if pdfFile.objects.filter(masterFile=excel).exists():
+def scheckSlaveFile(excelfile):
+	if pdfFile.objects.filter(masterFile=excelfile).exists():
+		print(pdfFile.objects.filter(masterFile=excelfile))
 		return True
 	else:
 		return False
