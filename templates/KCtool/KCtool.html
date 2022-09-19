@@ -382,5 +382,43 @@
 }
 
 </script>
-
+<script>
+    function delete_file(id){
+        var arr_pk_excel_file = [];
+        var postData = new FormData();
+        
+        arr_pk_excel_file.push(id);
+        
+        postData.append("list_id_excel_file", arr_pk_excel_file);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        if (postData){
+            var result = confirm("Want to delete?");
+            if (result) {
+            //Logic to delete the item
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:delete_file_excel' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                
+                success: function(resp) {
+                    alert(resp.msg)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    //window.location.replace(``);
+                }
+            }) //end ajax
+    }
+    
+        }
+        
+    }
+    </script>
 {% endblock %}
