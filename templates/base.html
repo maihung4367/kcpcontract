@@ -80,6 +80,86 @@
             </div>
         </div>
      </header>
+     <!-- Modal Info -->
+ <div id="info" class="modal">
+    {% get_info_profile request.user as result %}
+    {% comment %} <form action="/" method="post"> {% endcomment %}
+        <div class="modal__content">
+            <div class="modal__title">
+                <img src="{% static 'image/UserList.png' %}" alt="UserList">
+                <p>Thông tin tài khoản</p>          
+            </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    <span class="avarta_name">D</span>
+                    <div class="info_name">
+                        <p>{{result.profile.full_name}}</p>
+                        <small>User: {{result.profile.user.user_name}}</small>
+                    </div>
+                </div>
+
+                <div class="input_group">
+                    <label for="full_name">
+                        Họ và tên
+                        <input type="text" name="full_name" placeholder="Họ và tên" value="{{result.profile.full_name}}" id="full_name">
+                    </label>
+                    <label for="phone">
+                        Số điện thoại
+                        <input type="tel" name="phone" placeholder="909 999 999" value="{{result.profile.phone_number}}" id="phone_number">
+                    </label>
+                    <label for="email">
+                        Email
+                        <input type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
+                    </label>
+                    {% comment %} <label for="passwd">
+                        Mật khẩu
+                        <div class="form-group has-feedback">
+                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
+                            <i class="showpass show-eye-open fas fa-eye"></i>
+                          </div>
+                    </label> {% endcomment %}
+                </div>   
+            </div>
+
+            <div class="modal__title-child">
+                <p>Thông tin công ty</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group">
+                    <label for="company_name">
+                        Tên công ty
+                        <input type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
+                    </label>
+    
+                    <label for="title_name">
+                        Chức danh
+                        <input type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__title-child">
+                <p>Thông tin địa chỉ</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group input_address">
+                    <label for="company_address">
+                        Địa chỉ
+                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save" id="save-info-profile">Lưu</button>
+            </div>
+            
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    {% comment %} </form> {% endcomment %}
+</div>
      {% block content %}
 
      {% endblock %}
@@ -101,6 +181,45 @@
             $('.checkitem').prop('checked', $_this.prop('checked'));
         });
     });
+ </script>
+ <script>
+    $('#save-info-profile').on('click', function(){
+        var full_name = $("#full_name").val()
+        var phone_number = $("#phone_number").val()
+        var email = $("#email").val()
+        var company_name = $("#company_name").val()
+        var position = $("#position").val()
+        var address = $("#address").val()
+        var postData = new FormData();
+        postData.append("full_name", full_name);
+        postData.append("phone_number", phone_number);
+        postData.append("email", email);
+        postData.append("company_name", company_name);
+        postData.append("position", position);
+        postData.append("address", address);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:update_profile' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                alert("success")
+                
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+
+    })
  </script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
  <script src="{% static 'js/main.js' %}"></script>

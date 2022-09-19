@@ -1,5 +1,6 @@
 from django import template
 from excelExtract.models import document,excel,pdfFile
+from user.models import Profile
 register =template.Library() 
 
 @register.filter(name="nameFileFilter")
@@ -36,3 +37,7 @@ def scheckSlaveFile(excelfile):
 	else:
 		return False
 
+@register.simple_tag()
+def get_info_profile(user):
+	profile = Profile.objects.get(user=user)
+	return {"profile":profile}

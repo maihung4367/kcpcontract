@@ -9,7 +9,7 @@
             <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
+            <button class="all-sign"><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
             <button class="all-sign">
                 
                 <a href="#"  onclick="sign_all_pdf()">
@@ -125,85 +125,7 @@
          <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
         </div>
 </footer>
-<!-- Modal Info -->
- <div id="info" class="modal">
-    <form action="/" method="post">
-        <div class="modal__content">
-            <div class="modal__title">
-                <img src="{% static 'image/UserList.png' %}" alt="UserList">
-                <p>Thông tin tài khoản</p>          
-            </div>
 
-            <div class="modal__detail">
-                <div class="user">
-                    <span class="avarta_name">D</span>
-                    <div class="info_name">
-                        <p>Nguyễn Thanh Điền</p>
-                        <small>User: 07/08/2022</small>
-                    </div>
-                </div>
-
-                <div class="input_group">
-                    <label for="full_name">
-                        Họ và tên
-                        <input type="text" name="full_name" placeholder="Họ và tên">
-                    </label>
-                    <label for="phone">
-                        Số điện thoại
-                        <input type="tel" id="numbPhone" name="phone" placeholder="909 999 999" >
-                    </label>
-                    <label for="email">
-                        Email
-                        <input type="email" name="email" placeholder="Nhập email" required>
-                    </label>
-                    <label for="passwd">
-                        Mật khẩu
-                        <div class="form-group has-feedback">
-                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
-                            <i class="showpass show-eye-open fas fa-eye"></i>
-                          </div>
-                    </label>
-                </div>   
-            </div>
-
-            <div class="modal__title-child">
-                <p>Thông tin công ty</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group">
-                    <label for="company_name">
-                        Tên công ty
-                        <input type="text" name="company_name" placeholder="Nhập tên công ty">
-                    </label>
-    
-                    <label for="title_name">
-                        Chức danh
-                        <input type="text" name="title_name" placeholder="Nhập chức danh">
-                    </label>
-                    
-                </div>   
-            </div>
-            <div class="modal__title-child">
-                <p>Thông tin địa chỉ</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group input_address">
-                    <label for="company_address">
-                        Địa chỉ
-                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ">
-                    </label>
-                    
-                </div>   
-            </div>
-            <div class="modal__footer">
-                <button class="btn_cancel">Huỷ</button>
-                <button class="btn_save">Lưu</button>
-            </div>
-            
-            <a href="#" class="modal__close">&times;</a>
-        </div>
-    </form>
-</div>
 <!-- Modal Upload E-Sign -->
 <div id="eSign" class="modal">
     <form action="/" method="post">
