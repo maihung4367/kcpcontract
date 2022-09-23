@@ -23,6 +23,12 @@ def accountFilter(value):
 		# if f.loaiCt not in listloaict:
 		# 	listloaict.append(f.loaiCt)
 	return 	listaccount
+@register.filter(name="confirmedValue")
+def confirmedValue(value):
+	confirmedValue=""
+	if value==True:
+		confirmedValue="Đã xác nhận"
+	return 	confirmedValue
 @register.filter(name="signedValue")
 def signedValue(value):
 	if value==True:

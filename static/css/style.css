@@ -1,85 +1,179 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 /* CSS reset */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-  font-family: 'Roboto', sans-serif;
-  background: #E6ECF4;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
-*{
+
+/* HTML5 display-role reset for older browsers */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+    font-family: 'Roboto', sans-serif;
+    background: #E6ECF4;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-li,a,button {
-   font-weight:500;
-   font-size:16px;
-   color:#575a5e;
-   text-decoration:none;
+li,
+a,
+button {
+    font-weight: 500;
+    font-size: 16px;
+    color: #575a5e;
+    text-decoration: none;
 }
+
+
 /* end */
 
 
 /* Header */
 
-header{
-   display:flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 12px 24px 12px 38px;
-   height: 66px;
-   background: #003A8C;
-   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px 12px 38px;
+    height: 66px;
+    background: #003A8C;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.logo{
+.logo {
     cursor: pointer;
     height: 50px;
 }
 
-.nav_left{
+.nav_left {
     display: flex;
     align-items: center;
 }
@@ -92,18 +186,18 @@ nav {
     list-style: none;
 }
 
-.nav_links li{
+.nav_links li {
     display: inline-block;
     margin-left: 20px;
 }
 
 .nav_links li:hover,
-.nav_links li.active{
+.nav_links li.active {
     border-bottom: 1px solid #fff;
 }
 
 .nav_links li a {
-  color: #fff;
+    color: #fff;
     transition: all 0.3s ease 0s;
     display: flex;
     align-items: center;
@@ -115,19 +209,19 @@ nav {
     object-fit: cover;
 }
 
-.nav_right{
+.nav_right {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.nav_right .header_search{
+.nav_right .header_search {
     position: relative;
     margin-right: 10px;
-    width:280px;
+    width: 280px;
 }
 
-.nav_right .input_search{ 
+.nav_right .input_search {
     padding: 8px 27px;
     width: 100%;
     border: none;
@@ -137,7 +231,8 @@ nav {
     font-size: 17px;
     font-weight: 600;
 }
-.nav_right .input_search::placeholder{
+
+.nav_right .input_search::placeholder {
     color: #b4b4b4;
     font-size: 13px;
     font-weight: 400;
@@ -152,7 +247,6 @@ nav {
 }
 
 .nav_right .header_info .btn_info {
-    
     border: none;
     outline: none;
     background: transparent;
@@ -174,13 +268,15 @@ nav {
     cursor: pointer;
 }
 
+
 /* Button Dropdown */
-  .dropdown {
+
+.dropdown {
     position: relative;
     display: inline-block;
-  }
-  
-  .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     top: 100%;
@@ -188,28 +284,41 @@ nav {
     background-color: #fff;
     min-width: 200px;
     overflow: auto;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     padding: 10px;
     z-index: 1000;
-  }
-  
-  .dropdown-content a {
+}
+
+.dropdown-content a {
     display: flex;
     align-items: center;
     font-size: 14px;
     color: #575a5e;
     padding: 12px 16px;
     text-decoration: none;
-  }
+}
 
-  .dropdown-content a img {
+.dropdown-content a img {
     margin-right: 5px;
-  }
-  
-  .dropdown a:hover {background-color: #E6ECF4; color: #003A8C;}
-  
-  .show {display: block;}
+}
+
+.dropdown-content a .icon-file {
+    margin-right: 5px;
+    font-size: 20px;
+    color: #575a5e;
+}
+
+.dropdown a:hover {
+    background-color: #E6ECF4;
+    color: #003A8C;
+}
+
+.show {
+    display: block;
+}
+
+
 /* End */
 
 .hr_submenu {
@@ -219,1343 +328,1608 @@ nav {
     margin: 0 auto;
 }
 
+
 /* Content */
-section{
-  background: #fff;
-  margin: 0 38px;
-  padding: 15px;
+
+section {
+    background: #fff;
+    margin: 0 38px;
+    padding: 15px;
 }
 
 section .top_content,
 section .top_content .title_content,
 section .btn_content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-section .top_content .title_content p{
-  font-size: 20px;
-  font-weight: 500;
-  padding-right: 20px;
-}
-section .top_content .title_content .number_vb{
-  font-size: 14px;
-  padding-top: 5px;
+section .top_content .title_content p {
+    font-size: 20px;
+    font-weight: 500;
+    padding-right: 20px;
 }
 
-section .btn_content .all-sign ,
+section .top_content .title_content .number_vb {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+section .btn_content .all-sign,
 section .btn_content .create_vb,
-section .btn_content .btn-up{
-  outline: none;
-  border: none;
+section .btn_content .btn-up {
+    outline: none;
+    border: none;
 }
-
 
 section .btn_content .all-sign a,
 section .btn_content .create_vb a {
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #003A8C;
-  color: #003A8C;
-  background: #fff;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.5s;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #003A8C;
+    color: #003A8C;
+    background: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-section .btn_content .btn-up a  {
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #003A8C;
-  color: #fff;
-  background: #003A8C;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.5s;
+section .btn_content .btn-up a {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #003A8C;
+    color: #fff;
+    background: #003A8C;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-section .btn_content .btn-up a:hover{
-  opacity: 0.8;
+section .btn_content .btn-up a:hover {
+    opacity: 0.8;
 }
 
 section .btn_content .all-sign a:hover,
-section .btn_content .create_vb a:hover{
-  background: #E6ECF4;
+section .btn_content .create_vb a:hover {
+    background: #E6ECF4;
 }
 
-section .btn_content .all-sign{
-  margin-right: 15px;
+section .btn_content .all-sign {
+    margin-right: 15px;
 }
 
 section .btn_content img {
-  padding-right: 5px;
+    padding-right: 5px;
 }
 
-section .table_content{
-  margin-top: 20px;
-}
-section .table_content table{
-  width: 100%;
-}
-section .table_content th{
-  background: #E6ECF4;
-  padding: 20px;
-  font-weight: 500;
-  text-align: left;
-  font-size: 17px;
-  /* border-radius: 3px 3px 0 0; */
-  
+
+/* Filter Content */
+
+section .filter_content {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-section .table_content td .icon-edit{
-  margin-bottom: -5px;
+section .filter_content .filter_left {
+    width: 50%;
+}
+
+section .filter_content .filter_right {
+    width: 50%;
+    text-align: right;
+}
+
+section .filter_content .input-search {
+    width: 322px;
+    display: flex;
+}
+
+section .filter_content .input-search input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px 0px 0px 4px;
+    outline: none;
+    border: 1px solid #b4b4b4;
+}
+
+section .filter_content .input-search button {
+    padding: 8px 15px;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    border-radius: 0px 4px 4px 0px;
+    cursor: pointer;
+}
+
+section .filter_content .input-search button:hover {
+    opacity: 0.8;
+}
+
+section .filter_content .input-search i {
+    color: #fff;
+}
+
+section .filter_content .mt-15 {
+    margin-top: 15px;
+}
+
+section .filter_content .mt-50 {
+    margin-top: 50px;
+}
+
+section .filter_content .filter_right .pr-15 {
+    padding-right: 15px;
+}
+
+section .filter_content .input-date input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #b4b4b4;
+    outline: none;
+}
+
+section .filter_content .input-date input:focus,
+section .filter_content .input-search input:focus {
+    outline: 1px solid #003A8C;
+    border: none;
+}
+
+section .filter_content .input-date .btn-submit {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 15px;
+    color: #003A8C;
+    border: 1px solid #003A8C;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+section .filter_content .input-date .btn-submit:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+
+/* end */
+
+section .table_content {
+    margin-top: 20px;
+}
+
+section .table_content table {
+    width: 100%;
+}
+
+section .table_content th {
+    background: #E6ECF4;
+    padding: 20px;
+    font-weight: 500;
+    text-align: left;
+    font-size: 17px;
+    /* border-radius: 3px 3px 0 0; */
+}
+
+section .table_content td .icon-edit {
+    margin-bottom: -5px;
 }
 
 
 /* btn-upload */
 
 #btn-upload .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 10px;
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
 }
 
 #btn-upload .btn {
-  border: none;
-  color: #003A8C;
-  background-color: white;
-  padding: 5px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  text-align: start;
+    border: none;
+    color: #003A8C;
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: start;
 }
 
 #btn-upload .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
 }
 
+
 /* end */
+
 
 /* btnupDropdown */
 
 #btnUpDropdown .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 10px;
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
 }
 
 #btnUpDropdown .btn {
-  border: 2px solid #003A8C;
-  color: #003A8C;
-  background-color: white;
-  padding: 5px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  text-align: start;
+    border: 2px solid #003A8C;
+    color: #003A8C;
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: start;
 }
 
 #btnUpDropdown .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
 }
+
 
 /* end */
 
-section .table_content td{
-  text-align: left;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-bottom: 1px solid #b4b4b4;
+section .table_content td {
+    text-align: left;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #b4b4b4;
 }
 
-section .table_content .td-filename span{
-  padding-left: 5px;
-  font-weight: bold;
+section .table_content .td-filename span {
+    padding-left: 5px;
+    font-weight: bold;
 }
-section .table_content .td-filename a img{
-  margin-bottom: -5px;
+
+section .table_content .td-filename a img {
+    margin-bottom: -5px;
 }
 
 section .table_content td img {
-  cursor: pointer;
-  object-fit: cover;
+    cursor: pointer;
+    object-fit: cover;
 }
 
-section .table_content td .btn-clear{
-  border: none;
-  outline: none;
-  background: none;
-  cursor: pointer;
+section .table_content td .btn-clear {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
 }
 
-section .table_content td .create-pdf{
-  height: 24px;
-  width: 20.8px;
-  object-fit: cover;
+section .table_content td .create-pdf {
+    height: 24px;
+    width: 20.8px;
+    object-fit: cover;
 }
 
-section .table_content td .btn-edit{
-  border: none;
-  outline: none;
-  background: none;
+section .table_content td .btn-edit {
+    border: none;
+    outline: none;
+    background: none;
 }
 
-section .table_content .status-success{
-  color: #003A8C;
-  font-style: italic;
-}
-section .table_content .status-fail{
-  color: #d02d2c;
-  font-style: italic;
+section .table_content .status-success {
+    color: #003A8C;
+    font-style: italic;
 }
 
-section .table_content td .select-status{
-  border: 1px solid #b4b4b4;
-  outline: none;
-  border-radius: 4px;
-  padding: 5px;
+section .table_content .status-fail {
+    color: #d02d2c;
+    font-style: italic;
 }
 
-#statusSelector{
-  font-size: 17px;
-  font-weight: 600;
-  /* border: 1px solid #b4b4b4; */
-  border: none;
-  outline: none;
-  /* padding: 5px; */
-  border-radius: 4px;
-  background: #E6ECF4;
+section .table_content td .select-status {
+    border: 1px solid #b4b4b4;
+    outline: none;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#statusSelector {
+    font-size: 17px;
+    font-weight: 600;
+    /* border: 1px solid #b4b4b4; */
+    border: none;
+    outline: none;
+    /* padding: 5px; */
+    border-radius: 4px;
+    background: #E6ECF4;
 }
 
 section .pagination {
-  padding-top: 20px;
+    padding-top: 20px;
 }
-section .pagination a{
-  color: #b4b4b4;
-  font-size: 16px;
-  transition: all 0.3s;
+
+section .pagination a {
+    color: #b4b4b4;
+    font-size: 16px;
+    transition: all 0.3s;
 }
+
 section .pagination a.active,
-section .pagination a:hover{
-  color: #575a5e;
-  font-size: 16px;
-  font-weight: 500;
+section .pagination a:hover {
+    color: #575a5e;
+    font-size: 16px;
+    font-weight: 500;
 }
+
 
 /* Footer */
+
 footer {
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
 }
 
+
 /* Modal info */
+
 #info {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(77, 77, 77, .7);
-  transition: all .4s;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
 }
 
 #info:target {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #info .modal__content {
-  border-radius: 5px;
-  position: relative;
-  width: 500px;
-  max-width: 100%;
-  background: #fff;
+    border-radius: 5px;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+    background: #fff;
 }
 
-#info .modal__content .modal__title{
-  display: flex;
-  align-items: center;
-  background: #E6ECF4;
-  padding: 10px 15px;
-  border-radius: 5px 5px 0 0;
-
+#info .modal__content .modal__title {
+    display: flex;
+    align-items: center;
+    background: #E6ECF4;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
 }
 
-#info .modal__content .modal__title img{
-  padding-right: 5px;
+#info .modal__content .modal__title img {
+    padding-right: 5px;
 }
 
-#info .modal__content .modal__title p{
-  font-weight: 500;
-  font-style: 20px;
+#info .modal__content .modal__title p {
+    font-weight: 500;
+    font-style: 20px;
 }
 
-#info .modal__content .modal__title-child{
-  background: #E6ECF4;
-  padding: 8px 15px;
+#info .modal__content .modal__title-child {
+    background: #E6ECF4;
+    padding: 8px 15px;
 }
 
 #info .modal__content .modal__title-child p {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-#info .modal__content .modal__detail{
-  padding: 0 15px;
+#info .modal__content .modal__detail {
+    padding: 0 15px;
 }
 
 #info .modal__content .modal__detail .user {
-  display: flex;
-  align-items: center;
-  padding: 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
 }
 
-#info .modal__content .modal__detail .user .avarta_name{
-  color: #003A8C;
-  background: #E6ECF4;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  border: 1px solid #b4b4b4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 30px;
-  font-weight: 500;
+#info .modal__content .modal__detail .user .avarta_name {
+    color: #003A8C;
+    background: #E6ECF4;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #b4b4b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 30px;
+    font-weight: 500;
 }
 
-#info .modal__content .modal__detail .user .info_name{
-  padding-left: 10px;
-}
-#info .modal__content .modal__detail .user .info_name p{
-  font-size: 15px;
-  font-weight: 500;
-}
-#info .modal__content .modal__detail .user .info_name small{
-  font-size: 13px;
+#info .modal__content .modal__detail .user .info_name {
+    padding-left: 10px;
 }
 
-#info .modal__content .modal__detail .input_group{
-  display: grid;
-  grid-template-columns: 50% 45%;
-  gap: 20px 15px;
-  padding: 15px;
-  width: 100%;
+#info .modal__content .modal__detail .user .info_name p {
+    font-size: 15px;
+    font-weight: 500;
 }
-#info .modal__content .modal__detail .input_address{
-  display: grid;
-  grid-template-columns: 100%;
+
+#info .modal__content .modal__detail .user .info_name small {
+    font-size: 13px;
+}
+
+#info .modal__content .modal__detail .input_group {
+    display: grid;
+    grid-template-columns: 50% 45%;
+    gap: 20px 15px;
+    padding: 15px;
+    width: 100%;
+}
+
+#info .modal__content .modal__detail .input_address {
+    display: grid;
+    grid-template-columns: 100%;
 }
 
 #info .modal__content .modal__detail .input_group label {
-  font-size: 14px;
-  position: relative;
-}
-#info .modal__content .modal__detail .input_group input {
-  width: 100%;
-  outline: none;
-  border: 1px solid #eee;
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin-top: 5px;
-  color: #003A8C;
-}
-#info .modal__content .modal__detail .input_group input:focus {
-  outline: 1px solid #003A8C;
-}
-#info .modal__content .modal__detail .input_group input::placeholder {
-  color: #b4b4b4;
-  font-size: 13px;
-}
-#info .modal__content .modal__detail .input_group .showpass {
-  position: absolute;
-  right: 10px;
-  top: 70%;
-  transform: translateY(-50%);
-  font-size: 13px;
-  color: #003A8C;
-  cursor: pointer;
+    font-size: 14px;
+    position: relative;
 }
 
-#password + .showpass {
-  cursor: pointer;
-  pointer-events: all;
+#info .modal__content .modal__detail .input_group input {
+    width: 100%;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    color: #003A8C;
+}
+
+#info .modal__content .modal__detail .input_group input:focus {
+    outline: 1px solid #003A8C;
+}
+
+#info .modal__content .modal__detail .input_group input::placeholder {
+    color: #b4b4b4;
+    font-size: 13px;
+}
+
+#info .modal__content .modal__detail .input_group .showpass {
+    position: absolute;
+    right: 10px;
+    top: 70%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #003A8C;
+    cursor: pointer;
+}
+
+#password+.showpass {
+    cursor: pointer;
+    pointer-events: all;
 }
 
 #numbPhone {
-  margin-top: 5px !important;
-  padding: 5px 50px !important;
+    margin-top: 5px !important;
+    padding: 5px 50px !important;
 }
 
 .iti__flag-container {
-  top: 5px !important;
+    top: 5px !important;
 }
 
 #info .modal__footer {
-  text-align: right;
-  border-top: 1px solid #eee;
-  padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+    padding: 15px;
 }
+
 #info .modal__footer a {
-  color: #585858;
+    color: #585858;
 }
+
 #info .modal__footer i {
-  color: #d02d2c;
+    color: #d02d2c;
 }
 
-#info .modal__footer .btn_cancel{
-  color: #333;
-  background: #eee;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  margin-right: 5px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
-}
-#info .modal__footer .btn_cancel:hover{
-  background: #003A8C;
-  color: #fff;
-}
-#info .modal__footer .btn_save{
-  color: #fff;
-  background: #003A8C;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
+#info .modal__footer .btn_cancel {
+    color: #333;
+    background: #eee;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-#info .modal__footer .btn_save:hover{
-  background: #E6ECF4;
-  color: #333;
+#info .modal__footer .btn_cancel:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+#info .modal__footer .btn_save {
+    color: #fff;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#info .modal__footer .btn_save:hover {
+    background: #E6ECF4;
+    color: #333;
 }
 
 #info .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #575a5e;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50px;
-  border: 1px solid #575a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #575a5e;
+    text-decoration: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid #575a5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
 /* Modal eSign */
+
 #eSign {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(77, 77, 77, .7);
-  transition: all .4s;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
 }
 
 #eSign:target {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #eSign .modal__content {
-  border-radius: 5px;
-  position: relative;
-  width: 500px;
-  max-width: 100%;
-  background: #fff;
+    border-radius: 5px;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+    background: #fff;
 }
 
-#eSign .modal__content .modal__title{
-  display: flex;
-  align-items: center;
-  background: #E6ECF4;
-  padding: 10px 15px;
-  border-radius: 5px 5px 0 0;
-
+#eSign .modal__content .modal__title {
+    display: flex;
+    align-items: center;
+    background: #E6ECF4;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
 }
 
-#eSign .modal__content .modal__title img{
-  padding-right: 5px;
+#eSign .modal__content .modal__title img {
+    padding-right: 5px;
 }
 
-#eSign .modal__content .modal__title p{
-  font-weight: 500;
-  font-style: 20px;
+#eSign .modal__content .modal__title .icon-file {
+    margin-right: 5px;
+    font-size: 20px;
+    color: #003A8C;
 }
 
-#eSign .modal__content .modal__title-child{
-  background: #E6ECF4;
-  padding: 8px 15px;
+#eSign .modal__content .modal__title p {
+    font-weight: 500;
+    font-style: 20px;
+}
+
+#eSign .modal__content .modal__title-child {
+    background: #E6ECF4;
+    padding: 8px 15px;
 }
 
 #eSign .modal__content .modal__title-child p {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-#eSign .modal__content .modal__detail{
-  padding: 0 15px;
+#eSign .modal__content .modal__detail {
+    padding: 0 15px;
 }
 
 #eSign .modal__content .modal__detail .user {
-  display: flex;
-  align-items: center;
-  padding: 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
 }
 
-#eSign .modal__content .modal__detail .user .avarta_name{
-  color: #003A8C;
-  background: #E6ECF4;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  border: 1px solid #b4b4b4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 30px;
-  font-weight: 500;
+#eSign .modal__content .modal__detail .user .avarta_name {
+    color: #003A8C;
+    background: #E6ECF4;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #b4b4b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 30px;
+    font-weight: 500;
 }
 
-#eSign .modal__content .modal__detail .user .info_name{
-  padding-left: 10px;
-}
-#eSign .modal__content .modal__detail .user .info_name p{
-  font-size: 15px;
-  font-weight: 500;
-}
-#eSign .modal__content .modal__detail .user .info_name small{
-  font-size: 13px;
+#eSign .modal__content .modal__detail .user .info_name {
+    padding-left: 10px;
 }
 
-#eSign .modal__content .modal__detail .input_group{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  width: 100%;
+#eSign .modal__content .modal__detail .user .info_name p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#eSign .modal__content .modal__detail .user .info_name small {
+    font-size: 13px;
+}
+
+#eSign .modal__content .modal__detail .input_group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 100%;
 }
 
 #eSign .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
 }
 
 #eSign .btn {
-  border: 2px solid #003A8C;
-  color: #003A8C;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+    border: 2px solid #003A8C;
+    color: #003A8C;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #eSign .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 
 #eSign .modal__footer {
-  text-align: right;
-  border-top: 1px solid #eee;
-  padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+    padding: 15px;
 }
+
 #eSign .modal__footer a {
-  color: #585858;
+    color: #585858;
 }
+
 #eSign .modal__footer i {
-  color: #d02d2c;
+    color: #d02d2c;
 }
 
-#eSign .modal__footer .btn_cancel{
-  color: #333;
-  background: #eee;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  margin-right: 5px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
-}
-#eSign .modal__footer .btn_cancel:hover{
-  background: #003A8C;
-  color: #fff;
-}
-#eSign .modal__footer .btn_save{
-  color: #fff;
-  background: #003A8C;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
+#eSign .modal__footer .btn_cancel {
+    color: #333;
+    background: #eee;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-#eSign .modal__footer .btn_save:hover{
-  background: #E6ECF4;
-  color: #333;
+#eSign .modal__footer .btn_cancel:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+#eSign .modal__footer .btn_save {
+    color: #fff;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#eSign .modal__footer .btn_save:hover {
+    background: #E6ECF4;
+    color: #333;
 }
 
 #eSign .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #575a5e;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50px;
-  border: 1px solid #575a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #575a5e;
+    text-decoration: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid #575a5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+#eSign .input-date input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #b4b4b4;
+    outline: none;
+}
+
+#eSign .input-date input:focus {
+    outline: 1px solid #003A8C;
+    border: none;
+}
+
+
 /* Modal view PDF */
+
 #viewPDF {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(77, 77, 77, .7);
-  transition: all .4s;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
 }
 
 #viewPDF:target {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #viewPDF .modal__content {
-  border-radius: 5px;
-  position: relative;
-  width: 815px;
-  max-width: 100%;
-  background: #fff;
+    border-radius: 5px;
+    position: relative;
+    width: 815px;
+    max-width: 100%;
+    background: #fff;
 }
 
-#viewPDF .modal__content .modal__title{
-  display: flex;
-  align-items: center;
-  background: #E6ECF4;
-  padding: 10px 15px;
-  border-radius: 5px 5px 0 0;
-
+#viewPDF .modal__content .modal__title {
+    display: flex;
+    align-items: center;
+    background: #E6ECF4;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
 }
 
-#viewPDF .modal__content .modal__title i{
-  padding-right: 5px;
+#viewPDF .modal__content .modal__title i {
+    padding-right: 5px;
 }
 
-#viewPDF .modal__content .modal__title p{
-  font-weight: 500;
-  font-style: 20px;
+#viewPDF .modal__content .modal__title p {
+    font-weight: 500;
+    font-style: 20px;
 }
 
-#viewPDF .modal__content .modal__title-child{
-  background: #E6ECF4;
-  padding: 8px 15px;
+#viewPDF .modal__content .modal__title-child {
+    background: #E6ECF4;
+    padding: 8px 15px;
 }
 
 #viewPDF .modal__content .modal__title-child p {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-#viewPDF .modal__content .modal__detail{
-  padding: 0 15px;
+#viewPDF .modal__content .modal__detail {
+    padding: 0 15px;
 }
 
 #viewPDF .modal__content .modal__detail .user {
-  display: flex;
-  align-items: center;
-  padding: 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
 }
 
-#viewPDF .modal__content .modal__detail .user .avarta_name{
-  color: #003A8C;
-  background: #E6ECF4;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  border: 1px solid #b4b4b4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 30px;
-  font-weight: 500;
+#viewPDF .modal__content .modal__detail .user .avarta_name {
+    color: #003A8C;
+    background: #E6ECF4;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #b4b4b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 30px;
+    font-weight: 500;
 }
 
-#viewPDF .modal__content .modal__detail .user .info_name{
-  padding-left: 10px;
-}
-#viewPDF .modal__content .modal__detail .user .info_name p{
-  font-size: 15px;
-  font-weight: 500;
-}
-#viewPDF .modal__content .modal__detail .user .info_name small{
-  font-size: 13px;
+#viewPDF .modal__content .modal__detail .user .info_name {
+    padding-left: 10px;
 }
 
-#viewPDF .modal__content .modal__detail .input_group{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  width: 100%;
+#viewPDF .modal__content .modal__detail .user .info_name p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#viewPDF .modal__content .modal__detail .user .info_name small {
+    font-size: 13px;
+}
+
+#viewPDF .modal__content .modal__detail .input_group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 100%;
 }
 
 #viewPDF .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
 }
 
 #viewPDF .btn {
-  border: 2px solid #003A8C;
-  color: #003A8C;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+    border: 2px solid #003A8C;
+    color: #003A8C;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #viewPDF .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 
 #viewPDF .modal__footer {
-  text-align: right;
-  border-top: 1px solid #eee;
-  padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+    padding: 15px;
 }
+
 #viewPDF .modal__footer a {
-  color: #585858;
+    color: #585858;
 }
+
 #viewPDF .modal__footer i {
-  color: #d02d2c;
+    color: #d02d2c;
 }
 
-#viewPDF .modal__footer .btn_cancel{
-  color: #333;
-  background: #eee;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  margin-right: 5px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
-}
-#viewPDF .modal__footer .btn_cancel:hover{
-  background: #003A8C;
-  color: #fff;
-}
-#viewPDF .modal__footer .btn_save{
-  color: #fff;
-  background: #003A8C;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
+#viewPDF .modal__footer .btn_cancel {
+    color: #333;
+    background: #eee;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-#viewPDF .modal__footer .btn_save:hover{
-  background: #E6ECF4;
-  color: #333;
+#viewPDF .modal__footer .btn_cancel:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+#viewPDF .modal__footer .btn_save {
+    color: #fff;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#viewPDF .modal__footer .btn_save:hover {
+    background: #E6ECF4;
+    color: #333;
 }
 
 #viewPDF .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #575a5e;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50px;
-  border: 1px solid #575a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #575a5e;
+    text-decoration: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid #575a5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
 /* Modal Add Doc */
+
 #addDoc {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(77, 77, 77, .7);
-  transition: all .4s;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
 }
 
 #addDoc:target {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #addDoc .modal__content {
-  border-radius: 5px;
-  position: relative;
-  width: 800px;
-  max-width: 100%;
-  background: #fff;
-  /* padding: 1em 2em; */
+    border-radius: 5px;
+    position: relative;
+    width: 800px;
+    max-width: 100%;
+    background: #fff;
+    /* padding: 1em 2em; */
 }
 
-#addDoc .modal__content .modal__title{
-  display: flex;
-  align-items: center;
-  background: #E6ECF4;
-  padding: 10px 15px;
-  border-radius: 5px 5px 0 0;
-
+#addDoc .modal__content .modal__title {
+    display: flex;
+    align-items: center;
+    background: #E6ECF4;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
 }
 
-#addDoc .modal__content .modal__title i{
-  padding-right: 5px;
+#addDoc .modal__content .modal__title i {
+    padding-right: 5px;
 }
 
-#addDoc .modal__content .modal__title p{
-  font-weight: 500;
-  font-style: 20px;
+#addDoc .modal__content .modal__title p {
+    font-weight: 500;
+    font-style: 20px;
 }
 
-#addDoc .modal__content .modal__title-child{
-  background: #E6ECF4;
-  padding: 8px 15px;
+#addDoc .modal__content .modal__title-child {
+    background: #E6ECF4;
+    padding: 8px 15px;
 }
 
 #addDoc .modal__content .modal__title-child p {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-#addDoc .modal__content .modal__detail{
-  padding: 0 15px;
-  display: flex;
-  justify-content: space-between;
-
+#addDoc .modal__content .modal__detail {
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
-#addDoc .modal__content .modal__detail .input_group{
-  padding: 15px;
-  width: 50%;
+#addDoc .modal__content .modal__detail .input_group {
+    padding: 15px;
+    width: 50%;
 }
-#addDoc .modal__content .modal__detail .input_group .input_item{
-  margin-bottom: 20px;
+
+#addDoc .modal__content .modal__detail .input_group .input_item {
+    margin-bottom: 20px;
 }
+
 #addDoc .modal__content .modal__detail .input_group label {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 #addDoc .modal__content .modal__detail .input_group input {
-  width: 100%;
-  outline: none;
-  border: 1px solid #eee;
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin-top: 5px;
-  color: #003A8C;
+    width: 100%;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    color: #003A8C;
 }
+
 #addDoc .modal__content .modal__detail .input_group input:focus {
-  outline: 1px solid #003A8C;
+    outline: 1px solid #003A8C;
 }
+
 #addDoc .modal__content .modal__detail .input_group input::placeholder {
-  color: #b4b4b4;
-  font-size: 13px;
+    color: #b4b4b4;
+    font-size: 13px;
 }
 
 #addDoc .upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 10px;
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
 }
 
 #addDoc .btn {
-  border: 2px solid #003A8C;
-  color: #003A8C;
-  background-color: white;
-  padding: 5px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
+    border: 2px solid #003A8C;
+    color: #003A8C;
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
 }
 
 #addDoc .upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
 }
 
 #addDoc .modal__footer {
-  text-align: right;
-  border-top: 1px solid #eee;
-  padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+    padding: 15px;
 }
+
 #addDoc .modal__footer a {
-  color: #585858;
+    color: #585858;
 }
+
 #addDoc .modal__footer i {
-  color: #d02d2c;
+    color: #d02d2c;
 }
 
-#addDoc .modal__footer .btn_cancel{
-  color: #333;
-  background: #eee;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  margin-right: 5px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
-}
-#addDoc .modal__footer .btn_cancel:hover{
-  background: #003A8C;
-  color: #fff;
-}
-#addDoc .modal__footer .btn_save{
-  color: #fff;
-  background: #003A8C;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
+#addDoc .modal__footer .btn_cancel {
+    color: #333;
+    background: #eee;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-#addDoc .modal__footer .btn_save:hover{
-  background: #E6ECF4;
-  color: #333;
+#addDoc .modal__footer .btn_cancel:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+#addDoc .modal__footer .btn_save {
+    color: #fff;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#addDoc .modal__footer .btn_save:hover {
+    background: #E6ECF4;
+    color: #333;
 }
 
 #addDoc .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #575a5e;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50px;
-  border: 1px solid #575a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #575a5e;
+    text-decoration: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid #575a5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
 /* Modal Create PDF */
+
 #createPDF {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(77, 77, 77, .7);
-  transition: all .4s;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
 }
 
 #createPDF:target {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 #createPDF .modal__content {
-  border-radius: 5px;
-  position: relative;
-  width: 500px;
-  max-width: 100%;
-  background: #fff;
+    border-radius: 5px;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+    background: #fff;
 }
 
-#createPDF .modal__content .modal__title{
-  display: flex;
-  align-items: center;
-  background: #E6ECF4;
-  padding: 10px 15px;
-  border-radius: 5px 5px 0 0;
-
+#createPDF .modal__content .modal__title {
+    display: flex;
+    align-items: center;
+    background: #E6ECF4;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
 }
 
-#createPDF .modal__content .modal__title img{
-  padding-right: 5px;
+#createPDF .modal__content .modal__title img {
+    padding-right: 5px;
 }
 
-#createPDF .modal__content .modal__title p{
-  font-weight: 500;
-  font-style: 20px;
+#createPDF .modal__content .modal__title p {
+    font-weight: 500;
+    font-style: 20px;
 }
 
-#createPDF .modal__content .modal__title-child{
-  background: #E6ECF4;
-  padding: 8px 15px;
+#createPDF .modal__content .modal__title-child {
+    background: #E6ECF4;
+    padding: 8px 15px;
 }
 
 #createPDF .modal__content .modal__title-child p {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-#createPDF .modal__content .modal__detail{
-  padding: 0 15px;
+#createPDF .modal__content .modal__detail {
+    padding: 0 15px;
 }
 
 #createPDF .modal__content .modal__detail .user {
-  display: flex;
-  align-items: center;
-  padding: 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
 }
 
-#createPDF .modal__content .modal__detail .user .avarta_name{
-  color: #003A8C;
-  background: #E6ECF4;
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  border: 1px solid #b4b4b4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 30px;
-  font-weight: 500;
+#createPDF .modal__content .modal__detail .user .avarta_name {
+    color: #003A8C;
+    background: #E6ECF4;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #b4b4b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 30px;
+    font-weight: 500;
 }
 
-#createPDF .modal__content .modal__detail .user .info_name{
-  padding-left: 10px;
-}
-#createPDF .modal__content .modal__detail .user .info_name p{
-  font-size: 15px;
-  font-weight: 500;
-}
-#createPDF .modal__content .modal__detail .user .info_name small{
-  font-size: 13px;
+#createPDF .modal__content .modal__detail .user .info_name {
+    padding-left: 10px;
 }
 
-#createPDF .modal__content .modal__detail .input_group{
-  display: block;
-  padding: 15px;
-  width: 100%;
+#createPDF .modal__content .modal__detail .user .info_name p {
+    font-size: 15px;
+    font-weight: 500;
 }
 
-#createPDF .modal__content .modal__detail .input_group .input_item{
-  width: 100%;
-  margin: 15px 0;
-}
-#createPDF .modal__content .modal__detail .input_group .input_item input{
-  width: 100%;
-  padding: 5px;
-}
-#createPDF .modal__content .modal__detail .input_group .input_item #multiEmail{
-  width: 100%;
-  padding: 7px;
-  border: 1px solid #b4b4b4;
-  border-width: 1px;
-  border-radius: 4px;
-  font-size: 18px;
+#createPDF .modal__content .modal__detail .user .info_name small {
+    font-size: 13px;
 }
 
-#createPDF .modal__content .modal__detail .input_group .input_item #multiEmail:focus{
-  outline: 1px solid #003A8C;
-  border: none;
+#createPDF .modal__content .modal__detail .input_group {
+    display: block;
+    padding: 15px;
+    width: 100%;
 }
 
-#createPDF .label{
-  font-size: 16px;
-  margin-bottom: 5px;
+#createPDF .modal__content .modal__detail .input_group .input_item {
+    width: 100%;
+    margin: 15px 0;
+}
+
+#createPDF .modal__content .modal__detail .input_group .input_item input {
+    width: 100%;
+    padding: 5px;
+}
+
+#createPDF .modal__content .modal__detail .input_group .input_item #multiEmail {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #b4b4b4;
+    border-width: 1px;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+#createPDF .modal__content .modal__detail .input_group .input_item #multiEmail:focus {
+    outline: 1px solid #003A8C;
+    border: none;
+}
+
+#createPDF .label {
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 #createPDF .modal__content .modal__detail .input_group .input_item
-
 /* Multi select */
 
 .select2-container {
-  min-width: 100%;
+    min-width: 100%;
 }
 
 .select2-results__option {
-  padding-right: 20px;
-  vertical-align: middle;
+    padding-right: 20px;
+    vertical-align: middle;
 }
+
 .select2-results__option:before {
-  content: "";
-  display: inline-block;
-  position: relative;
-  height: 20px;
-  width: 20px;
-  border: 2px solid #E6ECF4;
-  border-radius: 4px;
-  background-color: #fff;
-  margin-right: 20px;
-  vertical-align: middle;
+    content: "";
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border: 2px solid #E6ECF4;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
 }
+
 .select2-results__option[aria-selected=true]:before {
-  font-family:fontAwesome;
-  content: "\f00c";
-  color: #fff;
-  background-color: #003A8C;
-  border: 0;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  text-align: center;
-  /* padding-left: 3px; */
+    font-family: fontAwesome;
+    content: "\f00c";
+    color: #fff;
+    background-color: #003A8C;
+    border: 0;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    /* padding-left: 3px; */
 }
+
 .select2-container--default .select2-results__option[aria-selected=true] {
-	background-color: #fff;
+    background-color: #fff;
 }
+
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-	background-color: #E6ECF4;
-	color: #333;
-  font-weight: 500;
+    background-color: #E6ECF4;
+    color: #333;
+    font-weight: 500;
 }
+
 .select2-container--default .select2-selection--multiple {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-	border-radius: 4px;
+    border-radius: 4px;
 }
+
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-	border-color: #003A8C;
-	border-width: 1px;
+    border-color: #003A8C;
+    border-width: 1px;
 }
+
 .select2-container--open .select2-dropdown--below {
-	border-radius: 6px;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
 .select2-selection .select2-selection--multiple:after {
-	content: 'hhghgh';
+    content: 'hhghgh';
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: rgba(67, 145, 253, 0.3);
-  border: 1px solid #E6ECF4;
-  color: #333;
-  font-weight: 500;
-  border-radius: 4px;
-  cursor: default;
-  float: left;
-  margin-right: 5px;
-  margin-top: 5px;
-  padding: 3px 5px;
+    background-color: rgba(67, 145, 253, 0.3);
+    border: 1px solid #E6ECF4;
+    color: #333;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 3px 5px;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
-  position: absolute;
-  top: 0;
-  right: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .select2-container--default .select2-selection--multiple {
-  border-width: 1px;
-  border: 1px solid #b4b4b4;
+    border-width: 1px;
+    border: 1px solid #b4b4b4;
 }
+
 
 /* end */
 
-
 #createPDF .modal__footer {
-  text-align: right;
-  border-top: 1px solid #eee;
-  padding: 15px;
+    text-align: right;
+    border-top: 1px solid #eee;
+    padding: 15px;
 }
+
 #createPDF .modal__footer a {
-  color: #585858;
+    color: #585858;
 }
+
 #createPDF .modal__footer i {
-  color: #d02d2c;
+    color: #d02d2c;
 }
 
-#createPDF .modal__footer .btn_cancel{
-  color: #333;
-  background: #eee;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  margin-right: 5px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
-}
-#createPDF .modal__footer .btn_cancel:hover{
-  background: #003A8C;
-  color: #fff;
-}
-#createPDF .modal__footer .btn_save{
-  color: #fff;
-  background: #003A8C;
-  border: none;
-  outline: none;
-  padding: 5px 15px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.5s;
+#createPDF .modal__footer .btn_cancel {
+    color: #333;
+    background: #eee;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
 }
 
-#createPDF .modal__footer .btn_save:hover{
-  background: #E6ECF4;
-  color: #333;
+#createPDF .modal__footer .btn_cancel:hover {
+    background: #003A8C;
+    color: #fff;
+}
+
+#createPDF .modal__footer .btn_save {
+    color: #fff;
+    background: #003A8C;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#createPDF .modal__footer .btn_save:hover {
+    background: #E6ECF4;
+    color: #333;
 }
 
 #createPDF .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #575a5e;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50px;
-  border: 1px solid #575a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #575a5e;
+    text-decoration: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid #575a5e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+
+/* Modal aLarm */
+
+#aLarm {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#aLarm.open {
+    display: flex;
+}
+
+#aLarm .modal-container {
+    background: #fff;
+    width: 500px;
+    max-width: calc(100% - 32px);
+    /*cách vào 2 bên khi thu nhỏ */
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.9s;
+    /* gọi animation */
+    border-radius: 4px;
+}
+
+#aLarm .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: #003A8C;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+}
+
+#aLarm .modal-header i {
+    margin-right: 16px;
+}
+
+#aLarm .modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+}
+
+#aLarm .modal-close:hover {
+    opacity: 0.8;
+}
+
+#aLarm .modal-body {
+    padding: 16px;
+}
+
+#aLarm .modal-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#aLarm .modal-label i {
+    margin-right: 5px;
+}
+
+#aLarm .modal-label .icon-success {
+    color: #56ff56;
+    font-size: 18px;
+}
+
+#aLarm .modal-label .icon-fail {
+    color: #ff5656;
+    font-size: 18px;
+}
+
+#aLarm .modal-detail {
+    margin-left: 25px;
+    padding: 10px 0;
+}
+
+#aLarm .modal-detail .modal-desc {
+    background: #E6ECF4;
+    padding: 5px;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+#aLarm .btn-group {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#aLarm .btn--success {
+    background: #003A8C;
+    padding: 8px 15px;
+    border: none;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#aLarm .btn--success:hover {
+    background: #E6ECF4;
+    color: #333;
+}
+
+
+/* Tạo keyframe cho animation */
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-140px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* Responsive */
-/* Style the form - display items horizontally */
-.form-inline {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-}
-
-/* Add some margins for each label */
-.form-inline label {
-  margin: 5px 10px 5px 0;
-}
-
-/* Style the input fields */
-.form-inline input {
-  vertical-align: middle;
-  margin: 5px 10px 5px 0;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-
-/* Style the submit button */
-.form-inline button {
-  padding: 10px 20px;
-  background-color: dodgerblue;
-  border: 1px solid #ddd;
-  color: white;
-}
-
-.form-inline button:hover {
-  background-color: royalblue;
-}
-
-/* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-@media (max-width: 800px) {
-  .form-inline input {
-    margin: 10px 0;
-  }
-
-  .form-inline {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}

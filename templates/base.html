@@ -38,16 +38,22 @@
                     active
                     {% endif %}
                     ">
-                        <a href="{% url 'KCTool:waitConfirmDoc' %}" > <img class="icon-vb" src="{% static 'image/cho-ky.png'%}" alt="cho-ky"> Văn bản vừa tạo</a>
+                        <a href="{% url 'KCTool:newCreatedDocs' %}" > <img class="icon-vb" src="{% static 'image/cho-ky.png'%}" alt="cho-ky"> Văn bản vừa tạo</a>
                     </li>
                     <li class="nav_item
                     {% if active_id == 3 %}
                     active
                     {% endif %}
                     ">
-                        <a href="{% url 'KCTool:signedDoc' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
+                        <a href="{% url 'KCTool:confirmedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã xác nhận</a> 
                     </li>
-                    
+                    <li class="nav_item
+                    {% if active_id == 4 %}
+                    active
+                    {% endif %}
+                    ">
+                        <a href="{% url 'KCTool:signedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -67,8 +73,8 @@
                         Thông tin tài khoản
                     </a>
                     <a href="#eSign">
-                        <img src="{% static 'image/edit.png' %}" alt="edit-icon">
-                        Tạo chữ ký số
+                        <img src="{% static 'image/edit.png' %}" >
+                        Xuất log 
                     </a>
                     <hr class="hr_submenu">
                     <a href="{% url 'user:logout' %}">
@@ -80,6 +86,35 @@
             </div>
         </div>
      </header>
+     <!-- Modal logging -->
+    <div id="eSign" class="modal">
+        <form action="{% url 'KCTool:signedDocs' %}?" method="GET" id="form">
+            <div class="modal__content">
+                <div class="modal__title">
+                    <img src="{% static 'image/edit.png' %}" >
+                    <p> Xuất log</p>
+                </div>
+                <div class="modal__detail">
+                    <div class="input_group">
+                        <div class="input-date">
+                            Từ <input style="padding: 5px;
+                            border-radius: 4px;
+                            border: 1px solid #b4b4b4;
+                            outline: none;"type="date" id="fromdate2" name="fromdate2" value="{{ fromdate2 }}"> đến 
+                            <input style="padding: 5px;
+                            border-radius: 4px;
+                            border: 1px solid #b4b4b4;
+                            outline: none;" type="date" id="todate2" name="todate2" value="{{ todate2 }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button type="submit" class="btn_save btn-submit">Xuất</button>
+                </div>
+                <a href="#" class="modal__close">&times;</a>
+            </div>
+        </form>
+    </div>
      <!-- Modal Info -->
  <div id="info" class="modal">
     {% get_info_profile request.user as result %}
@@ -221,6 +256,27 @@
 
     })
  </script>
+ <script>
+    $(document).ready(function() {  
+         $("#actlog").click(function(){        
+             var fromdate = $("#fromdate2").val();
+             var todate = $("#todate2").val();
+             var url = "{% url 'KCTool:signedDocs' %}?";
+             
+             if (fromdate !== "") {
+                 url += "&key_word=" + fromdate;
+             }
+             if (todate !== "") {
+                 url += "&key_word=" + todate;
+             }
+             console.log(url);      
+             window.location.replace(url);
+         })
+         
+     }); // end ready
+    
+ </script> 
+ 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
  <script src="{% static 'js/main.js' %}"></script>
     </body>
