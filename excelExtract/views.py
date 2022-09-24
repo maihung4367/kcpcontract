@@ -344,6 +344,7 @@ def send_pdf(request):
 				if account == str(pdfFile.objects.get(pk=int(i)).account):
 					pdf=pdfFile.objects.get(pk=int(i))	
 					pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
+					pdf.sendingTime=datetime.now()
 					linkfile=settings.URL+"/"+str(pdffile)
 					chuongtrinh=str(pdfFile.objects.get(pk=int(i)).loaict).split(",")
 					for ct in chuongtrinh:
