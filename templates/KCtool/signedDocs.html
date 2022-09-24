@@ -78,11 +78,6 @@
                 <th>
                     <input type="checkbox" name="check_all" id="check_all" class="checkall">
                 </th>
-                <th>Thời gian tạo</th>
-                <th>Email</th>
-                <th>Thời gian gửi</th>
-                <th>Tên file</th>
-                <th>Danh mục</th>
                 <th> <select id="account" 
                     style="
                     font-size:17px;
@@ -99,8 +94,12 @@
                             {% endif %}>
                                 {{accounT}}
                             </option>
-                        {% endfor %}
+                        {% endfor %}</th>
+                <th>Danh mục</th>
+                <th>Tên file</th>
+                <th>Thời gian kí gửi</th> 
                 <th>Trạng thái</th>
+                <th>Email</th>
                 <th>Xem file</th>
             </tr>
             <tr>
@@ -108,20 +107,24 @@
                 <td>
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
-                <td>{{pdf.createdTime|date:"d/m/Y"}},{{pdf.createdTime|time:"H:i"}}</td>
-                <td>{% for email in pdf.emailExtracted.all %}
-                    {{email}}<hr>
-                    {% endfor %}
-                </td>
-                <td>{{pdf.sendingTime|date:"d/m/Y"}} {{pdf.sendingTime|time:"H:i"}}</td>
-                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>{{pdf.loaict}}</td>
                 <td value="{{pdf.account}}">{{pdf.account}}</td>
+                <td>{{pdf.loaict}}</td>
+                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td>{{pdf.sendingTime|date:"d/m/Y"}} {{pdf.sendingTime|time:"H:i"}}</td>
                 {% if pdf.sended %}
                 <td>{{pdf.sended|signedValue}}</td>
                 {% else%}
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.sended|signedValue}}</td>
                 {% endif %}
+                <td>{% for email in pdf.emailExtracted.all %}
+                    {{email}}<hr>
+                    {% endfor %}
+                </td>
+                
+                
+                
+                
+                
                 <!-- <td>
                     <select name="" id="" class="select-status">
                         <option value=""></option>
