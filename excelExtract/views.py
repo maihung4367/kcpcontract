@@ -82,6 +82,8 @@ def kcToolPage(request):
 					print(file)
 					if file:
 						try:
+							user=request.user
+							profile=Profile.objects.get(user=user)
 							excelExtract.importDataExcel(file, user=profile)
 						except:
 							excelExtract.importDataExcel(file)
