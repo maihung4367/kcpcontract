@@ -261,12 +261,18 @@ def sign_and_send_pdf(request):
 						accountCate.append(account)
 				for account in accountCate:
 					listfile=[]
+					listct=[]
 					for i in list_id:
 						if account == str(pdfFile.objects.get(pk=int(i)).account):
 							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 							linkfile=settings.URL+"/"+str(pdffile)
+							chuongtrinh=(pdfFile.objects.get(pk=int(i)).loaict)
+							for ct in chuongtrinh:
+								if ct not in listct:
+									listct.append(ct)
 							tple=detect_position(str(pdffile))
+							
 							print(tple)
 							data_send ={
 								"pdf_url":linkfile,
@@ -299,16 +305,16 @@ def sign_and_send_pdf(request):
 								except:
 									log+=str(response_obj2.json()['message'])
 									continue
-							if listfile != []:
-								listemail=[]
-								for email in pdf.emailExtracted.all():
-									if email not in listemail:
-										listemail.append(email)
-									print(listfile)
-									print(email)
-									send_email.send_noti_to_partner_sign_by_email(listfile,listemail)
-							else:
-								log+=("{}:failed".format(account))
+					if listfile != []:
+						listemail=[]
+						for email in pdf.emailExtracted.all():
+							if email not in listemail:
+								listemail.append(email)
+							print(listfile)
+							print(email)
+							send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
+					else:
+						log+=("{}:failed".format(account))
 				return Response({"log":log}, status=status.HTTP_200_OK)
 		except:
 			err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -333,23 +339,28 @@ def send_pdf(request):
 				accountCate.append(account)
 		for account in accountCate:
 			listfile=[]
+			listct=[]
 			for i in list_id:
 				if account == str(pdfFile.objects.get(pk=int(i)).account):
 					pdf=pdfFile.objects.get(pk=int(i))	
 					pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 					linkfile=settings.URL+"/"+str(pdffile)
+					chuongtrinh=pdfFile.objects.get(pk=int(i)).loaict
+					for ct in chuongtrinh:
+						if ct not in listct:
+							listct.append(ct)
 					listfile.append(linkfile)
 
-					if listfile != []:
-						listemail=[]
-						for email in pdf.emailExtracted.all():
-							if email not in listemail:
-								listemail.append(email)
-								print(listfile)
-								print(email)
-						send_email.send_noti_to_partner_sign_by_email(listfile,listemail)
-					else:
-						log+=("listfile=[]")
+			if listfile != []:
+				listemail=[]
+				for email in pdf.emailExtracted.all():
+					if email not in listemail:
+						listemail.append(email)
+						print(listfile)
+						print(email)
+				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
+			else:
+				log+=("listfile=[]")
 		return Response({"log":log}, status=status.HTTP_200_OK)
 	except:
 		return Response({"log":"failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
