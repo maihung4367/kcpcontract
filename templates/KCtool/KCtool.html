@@ -14,7 +14,7 @@
             {% if user.is_staff or user.is_admin    %}
             <div class="upload-btn-wrapper">
                 <button class="btn btn-up">
-                    <a h class="dropbtn">
+                    <a href="#" class="dropbtn">
                         <img src="{% static 'image/add-vb_white.png'%} " alt="add-vb">
                     Tải tài liệu lên
                     </a>
@@ -23,9 +23,10 @@
                 {% csrf_token %}            
                 <input type="file" name="document" onchange='this.form.submit()' /> 
                  </form>
+                 
             </div>
             {% endif %}
-            
+            <button class="js-modal-btn">Mở Thông Báo</button>
         </div>
     </div>
     <div class="table_content">
@@ -256,7 +257,47 @@
         </div>
     </form>
 </div>
- 
+ <!-- Modal Alarm -->
+ <div id="aLarm" class="modal js-modal-open">
+    <div class="modal-container js-modal-container">
+        <div class="modal-close js-modal-close">
+            <i class="ti-close"></i>
+        </div>
+
+        <header class="modal-header">
+            <i class="fa-solid fa-bell"></i> Thông Báo
+        </header>
+
+        <div class="modal-body">
+            <label for="quantity" class="modal-label">
+                <i class="fa-solid fa-circle-check icon-success"></i>
+                Thành công
+            </label>
+            <p class="modal-detail">
+                <span class="modal-desc">Danh mục:</span> Primary, Claimback
+            </p>
+            <p class="modal-detail">
+                <span class="modal-desc">Loại Account:</span> Vinmart, BHX
+            </p>
+
+            <label for="email" class="modal-label">
+                <i class="fa-solid fa-circle-question icon-fail"></i>
+                Không có dữ liệu
+            </label>
+            <p class="modal-detail">
+                <span class="modal-desc">Danh mục:</span> Gift assignment
+            </p>
+            <p class="modal-detail">
+                <span class="modal-desc">Loại Account:</span> Lan Chi, Lotte
+            </p>
+
+            <div class="btn-group">
+                <button class="btn--success"> OK </button>
+            </div>
+        </div>
+
+    </div>
+</div> 
    
  <!-- JS -->
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
