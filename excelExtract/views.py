@@ -267,7 +267,7 @@ def sign_and_send_pdf(request):
 							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 							linkfile=settings.URL+"/"+str(pdffile)
-							chuongtrinh=(pdfFile.objects.get(pk=int(i)).loaict)
+							chuongtrinh=str(pdfFile.objects.get(pk=int(i)).loaict).split(",")
 							for ct in chuongtrinh:
 								if ct not in listct:
 									listct.append(ct)
@@ -345,7 +345,7 @@ def send_pdf(request):
 					pdf=pdfFile.objects.get(pk=int(i))	
 					pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 					linkfile=settings.URL+"/"+str(pdffile)
-					chuongtrinh=pdfFile.objects.get(pk=int(i)).loaict
+					chuongtrinh=str(pdfFile.objects.get(pk=int(i)).loaict).split(",")
 					for ct in chuongtrinh:
 						if ct not in listct:
 							listct.append(ct)
