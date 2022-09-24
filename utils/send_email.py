@@ -7,7 +7,7 @@ import requests
 from excelExtract.models import pdfFile
 def send_noti_to_partner_sign_by_email(ct,account,list_system_link_file_pdf, customer_email):
 	
-	subject = "KCV_THÔNG BÁO CHƯƠNG TRÌNH {} THÁNG {} + (ACCOUNT {}) ".format(ct,datetime.now().strftime("%m.%y"),account)
+	subject = "KCV_THÔNG BÁO CHƯƠNG TRÌNH {} THÁNG {} (ACCOUNT {}) ".format(ct,datetime.now().strftime("%m.%Y"),account)
 	html_message = get_template("template_email.html").render({"ct":ct})
 
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=customer_email)
