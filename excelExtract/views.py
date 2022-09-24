@@ -130,21 +130,21 @@ def signedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
 		numbersendedpdfs=len(pdfFile.objects.filter(sended=True))
-		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("sended")
+		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("sendingTime")
 		accountList=excelAccount.objects.all()
 		if request.GET.get("key_word",""):
 			key_word = request.GET.get("key_word")
-			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("sended")	
+			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("sendingTime")	
 		if request.GET.get("account",None):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
 			print(account.pk)			
-			pdfs = pdfs.filter(account=account).order_by("sended")
+			pdfs = pdfs.filter(account=account).order_by("sendingTime")
 		if request.GET.get("todate",None):
 			todate=request.GET.get("todate")
-			pdfs = pdfs.filter(createdTime__date__lte=todate).order_by("sended")|pdfs.filter(sendingTime__date__lte=todate).order_by("sended")
+			pdfs = pdfs.filter(createdTime__date__lte=todate).order_by("sendingTime")|pdfs.filter(sendingTime__date__lte=todate).order_by("sendingTime")
 		if request.GET.get("fromdate",None):	
 			fromdate=request.GET.get("fromdate")
-			pdfs = pdfs.filter(createdTime__date__gte=fromdate).order_by("sended")|pdfs.filter(sendingTime__date__gte=fromdate).order_by("sended")
+			pdfs = pdfs.filter(createdTime__date__gte=fromdate).order_by("sendingTime")|pdfs.filter(sendingTime__date__gte=fromdate).order_by("sendingTime")
 		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
 			fromdate2=request.GET.get("fromdate2")
 			todate2=request.GET.get("todate2")
