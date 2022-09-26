@@ -219,20 +219,22 @@ def getListAccount(request):
 @api_view(["POST"])
 def confirm_pdf(request):
 	try:
-		user = request.user
-		profile = Profile.objects.get(user=user)
-		list_id_pdf_file = request.data["list_id_pdf_file"]
-		list_id=list_id_pdf_file.split(",")
-		for i in list_id:
-			pdf = pdfFile.objects.get(pk=int(i))
-			pdf.confirmed = True
-			pdf.confirmer= profile
-			pdf.confirmedTime= datetime.now()
-			pdf.save()
-		print(list_id_pdf_file)
-		numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-		send_email.send_noti_to_partner_sign_by_email2([], ["khang.huynhquoc@kcc.com"])
-		return Response({"code":"00"}, status=status.HTTP_200_OK)
+		with transaction.atomic():
+			user = request.user
+			profile = Profile.objects.get(user=user)
+			list_id_pdf_file = request.data["list_id_pdf_file"]
+			list_id=list_id_pdf_file.split(",")
+			for i in list_id:
+				pdf = pdfFile.objects.get(pk=int(i))
+				pdf.confirmed = True
+				pdf.confirmer= profile
+				pdf.confirmedTime= datetime.now()
+				pdf.save()
+			print(list_id_pdf_file)
+			print(list_id)
+			numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
+			send_email.send_noti_to_partner_sign_by_email2([], "khang.huynhquoc@kcc.com")
+			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
 		print(err_mess)

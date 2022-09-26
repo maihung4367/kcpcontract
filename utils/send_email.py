@@ -21,10 +21,10 @@ def send_noti_to_partner_sign_by_email(ct,account,list_system_link_file_pdf, cus
 	msg.send()
 def send_noti_to_partner_sign_by_email2(list_system_link_file_pdf, customer_email):
 	numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-	subject = " Có {} văn bản cần kí gửi ".format(numberunsignepdfs)
-	html_message = get_template("template_email2.html").render({"customer_email":customer_email,"file_pdf":list_system_link_file_pdf[0]})
+	subject = " Có {} văn bản cần kí gửi Psign-kc ".format(numberunsignepdfs)
+	html_message = get_template("template_email2.html").render({"customer_email":customer_email})
 
-	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=customer_email)
+	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=[customer_email,])
 	msg.content_subtype = "html"
 
 	for linkfile in list_system_link_file_pdf:
