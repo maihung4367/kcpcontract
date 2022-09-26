@@ -62,7 +62,7 @@ def detect_position(pdf_file_location):
 def kcToolPage(request):
 	if request.user.is_authenticated:
 		form=uploadDocumentForm()
-		files=document.objects.all()
+		files=document.objects.all().order_by("-id")
 		pdffiles=pdfFile.objects.all().order_by("-id")
 		demoPdfFiles=pdfFile.objects.last()
 		numberUnsignepdfs=0
