@@ -19,14 +19,14 @@
                     Tải tài liệu lên
                     </a>
                 </button>
-                <form href="{% url 'KCTool:kcToolPage' %}" method="post" enctype="multipart/form-data">
+                <form href="{% url 'KCTool:kcToolPage' %}" method="post" enctype="multipart/form-data" >
                 {% csrf_token %}            
                 <input type="file" name="document" onchange='this.form.submit()' /> 
                  </form>
                  
             </div>
             {% endif %}
-            <button class="js-modal-btn">Mở Thông Báo</button>
+            
         </div>
     </div>
     <div class="table_content">
@@ -424,6 +424,7 @@
 }
 
 </script>
+
 <script>
     function delete_file(id){
         var arr_pk_excel_file = [];
