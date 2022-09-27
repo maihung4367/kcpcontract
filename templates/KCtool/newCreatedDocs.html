@@ -51,14 +51,6 @@
                    
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
                 </td>
-                <td>{{pdf.creator}} </td>
-                
-                <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
-                    {% for email in pdf.emailExtracted.all %}
-                        {{email}}<hr>
-                        {% endfor %}
-                    </td>         
-                </td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
