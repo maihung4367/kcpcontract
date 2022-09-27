@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def loginView(request):
+	if request.user.is_authenticated:
+		return redirect('KCTool:kcToolPage')
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
