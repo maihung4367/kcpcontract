@@ -181,9 +181,10 @@ def create_pdf(request):
 			listAccount=values_account.split(",")
 			listEmail=[]
 			for account in listAccount:
-				email=excelAccount.objects.get(account=account).responsibleBy
-				if email not in listEmail:
-					listEmail.append(email)
+				email=excelAccount.objects.get(account=account).responsibleBy.email
+				if email != None:
+					if email not in listEmail:
+						listEmail.append(email)
 			send_email.send_noti_to_confirmer([], listEmail)
 			print(annouce)
 			return Response({"annouce":annouce}, status=status.HTTP_200_OK)
