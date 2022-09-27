@@ -178,6 +178,13 @@ def create_pdf(request):
 			user=request.user
 			profile = Profile.objects.get(user=user)
 			annouce=excelExtract.exportFiles(loaict=values_category,fileID=id_excel,loaiAccount=values_account,user=profile) 
+			listAccount=values_account.split(",")
+			listEmail=[]
+			for account in listAccount:
+				email=excelAccount.objects.get(account=account).responsibleBy
+				if email not in listEmail:
+					listEmail.append(email)
+			send_email.send_noti_to_confirmer([], listEmail)
 			print(annouce)
 			return Response({"annouce":annouce}, status=status.HTTP_200_OK)
 	except:
