@@ -1,173 +1,102 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>AI Hub</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- add icon link -->
-    <link rel = "icon" href ="{% static 'img/logo_PVS_Hub_v4.png' %}" type = "image/x-icon">
-
-    <!-- Font awnsome 5 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- jQuery js -->
-    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-    
-    <!-- Jquery UI css file -->
-    <link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet"></link>
-    <!-- DatetimePicker Jquery css -->
-    <link href="{% static 'css/jquery.datetimepicker.css' %}" rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <!-- Auto complete -->
-    <link rel="stylesheet" href="{% static 'css/easy-autocomplete/easy-autocomplete.min.css' %}">
-    <!-- SideBars CSS -->
-    <link href="{% static 'css/sidebars.css' %}" rel="stylesheet">
-    <!-- Page style -->
-    <link href="{% static 'css/page-style.css' %}" rel="stylesheet">
-  </head>
-
-  <body>
-    <!-- <div class="overflow-hidden visually-hidden-focusable">
-      <div class="container-xl">
-        <a href="#" class="d-inline-flex p-2 m-1">abc</a>
-        <a href="#" class="d-none d-md-inline-flex p-2 m-1">cdf</a>
-      </div>
-    </div> -->
-    <header class="navbar navbar-expand-md navbar-dark bg-dark">
-      <nav class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="{% static 'img/logo_PVS_Hub_width-white.png' %}" width="100" height="30" alt="logo"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">Introduce</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            
-          </ul>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;font-size: larger;">
-              <i class="fa fa-user"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#"></a>
-              <hr class="dropdown-divider">
-              <a class="dropdown-item" href="">Log out</a>
-                                      
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery js -->
-    
-   
-  
-<div class="p-3 bg-white" style="width: 80%;">
-    <h4>This is HNK statistics tickets</h4>
-    <form action=" id="statistics-ticket-form" method="post" class="my-3">
-        {% csrf_token %}
-        <div class="row align-items-end">
-            <div class="col-md-4 mb-3">
-                <label for="from_date">From date<span class="required-input">*</span></label>
-                <input type="text" name="from_date" class="form-control form-control-sm" placeholder="dd / mm / Y" id="from_date" autocomplete="off"
-                
-                {% if from_date %}
-                value="{{ from_date|date:"d/m/Y" }}"
-                {% endif %}>
-                <span id="alert_from_date" style="color: #d9534f;font-size:15px"></span>
-            </div>
-            <div class="col-md-4 mb-3">
-                <label for="to_date">To date<span class="required-input">*</span></label>
-                <input type="text" id="to_date" name="to_date" class="form-control form-control-sm" placeholder="dd / mm / Y" autocomplete="off" id="to_date" 
-                
-                {% if to_date %}
-                value="{{ to_date|date:"d/m/Y" }}"
-                {% endif %}>
-                <span id="alert_to_date" style="color: #d9534f;font-size:15px"></span>
-            </div>
-            <div class="col-md-4">
-                <button class="btn btn-warning btn-sm mb-3" type="button" id="bt_submit">Export</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-
- <script>
-$(document).ready(function () {
-
-    $("#bt_submit").click(function () {
-        var from_date = $("#from_date").val();
-        var to_date = $("#to_date").val();
-
-        var valid = true;
-
-        if(!ValidateDate(from_date)){
-            $("#alert_from_date").text("Date chosen invalid");
-            valid &= false;
-        } else{
-            $("#alert_from_date").text("");
+<!DOCTYPE html>
+<html>
+    <style>
+        .modal_loading {
+            position: fixed;
+            background-color: rgba(255, 255, 255, 0.25);
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            transition: all 0.3s;
         }
-        if(!ValidateDate(to_date)){
-            $("#alert_to_date").text("Date chosen invalid");
-            valid &= false;
-        } else{
-            $("#alert_to_date").text("");
+        
+        .modal_loading-content {
+            width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 2em;
+            background: transparent;
         }
-
-        if(valid){
-            // $(this).prop("disabled",true);
-            $("#statistics-ticket-form").submit();
+        
+        @keyframes follow-the-leader {
+            0% {
+                -webkit-transform: rotate(0deg) translateY(-200%);
+                transform: rotate(0deg) translateY(-200%);
+            }
+            60%,
+            100% {
+                -webkit-transform: rotate(360deg) translateY(-200%);
+                transform: rotate(360deg) translateY(-200%);
+            }
         }
-    }); // end click
+        
+        .follow-the-leader {
+            height: 14px;
+            position: relative;
+            margin: 30px auto;
+            width: 14px;
+        }
+        
+        .follow-the-leader div {
+            -webkit-animation: follow-the-leader 1.875s infinite backwards;
+            animation: follow-the-leader 1.875s infinite backwards;
+            background-color: #003a8c;
+            border-radius: 100%;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .follow-the-leader div:nth-child(1) {
+            -webkit-animation-delay: 0.15s;
+            animation-delay: 0.15s;
+            background-color: rgba(45, 35, 244, 0.9);
+        }
+        
+        .follow-the-leader div:nth-child(2) {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+            background-color: rgba(45, 35, 244, 0.8);
+        }
+        
+        .follow-the-leader div:nth-child(3) {
+            -webkit-animation-delay: 0.45s;
+            animation-delay: 0.45s;
+            background-color: rgba(45, 35, 244, 0.7);
+        }
+        
+        .follow-the-leader div:nth-child(4) {
+            -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+            background-color: rgba(45, 35, 244, 0.6);
+        }
+        
+        .follow-the-leader div:nth-child(5) {
+            -webkit-animation-delay: 0.75s;
+            animation-delay: 0.75s;
+            background-color: rgba(45, 35, 244, 0.5);
+        }
+    </style>
+<body>
 
-    // date picker
-    $("#from_date").datepicker({
-    dateFormat: "dd/mm/yy",
-    changeMonth: true,
-    changeYear: true,
-    maxDate: 0,
-    // yearRange:"-90:+0",
-    // monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
-    // monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"]
-    });// end datepicker
-    $("#to_date").datepicker({
-    dateFormat: "dd/mm/yy",
-    changeMonth: true,
-    changeYear: true,
-    maxDate: 0,
-    // yearRange:"-90:+0",
-    // monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
-    // monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"]
-    });// end datepicker
+<p>When you submit the form, a function is triggered which alerts some text.</p>
 
-    // validate datetime format dd/mm/Y
-    function ValidateDate(value){
-      regex = new RegExp("^([0-2]\\d{1}|3[0-1])\\/(0\\d{1}|1[0-2])\\/(19|20)\\d{2}$");
-      var isValid = regex.test(value);
-      return isValid;
-    }
-}); // end ready
- </script>   
-   <!-- Bootstrap 5 js -->
-   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-   <!-- Jquery UI js file -->
-   <script src="{% static 'js/jquery-ui.min.js' %}"></script>
-   <!-- DatetimePicker js file -->
-   <script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
-   <!-- SideBars BS5 -->
-   <script src="{% static 'js/sidebars.js' %}"></script>
- </body>
+<form id="myForm" action="/action_page.php" onsubmit="myFunction()">
+  Enter name: <input type="text" name="fname" >
+  <input type="submit" value="Submit" >
+</form>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", myFunction);
+
+function myFunction() {
+    $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>')
+}
+</script>
+
+</body>
 </html>
