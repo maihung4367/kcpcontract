@@ -26,6 +26,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         "signer", default=False)
     is_admin = models.BooleanField(
         "admin PVS", default=False)
+    is_uploader=models.BooleanField(
+        "uploader", default=False)
 
     USERNAME_FIELD = "user_name"
 
