@@ -178,15 +178,44 @@ def create_pdf(request):
 			user=request.user
 			profile = Profile.objects.get(user=user)
 			annouce=excelExtract.exportFiles(loaict=values_category,fileID=id_excel,loaiAccount=values_account,user=profile) 
-			listAccount=values_account.split(",")
-			listEmail=[]
-			for account in listAccount:
-				email=excelAccount.objects.get(account=account).responsibleBy.email
-				if email != None:
-					if email not in listEmail:
-						listEmail.append(email)
-			send_email.send_noti_to_confirmer([], listEmail)
-			print(annouce)
+			if values_account != "all":
+				listAccount=values_account.split(",")
+				listEmail=[]
+				for account in listAccount:
+					try:
+						email=excelAccount.objects.get(account=account).responsibleBy
+						
+						if email.email :
+							if email.email not in listEmail:
+								listEmail.append(email.email)
+					except:
+						pass
+				send_email.send_noti_to_confirmer(listEmail)
+				print(listEmail)
+			else:
+				
+				file=document.objects.get(pk=id_excel)
+				listEmail=[]
+				listAccount=[]
+				
+				for f in excel.objects.filter(filename=file):
+					if f.account not in listAccount:
+						listAccount.append(f.account)
+				
+				for account in listAccount:
+					try:
+						email=excelAccount.objects.get(account=account)
+						email=email.responsibleBy			
+						if email.email :
+							if email.email not in listEmail:
+								listEmail.append(email.email)
+					except:
+						pass
+				print(listAccount)
+				print(listEmail)
+				
+				send_email.send_noti_to_confirmer(listEmail)			
+				
 			return Response({"annouce":annouce}, status=status.HTTP_200_OK)
 	except:
 		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

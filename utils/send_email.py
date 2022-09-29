@@ -6,6 +6,7 @@ from django.conf import settings
 from user.models import User,Profile
 import requests
 from excelExtract.models import pdfFile
+from django.template.loader import render_to_string
 def send_noti_to_partner_sign_by_email(ct,account,list_system_link_file_pdf, customer_email):
 	
 	subject = "KCV_THÔNG BÁO CHƯƠNG TRÌNH {} THÁNG {} {} ".format(str(ct).upper(),datetime.now().strftime("%m.%Y"),str(account).upper())
@@ -33,13 +34,9 @@ def send_noti_to_partner_sign_by_email2(list_system_link_file_pdf, customer_emai
 
 	
 	msg.send()
-def send_noti_to_confirmer(list_system_link_file_pdf, customer_emails):
-
+def send_noti_to_confirmer(customer_emails):
 	subject = " KCV_THÔNG BÁO CHƯƠNG TRÌNH CẦN XÁC NHẬN THÁNG {}".format(datetime.now().strftime("%m.%Y"))
-	html_message = get_template("notifyConfirm.html").render({"customer_email":customer_emails})
-
+	html_message = render_to_string("notifyConfirm.html")
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=customer_emails)
 	msg.content_subtype = "html"
-
-	
 	msg.send()
