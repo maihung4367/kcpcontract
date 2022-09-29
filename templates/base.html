@@ -20,7 +20,7 @@
     <style>
         .modal_loading {
             position: fixed;
-            background-color: rgba(255, 255, 255, 0.25);
+            background-color: rgba(255, 255, 255, 0.878);
             top: 0;
             right: 0;
             bottom: 0;
@@ -99,7 +99,7 @@
         }
     </style>
 </head>
-<body>
+<body >
     <header>
         <div class="nav_left">
             <a href="#">
@@ -228,13 +228,13 @@
                         Email
                         <input type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
                     </label>
-                    {% comment %} <label for="passwd">
+                    <label for="passwd">
                         Mật khẩu
                         <div class="form-group has-feedback">
                             <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
                             <i class="showpass show-eye-open fas fa-eye"></i>
                           </div>
-                    </label> {% endcomment %}
+                    </label> 
                 </div>   
             </div>
 
@@ -289,6 +289,7 @@
     $('#password').togglePassword(); // activate the hideShowPassword plugin
     });
  </script>
+ 
  <script type="text/javascript">
     $(function(){
         /*Check & uncheck all*/

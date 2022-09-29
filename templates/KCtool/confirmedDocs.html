@@ -253,7 +253,9 @@
             headers:{
                 "X-CSRFToken": csrftoken
             },
-            
+            beforeSend: function() {
+                    $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+            },
             success: function(resp) {
                 alert(resp.log)
                 window.location.replace(``);
