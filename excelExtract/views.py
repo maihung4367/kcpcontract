@@ -250,12 +250,12 @@ def confirm_pdf(request):
 
 @api_view(["POST"])
 def sign_and_send_pdf(request):
-	account_data={"user_name": "baynguyen2000@gmail.com",
-  				"password": "Tu12345@"}
+	account_data={"user_name": "thach.nguyenphamngoc@kcc.com",
+  				"password": "PVS@@123456"}
 	headers = { 
 	'Content-Type':'application/json' 
    }
-	response_obj = requests.post(r"https://api-testing.pvs.com.vn/user-api/api/token/", data=json.dumps(account_data),headers=headers)
+	response_obj = requests.post(r"https://api.pvs.com.vn/user-api/api/token/", data=json.dumps(account_data),headers=headers)
 	token=response_obj.json()['data']['access']
 	print(token)
 	if response_obj.status_code >= 200 and response_obj.status_code<300:
@@ -296,7 +296,7 @@ def sign_and_send_pdf(request):
 							headers2 = { 'Content-Type':'application/json', 
 							'Authorization': 'Bearer ' + token }
 							print(data_send)
-							response_obj2 = requests.post(r"https://api-testing.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/84", data=json.dumps(data_send), headers=headers2)				
+							response_obj2 = requests.post(r"https://api.pvs.com.vn/e-invoice-api/api/ca-sign/sign-pdf/58", data=json.dumps(data_send), headers=headers2)				
 							if response_obj2.status_code  >= 200 and response_obj2.status_code<300:
 								log+="{}:success ".format(str(pdffile).replace("documents/slavefiles/",""))
 								binarytext=response_obj2.content
