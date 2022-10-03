@@ -54,21 +54,16 @@ def importDataExcel(path, user=None):
 			for i,row in enumerate(ws.iter_rows(min_row=4,max_col=70,values_only=True),start=4):
 				
 				if i <= rangeline:
-					try:				
+							
 						standart=str(row[1]).replace(" ","").lower()
 						acc=excelAccount.objects.filter(standardName=standart)
 						if acc:
-							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
-							rowsheet.save()
+							excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 						if not acc :
 							newAccount=excelAccount.objects.create(account=row[1])
 							newAccount.standardName=standart
-							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
-							rowsheet.save()
 							newAccount.save()
-					except:
-						pass
-				
+							excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 				else:
 					break
 			
@@ -97,21 +92,16 @@ def importDataExcel(path, user=None):
 			for i,row in enumerate(ws.iter_rows(min_row=4,max_col=70,values_only=True),start=4):
 				
 				if i <= rangeline:
-					try:				
+							
 						standart=str(row[1]).replace(" ","").lower()
 						acc=excelAccount.objects.filter(standardName=standart)
 						if acc:
-							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
-							rowsheet.save()
+							excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 						if not acc :
 							newAccount=excelAccount.objects.create(account=row[1])
 							newAccount.standardName=standart
-							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
-							rowsheet.save()
 							newAccount.save()
-					except:
-						pass
-				
+							excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 				else:
 					break
 			
