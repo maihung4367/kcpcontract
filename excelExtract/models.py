@@ -1,6 +1,8 @@
+from email.policy import default
 from django.db import models
 from user.models import Profile
 import os
+from django.contrib import admin
 def fileExtensionValidate(value):
     from django.core.exceptions import ValidationError
     ext = os.path.splitext(value.name)[-1]  # [0] returns path+filename
@@ -16,8 +18,10 @@ class document(models.Model):
 class excelAccount(models.Model):
     account=models.CharField(max_length=30,unique=True)  
     responsibleBy=models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
+    standardName=models.CharField(max_length=60,null=True, blank=True)
     def __str__(self):
-        return "{}".format(str(self.account))      
+        return "{}".format(str(self.account))       
+    
 class accountEmail(models.Model):
     account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
     email=models.EmailField(blank=True,null=True)
@@ -26,7 +30,7 @@ class accountEmail(models.Model):
 class excel(models.Model):
     filename                =models.ForeignKey(document, on_delete=models.CASCADE)
     #group,account,postStartDate,postEndDate,mechanicsGetORDiscount,noiDungChuongTrinh,budgetRir,loaiCt
-    group                   =models.CharField(max_length=12)
+    group                   =models.CharField(max_length=30)
     account                 =models.CharField(max_length=30)
     postStartDate           =models.DateField(null=True,blank=True)
     postEndDate             =models.DateField(null=True,blank=True)

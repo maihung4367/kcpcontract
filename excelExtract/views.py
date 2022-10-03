@@ -76,8 +76,8 @@ def kcToolPage(request):
 				if pdf.account in excelAccount.objects.filter(responsibleBy=profile).all():
 					numberUnsignepdfs+=1
 		if request.method=='POST':
-			with transaction.atomic():
-				try:
+			# with transaction.atomic():
+			# 	try:
 					file=request.FILES['document']
 					print(file)
 					if file:
@@ -87,8 +87,8 @@ def kcToolPage(request):
 							excelExtract.importDataExcel(file, user=profile)
 						except:
 							excelExtract.importDataExcel(file)
-				except:
-					pass
+				# except:
+				# 	pass
 		return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs, "active_id":1})
 	else :
 		return HttpResponse("not authen")

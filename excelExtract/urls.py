@@ -15,5 +15,4 @@ urlpatterns = [
     path("delete_excel_file",views.deleteExcelFile, name="delete_file_excel"),
     path('update-profile', views.update_profile, name="update_profile")
 
-
 ]

@@ -20,7 +20,6 @@ def importDataExcel(path, user=None):
 	if user != None:
 		file.upload_by = user
 	file.save()
-	
 	#TÌM HEADERS,LOẠI CT TRONG SHEET CẦN TÌM/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	programCate=[]	#LIST TỔNG HỢP LẠI CHƯƠNG TRÌNH CỦA 2 BIẾN DƯỚI (ĐỀ PHÒNG TRƯỜNG HỢP CÓ LOẠI CT MỚI MÀ SHEET KHÁC KHÔNG CÓ)
 	programCate1=[] #CHỨA CÁC LOẠI CT TRONG Ecom Promotion Plan BCC_for SO
@@ -28,7 +27,8 @@ def importDataExcel(path, user=None):
 	listHeader=[] 	#CHỨA HEADER của Ecom VÀ Mnb Promotion Plan BCC_for SO (HIỆN TẠI DỰA VÀO ECOM ĐỂ XÁC ĐỊNH VÌ CẢ 2 GIỐNG NHAU )
 	
 	for f in wb.sheetnames:
-		if f=="Ecom Promotion Plan BCC_for SO":
+		
+		if f == "Promotion Plan BCC":
 			wb.active=wb[f]
 			ws=wb.active			
 			programCateCol=ws['BQ'] # CỘT LOẠI CT
@@ -49,83 +49,72 @@ def importDataExcel(path, user=None):
 			lineEnd=count+3
 			print("lineEnd" +"{}: {}".format(str(f),lineEnd))
 			#import data
-			rangeline=lineEnd-1
-			for i,row in enumerate(ws.rows):
+			rangeline=lineEnd
+			
+			for i,row in enumerate(ws.iter_rows(min_row=4,max_col=70,values_only=True),start=4):
 				
-				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+				if i <= rangeline:
 					try:				
-						acc=excelAccount.objects.filter(account=row[1].value)
-						print(acc)
+						standart=str(row[1]).replace(" ","").lower()
+						acc=excelAccount.objects.filter(standardName=standart)
+						if acc:
+							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							rowsheet.save()
 						if not acc :
-							print("1")
-							newAccount=excelAccount.objects.create(account=row[1].value)
+							newAccount=excelAccount.objects.create(account=row[1])
+							newAccount.standardName=standart
+							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							rowsheet.save()
 							newAccount.save()
-							if row[70].value !=None:
-								email=accountEmail.objects.create(email=row[70].value)	
-								email.save()
-						else:
-							print("2")
-							emailfilter=accountEmail.objects.filter(account=acc[0],email=row[70].value)
-							if not emailfilter:
-								if row[70].value != None:
-									email=accountEmail.objects.create(account=acc[0],email=row[70].value)
-									email.save()
 					except:
 						pass
-					
-				elif i> lineEnd:
+				
+				else:
 					break
-		if f=="MnB Promotion Plan BCC_for SO":
+			
+		if f == "Promotion Plan FEM":
 			wb.active=wb[f]
-			ws=wb.active	
+			ws=wb.active			
 			programCateCol=ws['BQ'] # CỘT LOẠI CT
-			group=ws['A']# CỘT GROUP
+			group=ws['A'] # CỘT GROUP
+			lineEnd=0 # XÁC ĐỊNH ROWS DỮ LIỆU  KẾT THÚC TẠI DÒNG NÀO ,DỰA TRÊN GROUP
 			count=0 # ĐẾM SỐ LƯỢNG DATA IMPORT
-			lineEnd=0
 			#LIỆT KÊ LOẠI CT
 			for i in range(3,len(programCateCol)): 
-				if  programCateCol[i].value not in programCate2 :
-					programCate2.append(programCateCol[i].value)
+				if  programCateCol[i].value not in programCate1 :
+					programCate1.append(programCateCol[i].value)
 					if  programCateCol[i].value==None:
-						programCate2.pop()
+						programCate1.pop()
 						break
 			# XÁC ĐỊNH ROWS DỮ LIỆU  KẾT THÚC TẠI DÒNG NÀO ,DỰA TRÊN GROUP
-			for i in range(3,len(group)):
+			for i in range(3,len(group)):		
 				if group[i].value != None:
 					count=count+1
 			lineEnd=count+3
 			print("lineEnd" +"{}: {}".format(str(f),lineEnd))
-			
-			# for i,row in enumerate(ws.rows,start=4):
-			# 	while i <= lineEnd:
-			# 		print(row[3].value)
 			#import data
-			rangeline=lineEnd-1
-			for i,row in enumerate(ws.rows):
-				if i>=3 and i<=rangeline:
-					excel.objects.create(filename=file,group=row[0].value,account=row[1].value,postStartDate=row[4].value,postEndDate=row[5].value,product=row[10].value,mechanicsGetORDiscount=row[12].value,noiDungChuongTrinh=row[57].value,budgetRir=row[59].value,loaiCt=row[68].value)
+			rangeline=lineEnd
+			for i,row in enumerate(ws.iter_rows(min_row=4,max_col=70,values_only=True),start=4):
+				
+				if i <= rangeline:
 					try:				
-						acc=excelAccount.objects.filter(account=row[1].value)
-						print(acc)
+						standart=str(row[1]).replace(" ","").lower()
+						acc=excelAccount.objects.filter(standardName=standart)
+						if acc:
+							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							rowsheet.save()
 						if not acc :
-							print("1")
-							newAccount=excelAccount.objects.create(account=row[1].value)
+							newAccount=excelAccount.objects.create(account=row[1])
+							newAccount.standardName=standart
+							rowsheet=excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							rowsheet.save()
 							newAccount.save()
-							if row[70].value !=None:
-								email=accountEmail.objects.create(email=row[70].value)	
-								email.save()
-						else:
-							print("2")
-							emailfilter=accountEmail.objects.filter(account=acc[0],email=row[70].value)
-							if not emailfilter:
-								if row[70].value != None:
-									email=accountEmail.objects.create(account=acc[0],email=row[70].value)
-									email.save()
 					except:
 						pass
-				elif i> lineEnd:
+				
+				else:
 					break
+			
 			
 	# TỔNG HỢP LẠI LOẠI CHƯƠNG TRÌNH CỦA 2 LIST (ĐỀ PHÒNG TRƯỜNG HỢP CÓ LOẠI CT MỚI MÀ LISTS KHÁC KHÔNG CÓ)
 	for i in programCate1:
@@ -134,9 +123,11 @@ def importDataExcel(path, user=None):
 	for i in programCate2:
 		if i not in programCate:
 			programCate.append(i)
+			
+	print("success")
 	return listHeader
 	#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+#
 # excelExtract.exportFiles(loaict,fileID,loaiAccount)
 def exportFiles(loaict,fileID,loaiAccount,user):
 	annouceExist=""
