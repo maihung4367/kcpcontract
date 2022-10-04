@@ -135,6 +135,15 @@
                     ">
                         <a href="{% url 'KCTool:signedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
                     </li>
+                    {% if request.user.is_admin or request.user.is_uploader %}
+                    <li class="nav_item
+                    {% if active_id == 5 %}
+                    active
+                    {% endif %}
+                    ">
+                        <a href="{% url 'KCTool:untrackedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản chưa được quản lý</a> 
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

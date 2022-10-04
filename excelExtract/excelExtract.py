@@ -58,12 +58,27 @@ def importDataExcel(path, user=None):
 						standart=str(row[1]).replace(" ","").lower()
 						acc=excelAccount.objects.filter(standardName=standart)
 						if acc:
-							excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							try:
+								excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							except:
+								if isinstance(row[4],str) and isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[4],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 						if not acc :
-							newAccount=excelAccount.objects.create(account=row[1])
-							newAccount.standardName=standart
-							newAccount.save()
-							excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							print(i,row[1],standart)
+							excelAccount.objects.create(account=str(row[1]),standardName=standart)
+							try:
+								excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							except:	
+								if isinstance(row[4],str) and isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[4],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 				else:
 					break
 			
@@ -95,13 +110,29 @@ def importDataExcel(path, user=None):
 							
 						standart=str(row[1]).replace(" ","").lower()
 						acc=excelAccount.objects.filter(standardName=standart)
+						print(acc)
 						if acc:
-							excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							try:
+								excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							except:
+								if isinstance(row[4],str) and isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[4],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 						if not acc :
-							newAccount=excelAccount.objects.create(account=row[1])
-							newAccount.standardName=standart
-							newAccount.save()
-							excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+							print(i,row[1],standart)
+							excelAccount.objects.create(account=row[1],standardName=standart)
+							try:
+								excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])
+							except:	
+								if isinstance(row[4],str) and isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[4],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
+								elif isinstance(row[5],str):
+									excel.objects.create(filename=file,group=row[0],account=row[1],postStartDate=row[4],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 				else:
 					break
 			
@@ -142,7 +173,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 		
 		for f in listAccount:
 			emptyList=[]
-			
+			errorFlag=False
 			pdfAccount=excelAccount.objects.get(account=f)
 			try:
 				pdfEmail=accountEmail.objects.filter(account=pdfAccount)
@@ -158,8 +189,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
-			else:
-				annouceExist=annouceExist+" {}_Success ".format(str(f))
+			
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
 			pdf = PDF()
@@ -233,11 +263,11 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				listMecha=excel.objects.filter(filename=file,account=f,loaiCt=ct).values("mechanicsGetORDiscount").distinct()
 				for mecha in listMecha:
 					datas=excel.objects.filter(filename=file,account=f,loaiCt=ct,mechanicsGetORDiscount=mecha.get("mechanicsGetORDiscount"))
-					print(datas)
+					
 					for row,data in enumerate(datas):
 						for col,colAlphabet in enumerate(["A","B","C","D"]):
 							
-							mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
+							mechanicsString=str(data.mechanicsGetORDiscount).replace("\n","")
 							if row >0:
 								mechanicsString=""	
 							cellWitdhMax=80
@@ -253,9 +283,18 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:											
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag = True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
+
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 								else:
 									if headers[col]=='Mechanics: get/discount':
 										string=mechanicsString
@@ -267,9 +306,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 							else:
 								if row ==(len(datas)-1):
 									mechanicsStringLen=len(mechanicsString)
@@ -301,9 +348,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 								else:
 									mechanicsStringLen=len(mechanicsString)
 									startChar=0
@@ -334,9 +389,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 
 			#table footer
 			for i,header in enumerate(headers):
@@ -375,7 +438,13 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
-			filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			filename=""
+			if errorFlag:
+				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
+				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+			else:
+				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)
@@ -394,10 +463,11 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 						pdffile.emailExtracted.add(email)
 				pdffile.save()
 	elif  loaiAccount=="all" and loaict!="all":
-
+		
 	# 	print("22222222222222222222222222222")
 		listCt=loaict.split(',')
 		for f in listAccount:
+			errorFlag = False
 			emptyList=[]
 			pdfAccount=excelAccount.objects.get(account=f)
 			try:
@@ -414,8 +484,6 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
-			else:
-				annouceExist=annouceExist+" {}_Success ".format(str(f))
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
 			pdf = PDF()
@@ -509,9 +577,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 								else:
 									if headers[col]=='Mechanics: get/discount':
 										string=mechanicsString
@@ -523,9 +599,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 							else:
 								if row ==(len(datas)-1):
 									mechanicsStringLen=len(mechanicsString)
@@ -557,9 +641,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 								else:
 									mechanicsStringLen=len(mechanicsString)
 									startChar=0
@@ -590,9 +682,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 
 			#table footer
 			for i,header in enumerate(headers):
@@ -635,7 +735,15 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
-			filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			
+			filename=""
+			if errorFlag:
+				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
+				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+			else:
+				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)
@@ -658,6 +766,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 		listAcc=loaiAccount.split(',')	
 	# 	print(listAcc)
 		for f in listAcc:
+			errorFlag = False
 			emptyList=[]
 			pdfAccount=excelAccount.objects.get(account=f)
 			try:
@@ -674,8 +783,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
-			else:
-				annouceExist=annouceExist+" {}_Success ".format(str(f))
+			
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
 			pdf = PDF()
@@ -769,9 +877,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 								else:
 									if headers[col]=='Mechanics: get/discount':
 										string=mechanicsString
@@ -783,9 +899,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 							else:
 								if row ==(len(datas)-1):
 									mechanicsStringLen=len(mechanicsString)
@@ -817,9 +941,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 								else:
 									mechanicsStringLen=len(mechanicsString)
 									startChar=0
@@ -850,9 +982,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 
 			#table footer
 			for i,header in enumerate(headers):
@@ -894,7 +1034,14 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
-			filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			filename=""
+			if errorFlag:
+				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
+				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+			else:
+				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)
@@ -918,6 +1065,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 		listCt=loaict.split(',')
 		
 		for f in listAcc:
+			errorFlag=False
 			emptyList=[]
 			pdfAccount=excelAccount.objects.get(account=f)
 			try:
@@ -934,8 +1082,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
-			else:
-				annouceExist=annouceExist+" {}_Success ".format(str(f))
+			
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
 			pdf = PDF()
@@ -1029,9 +1176,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 								else:
 									if headers[col]=='Mechanics: get/discount':
 										string=mechanicsString
@@ -1043,9 +1198,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5,"{}".format("None"),0,1,"L")
 							else:
 								if row ==(len(datas)-1):
 									mechanicsStringLen=len(mechanicsString)
@@ -1077,9 +1240,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 								else:
 									mechanicsStringLen=len(mechanicsString)
 									startChar=0
@@ -1110,9 +1281,17 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										else:
 											pdf.cell(80,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
-										pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										if data.postStartDate:
+											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,0,"L")
 									elif headers[col]=="Post end date":
-										pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										if data.postEndDate:
+											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+										else:
+											errorFlag=True
+											pdf.cell(60,5*line,"{}".format("None"),0,1,"L")
 
 			#table footer
 			for i,header in enumerate(headers):
@@ -1154,7 +1333,14 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
-			filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			filename=""
+			if errorFlag:
+				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
+				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+			else:
+				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
+			
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)

@@ -99,7 +99,11 @@
                 
                 <div class="modal__footer">
                     {% comment %} <button class="btn_cancel">Huỷ</button> {% endcomment %}
+                      {% if user.is_uploader or user.is_admin    %}
                     <button class="btn_save" id="create-pdf-modal">Tạo</button>
+                    {% else %}
+                    <button  onclick = "alert('Not Allowed')">Tạo</button>
+                    {% endif %}
                 </div>
                 
                 <a href="#" class="modal__close">&times;</a>

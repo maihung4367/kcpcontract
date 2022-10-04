@@ -13,6 +13,8 @@ urlpatterns = [
     path("send_pdf",views.send_pdf, name="send_pdf"),
     path("delete_file",views.deleteFile, name="delete_file"),
     path("delete_excel_file",views.deleteExcelFile, name="delete_file_excel"),
-    path('update-profile', views.update_profile, name="update_profile")
+    path('update-profile', views.update_profile, name="update_profile"),
+    path("UntrackedDocs/",views.untrackedDocs,name="untrackedDocs")
+
 
 ]

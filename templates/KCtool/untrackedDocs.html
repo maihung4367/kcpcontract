@@ -5,19 +5,11 @@
 <section>
     <div class="top_content">
         <div class="title_content">
-            <p>Danh sách văn bản chờ xác nhận</p>
-            <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
+            <p>Danh sách văn bản không quản lý</p>
+           
         </div>
         <div class="btn_content">
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
-            <button class="all-sign">
-                
-                <a href="#"  onclick="sign_all_pdf()">
-                    <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                Xác nhận 
-                </a>                
-            </button>
-            
+            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
         </div>
     </div>
     <div class="table_content">
@@ -28,7 +20,7 @@
                 </th>
                 <th> <select id="account" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
                     <option>Loại account</option>
-                        {% for account in accountList %}
+                        {% for account in untrackedAccount%}
                         <option value="{{account}}"
                         {% if account == "{{account}}" %}
                             selected
@@ -44,9 +36,9 @@
                 <th>Họ và tên</th>
                 <th>Xem file</th>
             </tr>
-            {% if user.is_admin %}
-                {% for pdf in unconfirmpdfs %}
-                {% if pdf.account in accountList %}
+            
+                {% for pdf in Alldocs %}
+                {% if pdf.account in untrackedAccount %}
                 <tr>
                 <td>
                    
@@ -68,32 +60,7 @@
                 </tr>   
                 {% endif %}       
                 {% endfor %}
-            {% else %}
-                {% for pdf in unconfirmpdfs %}
-                    {% if pdf.account in listaccount %}
-                        <tr>
-                            <td>
-                            
-                                <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
-                            </td>
-                            <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
-                            <td>{{pdf.loaict}}</td>
-                            
-                            <td >{{pdf.slaveFile|subNameFileFilter}}</td>
-                            
-                            <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
-                            <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
-                                {% for email in pdf.emailExtracted.all %}
-                                    {{email}}<hr>
-                                    {% endfor %}
-                                </td>
-                            <td>{{pdf.creator}} </td>
-                                
-                            <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
+          
         </table>
     </div>
     

@@ -108,7 +108,8 @@ def newCreatedDocs(request):
 			for pdf in pdfFile.objects.filter(confirmed=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy=profile).all():
 					numberunconfirmpdfs+=1
-		accountList=excelAccount.objects.all()
+		accountList=excelAccount.objects.filter(responsibleBy__isnull=False)
+		print(accountList)
 		profile=Profile.objects.get(user=user)
 		listaccount=excelAccount.objects.filter(responsibleBy=profile)
 		if request.GET.get("account",None):
@@ -155,6 +156,16 @@ def signedDocs(request):
 			
 			
 		return render(request,"KCtool/signedDocs.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
+
+	else :
+		return HttpResponse("not authen")
+
+def untrackedDocs(request):
+	if request.user.is_authenticated:
+		untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
+		Alldocs=pdfFile.objects.all()
+		
+		return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
 
 	else :
 		return HttpResponse("not authen")
