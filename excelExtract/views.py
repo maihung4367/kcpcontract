@@ -24,7 +24,7 @@ from django.urls import reverse_lazy
 import openpyxl
 from openpyxl.styles import Alignment,NamedStyle
 from openpyxl.writer.excel import save_virtual_workbook
-
+from user.forms import LoginForm
 
 #SUB MODULE FOR FINDING POS IN PDF
 def detect_position(pdf_file_location):
@@ -94,7 +94,8 @@ def kcToolPage(request):
 				# 	pass
 		return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs, "active_id":1})
 	else :
-		return HttpResponse("not authen")
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
 
 
 def newCreatedDocs(request):
@@ -123,7 +124,8 @@ def newCreatedDocs(request):
 			unconfirmpdfs = pdfFile.objects.filter(confirmed=False,account=account).order_by("-id")
 		return render(request,"KCtool/newCreatedDocs.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
 	else :
-		return HttpResponse("not authen")
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
 def confirmedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
@@ -133,7 +135,8 @@ def confirmedDocs(request):
 		return render(request,"KCtool/confirmedDocs.html",{"numberconfirmedpdfs":numberconfirmedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
 
 	else :
-		return HttpResponse("not authen")
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
 def signedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
@@ -163,17 +166,19 @@ def signedDocs(request):
 		return render(request,"KCtool/signedDocs.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
 
 	else :
-		return HttpResponse("not authen")
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
 
 def untrackedDocs(request):
 	if request.user.is_authenticated:
 		untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
-		Alldocs=pdfFile.objects.all()
+		Alldocs=pdfFile.objects.all().order_by("-createdTime")
 		
 		return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
 
 	else :
-		return HttpResponse("not authen")
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
 
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
