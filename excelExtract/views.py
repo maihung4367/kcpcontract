@@ -67,7 +67,10 @@ def kcToolPage(request):
 		demoPdfFiles=pdfFile.objects.last()
 		numberUnsignepdfs=0
 		if request.user.is_admin:
-			numberUnsignepdfs=len(pdfFile.objects.filter(confirmed=False))
+			
+			for pdf in pdfFile.objects.filter(confirmed=False):
+				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
+					numberunconfirmpdfs+=1
 		else:
 			user=request.user
 			profile=Profile.objects.get(user=user)
@@ -100,7 +103,9 @@ def newCreatedDocs(request):
 		unconfirmpdfs=pdfFile.objects.filter(confirmed=False).order_by("-id")
 		numberunconfirmpdfs=0
 		if request.user.is_admin:
-			numberunconfirmpdfs=len(pdfFile.objects.filter(confirmed=False))
+			for pdf in pdfFile.objects.filter(confirmed=False):
+				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
+					numberunconfirmpdfs+=1
 		else:
 			user=request.user
 			profile=Profile.objects.get(user=user)
