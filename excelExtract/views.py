@@ -70,7 +70,7 @@ def kcToolPage(request):
 			
 			for pdf in pdfFile.objects.filter(confirmed=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
-					numberunconfirmpdfs+=1
+					numberUnsignepdfs+=1
 		else:
 			user=request.user
 			profile=Profile.objects.get(user=user)
