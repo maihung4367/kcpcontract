@@ -464,8 +464,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				pdffile.save()
 	elif  loaiAccount=="all" and loaict!="all":
 		
-	# 	print("22222222222222222222222222222")
+		print("22222222222222222222222222222")
 		listCt=loaict.split(',')
+		print(listAccount)
 		for f in listAccount:
 			errorFlag = False
 			emptyList=[]
@@ -484,6 +485,8 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			if emptyList != []:
 				annouceExist=annouceExist+" {}_no_Data ".format(str(f))
 				continue
+			
+		
 			title = 'THÔNG BÁO VỀ CHƯƠNG TRÌNH KHUYẾN MÃI' #.encode('utf-8')
 			date_year = "Tp.HCM, Ngày {}".format(str(datetime.now().date().strftime("%d/%m/%Y")))
 			pdf = PDF()
@@ -561,7 +564,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 					for row,data in enumerate(datas):
 						for col,colAlphabet in enumerate(["A","B","C","D"]):
 							
-							mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
+							mechanicsString=str(data.mechanicsGetORDiscount).replace("\n","")
 							if row >0:
 								mechanicsString=""	
 							cellWitdhMax=80
@@ -748,7 +751,6 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)
 				pdffile=pdfFile()
-
 				pdffile.masterFile=file
 				pdffile.creator=user
 				pdffile.account=pdfAccount
@@ -861,7 +863,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 					for row,data in enumerate(datas):
 						for col,colAlphabet in enumerate(["A","B","C","D"]):
 							
-							mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
+							mechanicsString=str(data.mechanicsGetORDiscount).replace("\n","")
 							if row >0:
 								mechanicsString=""	
 							cellWitdhMax=80
@@ -1160,7 +1162,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 					for row,data in enumerate(datas):
 						for col,colAlphabet in enumerate(["A","B","C","D"]):
 							
-							mechanicsString=data.mechanicsGetORDiscount.replace("\n","")
+							mechanicsString=str(data.mechanicsGetORDiscount).replace("\n","")
 							if row >0:
 								mechanicsString=""	
 							cellWitdhMax=80
