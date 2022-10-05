@@ -26,7 +26,7 @@ from openpyxl.styles import Alignment,NamedStyle
 from openpyxl.writer.excel import save_virtual_workbook
 from user.forms import LoginForm
 
-#SUB MODULE FOR FINDING POS IN PDF
+#Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
 	page_0 = pdf.load_page(0)
@@ -53,7 +53,7 @@ def detect_position(pdf_file_location):
 	bottom = (page_height - bottom) - 10.5*2 - 50  # 10.5 la chieu cao 1 dong dong, 50 trong 50x50
 	return left, bottom, marked_page_num
 
-#VIEWS FUNCTIONS
+#DJANGO VIEWS FUNCTIONS
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -125,7 +125,8 @@ def newCreatedDocs(request):
 		return render(request,"KCtool/newCreatedDocs.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
 	else :
 		form = LoginForm()
-		return render(request, 'login.html', {'form':form})
+		return render(request, 'login.html', {'form':form}) 
+
 def confirmedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
@@ -137,6 +138,7 @@ def confirmedDocs(request):
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
+
 def signedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
@@ -185,7 +187,9 @@ def untrackedDocs(request):
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 
-
+#DJANGO API VIEWS
+#----------------------------------------------------------------------------------------------------
+#CREATE PDF API
 @api_view(["POST"])
 def create_pdf(request):
 	try:
@@ -241,9 +245,9 @@ def create_pdf(request):
 	except:
 		return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
+#API TO RETURN DYNAMIC OPTIONS OF AN EXCEL FILE INCLUDE LOAI CHUONG TRINH,LOAI ACCOUNT
 @api_view(["POST"])
-def getListAccount(request):
+def getListAccount(request): 
 	# try:
 		arr_listaccounts=[]
 		arr_loaiCt = []
@@ -273,9 +277,9 @@ def getListAccount(request):
 		return Response({"Status":"Success", "list_accounts": list_accounts, "list_loaiCt":list_loaiCt},  status=status.HTTP_200_OK)
 	# except:
 	# 	return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+#SEND NOTIFY TO THE SIGNER
 @api_view(["POST"])
-def confirm_pdf(request):
+def confirm_pdf(request): 
 	try:
 		with transaction.atomic():
 			user = request.user
@@ -297,9 +301,9 @@ def confirm_pdf(request):
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
 		print(err_mess)
 		return Response({"err":err_mess},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+#SIGN AND SEND PDF
 @api_view(["POST"])
-def sign_and_send_pdf(request):
+def sign_and_send_pdf(request): 
 	account_data={"user_name": "thach.nguyenphamngoc@kcc.com",
   				"password": "PVS@@123456"}
 	headers = { 
@@ -389,9 +393,9 @@ def sign_and_send_pdf(request):
 	else :
 		return Response(response_obj.json()['message'], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
+#ONLY SEND PDF 
 @api_view(["POST"])
-def send_pdf(request):
+def send_pdf(request): 
 	try:
 		log="success"
 		list_id_pdf_file = request.data["list_id_pdf_file"]
@@ -431,9 +435,9 @@ def send_pdf(request):
 		return Response({"log":log}, status=status.HTTP_200_OK)
 	except:
 		return Response({"log":"failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+#DELETE THE PDF FILE
 @api_view(["POST"])
-def deleteFile(request):
+def deleteFile(request): 
 	print(request.data)
 	if request.data["list_id_pdf_file"]:
 		list_id_pdf_file = request.data["list_id_pdf_file"]
@@ -444,9 +448,9 @@ def deleteFile(request):
 			print(fileWillBeDel)
 			fileWillBeDel.delete()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
-
+#DELETE THE EXCEL FILE
 @api_view(["POST"])
-def deleteExcelFile(request):
+def deleteExcelFile(request): 
 	print(request.data)
 	if request.data["list_id_excel_file"]:
 		list_id_pdf_file = request.data["list_id_excel_file"]
@@ -458,7 +462,7 @@ def deleteExcelFile(request):
 			fileWillBeDel.delete()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
 
-
+#NOT API BUT A FUNCTION WHICH GENERATE A VIRTUAL EXCEL REPORT
 def export_hnk_ticket_excel(from_date, to_date):
 	col_names = ["","Account","Category","file","CreatedTime","ConfirmedTime","SendedTime","creator","confirmer","sender","Confirmed","Signed","Sended"]
 	actlogs = pdfFile.objects.filter(createdTime__date__gte=from_date,createdTime__date__lte=to_date)|pdfFile.objects.filter(sendingTime__date__gte=from_date,createdTime__date__lte=to_date)
@@ -562,7 +566,7 @@ def export_hnk_ticket_excel(from_date, to_date):
 	response['Content-Disposition'] = 'attachment;filename={}_{}.xlsx'.format(from_date,to_date)
 
 	return response
-
+#UPDATE USER PROFILE
 @api_view(["POST"])
 def update_profile(request):
 	user = request.user

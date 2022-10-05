@@ -26,7 +26,8 @@ class accountEmail(models.Model):
     account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
     email=models.EmailField(blank=True,null=True)
     def __str__(self):
-        return "{}".format(str(self.email)) 
+        return "{}  {}".format(str(self.account),str(self.email)) 
+
 class excel(models.Model):
     filename                =models.ForeignKey(document, on_delete=models.CASCADE)
     #group,account,postStartDate,postEndDate,mechanicsGetORDiscount,noiDungChuongTrinh,budgetRir,loaiCt
@@ -41,7 +42,7 @@ class excel(models.Model):
     loaiCt                  =models.CharField(max_length=20,null=True,blank=True)
 
     def __str__(self):
-        return "{}".format(str(self.filename))
+        return "{} {}".format(str(self.filename.pk),self.account)
 class pdfFile(models.Model):
     masterFile=models.ForeignKey(document, on_delete=models.CASCADE)
     slaveFile=models.FileField(upload_to="documents/slavefiles")
