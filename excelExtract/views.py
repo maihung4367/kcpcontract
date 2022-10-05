@@ -303,6 +303,7 @@ def sign_and_send_pdf(request):
 	response_obj = requests.post(r"https://api.pvs.com.vn/user-api/api/token/", data=json.dumps(account_data),headers=headers)
 	token=response_obj.json()['data']['access']
 	print(token)
+	print("response_obj.status_code",response_obj.status_code)
 	if response_obj.status_code >= 200 and response_obj.status_code<300:
 		try:
 			
@@ -316,15 +317,18 @@ def sign_and_send_pdf(request):
 					account = str(pdfFile.objects.get(pk=int(i)).account)
 					if account not in accountCate:
 						accountCate.append(account)
+				print(accountCate)
 				for account in accountCate:
 					listfile=[]
 					listct=[]
 					for i in list_id:
 						if account == str(pdfFile.objects.get(pk=int(i)).account):
+							print(account)
 							pdf=pdfFile.objects.get(pk=int(i))	
 							pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 							linkfile=settings.URL+"/"+str(pdffile)
 							chuongtrinh=str(pdfFile.objects.get(pk=int(i)).loaict).split(",")
+							print("chuongtrỉnh",chuongtrinh)
 							for ct in chuongtrinh:
 								if ct not in listct:
 									listct.append(ct)
@@ -369,7 +373,7 @@ def sign_and_send_pdf(request):
 								listemail.append(email)
 							print(listfile)
 							print(email)
-							send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
+						send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
 					else:
 						log+=("{}:failed".format(account))
 				return Response({"log":log}, status=status.HTTP_200_OK)
