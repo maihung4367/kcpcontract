@@ -441,7 +441,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			filename=""
 			if errorFlag:
 				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+				continue
 			else:
 				annouceExist=annouceExist  +" {}_Success ".format(str(f))
 				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
@@ -742,7 +742,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			filename=""
 			if errorFlag:
 				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+				continue
 			else:
 				annouceExist=annouceExist  +" {}_Success ".format(str(f))
 				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
@@ -1039,7 +1039,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			filename=""
 			if errorFlag:
 				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+				continue
 			else:
 				annouceExist=annouceExist  +" {}_Success ".format(str(f))
 				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
@@ -1338,7 +1338,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			filename=""
 			if errorFlag:
 				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				filename="{}_{}PleaseCheck.pdf".format(f,str(datetime.now().date()))
+				continue
 			else:
 				annouceExist=annouceExist  +" {}_Success ".format(str(f))
 				filename="ThưThôngBáo_{}_{}.pdf".format(f,str(datetime.now().date()))
