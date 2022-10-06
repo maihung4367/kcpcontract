@@ -31,8 +31,6 @@ def send_noti_to_partner_sign_by_email2(list_system_link_file_pdf, customer_emai
 
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=[customer_email,])
 	msg.content_subtype = "html"
-
-	
 	msg.send()
 def send_noti_to_confirmer(customer_emails):
 	subject = " KCV_THÔNG BÁO CHƯƠNG TRÌNH CẦN XÁC NHẬN THÁNG {}".format(datetime.now().strftime("%m.%Y"))

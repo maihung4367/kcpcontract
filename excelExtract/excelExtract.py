@@ -248,7 +248,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"{}".format(headers[i]),"B",0,"L",1)
+					pdf.cell(90,5,"{}".format(headers[i]),"B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -279,9 +279,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:											
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -302,9 +302,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -344,9 +344,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -385,9 +385,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postEndDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -410,7 +410,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"","B",0,"L",1)
+					pdf.cell(90,5,"","B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -545,7 +545,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"{}".format(headers[i]),"B",0,"L",1)
+					pdf.cell(90,5,"{}".format(headers[i]),"B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -576,9 +576,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -598,9 +598,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -640,9 +640,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -681,9 +681,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -706,7 +706,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"","B",0,"L",1)
+					pdf.cell(90,5,"","B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -844,7 +844,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"{}".format(headers[i]),"B",0,"L",1)
+					pdf.cell(90,5,"{}".format(headers[i]),"B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -875,9 +875,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -897,9 +897,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -939,9 +939,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -980,9 +980,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -1005,7 +1005,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"","B",0,"L",1)
+					pdf.cell(90,5,"","B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -1143,7 +1143,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"{}".format(headers[i]),"B",0,"L",1)
+					pdf.cell(90,5,"{}".format(headers[i]),"B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
@@ -1174,9 +1174,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -1196,9 +1196,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5,"",0,0,"L")
+											pdf.cell(90,5,"",0,0,"L")
 										else:
-											pdf.cell(80,5,string,0,0,"L")
+											pdf.cell(90,5,string,0,0,"L")
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -1238,9 +1238,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -1279,9 +1279,9 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 									if headers[col]=='Product':
 										string=data.product
 										if string== None:
-											pdf.cell(80,5*line,"",0,0,"L")
+											pdf.cell(90,5*line,"",0,0,"L")
 										else:
-											pdf.cell(80,5*line,string,0,0,"L",)
+											pdf.cell(90,5*line,string,0,0,"L",)
 									elif headers[col]=="Post start date":
 										if data.postStartDate:
 											pdf.cell(60,5*line,"{}".format(data.postStartDate.strftime("%d/%m/%Y")),0,0,"L")
@@ -1304,7 +1304,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				elif i==1:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(80,5,"","B",0,"L",1)
+					pdf.cell(90,5,"","B",0,"L",1)
 				elif i ==2:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
