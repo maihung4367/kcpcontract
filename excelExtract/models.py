@@ -26,7 +26,7 @@ class accountEmail(models.Model):
     account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
     email=models.EmailField(blank=True,null=True)
     def __str__(self):
-        return "{}  {}".format(str(self.account),str(self.email)) 
+        return "{}".format(str(self.email)) 
 
 class excel(models.Model):
     filename                =models.ForeignKey(document, on_delete=models.CASCADE)
