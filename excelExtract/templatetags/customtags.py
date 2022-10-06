@@ -43,13 +43,7 @@ def scheckSlaveFile(excelfile):
 		return False
 	else:
 		return True
-@register.filter(name="redColorPlsCheck")
-def redColorPlsCheck(name):
-	if "PleaseCheck" in name:
-		print(name)
-		return True
-	else:
-		return False
+
 
 @register.simple_tag()
 def get_info_profile(user):

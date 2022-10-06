@@ -238,30 +238,28 @@
         </div>
     </form>
 </div>
-<!-- Modal view PDF -->
-<div id="viewPDF" class="modal">
-    <form action="/" method="post">
-        {% csrf_token %}
-        <div class="modal__content">
-            <div class="modal__title">
-                <i class="fa-solid fa-file-pdf"></i>
-                <p>View file</p>          
-            </div>
-
-            <div class="modal__detail">
-                <span id="change_link_pdf">
-                    
-                   </span>
-            </div>
-
-            
-            <div class="modal__footer">
-                <button class="btn_save">Xong</button>
-            </div>
-            
-            <a href="#" class="modal__close">&times;</a>
+<div id="viewPDF" class="modal"  >
+    
+    <div class="modal__content">
+        <div class="modal__title">
+            <i class="fa-solid fa-file-pdf"></i>
+            <p>View file</p>          
         </div>
-    </form>
+
+        <div class="modal__detail">
+            <span id="change_link_pdf">
+             
+            </span>
+        </div>
+
+        
+        <div class="modal__footer">
+            <a href="#" > <button class="btn_save">Xong</button></a>
+        </div>
+        <a href="#" class="modal__close">&times;</a>
+       
+    </div>
+
 </div>
 
 <script>
