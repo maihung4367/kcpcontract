@@ -10,6 +10,8 @@ def updateAllStandardName(self, request, queryset):
 class ExcelAcountAdmin(admin.ModelAdmin):
     model =excelAccount
     actions = [updateAllStandardName] 
+
+    
 admin.site.register(document)
 admin.site.register(excel)
 admin.site.register(pdfFile)

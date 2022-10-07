@@ -60,5 +60,6 @@ class pdfFile(models.Model):
     confirmed=models.BooleanField(default=False) 
     signed=models.BooleanField(default=False)   
     sended=models.BooleanField(default=False) 
+    errorFlags=models.BooleanField(default=False) 
     def __str__(self):
         return "{}".format(str(self.slaveFile).replace("documents/slavefiles/",""))

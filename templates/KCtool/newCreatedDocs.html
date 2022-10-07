@@ -54,9 +54,11 @@
                 </td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
-                
+                {% if pdf.errorFlags %}
+                <td style="color: crimson;font-weight: 900;">{{pdf.slaveFile|subNameFileFilter}}</td>
+                {% else %}
                 <td >{{pdf.slaveFile|subNameFileFilter}}</td>
-                
+                {% endif %}
                 <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
                 <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
                     {% for email in pdf.emailExtracted.all %}
@@ -78,9 +80,7 @@
                             </td>
                             <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
                             <td>{{pdf.loaict}}</td>
-                            
-                            <td >{{pdf.slaveFile|subNameFileFilter}}</td>
-                            
+                            <td >{{pdf.slaveFile|subNameFileFilter}}</td>                   
                             <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
                             <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
                                 {% for email in pdf.emailExtracted.all %}
