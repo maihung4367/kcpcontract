@@ -1225,10 +1225,11 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 					datas=excel.objects.filter(filename=file,account=f,loaiCt=ct,mechanicsGetORDiscount=mecha.get("mechanicsGetORDiscount"))
 					print(datas)
 					for row,data in enumerate(datas):
-						for col,colAlphabet in enumerate(["A","B","C","D"]):
-							if data.postStartDate==None or data.postEndDate==None:
+						if data.postStartDate==None or data.postEndDate==None:
 								errorFlag=True
 								continue
+						for col,colAlphabet in enumerate(["A","B","C","D"]):
+							
 							mechanicsString=str(data.mechanicsGetORDiscount).replace("\n","")
 							if row >0:
 								mechanicsString=""	
