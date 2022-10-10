@@ -452,11 +452,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			print(maxpageIndex)
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
-			
-			if errorFlag:
-				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-			else:
-				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+			annouceExist=annouceExist  +" {}_Success ".format(str(f))
 			filename="THUTHONGBAO_{}_{}.pdf".format(str(f).upper(),str(datetime.now().date()))
 			with open("pdffile.pdf",'rb') as pdf:
 				print(1)
@@ -766,11 +762,8 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			# pdf.write_html(html)
 			
 			
-			if errorFlag:
-				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				
-			else:
-				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+			
+			annouceExist=annouceExist  +" {}_Success ".format(str(f))
 			filename="THUTHONGBAO_{}_{}.pdf".format(str(f).upper(),str(datetime.now().date()))
 			
 			print(filename)
@@ -1074,11 +1067,8 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
 			
-			if errorFlag:
-				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				
-			else:
-				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+			
+			annouceExist=annouceExist  +" {}_Success ".format(str(f))
 			filename="THUTHONGBAO_{}_{}.pdf".format(str(f).upper(),str(datetime.now().date()))		
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
@@ -1388,11 +1378,8 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 			pdf.output("pdffile.pdf")
 			# pdf.write_html(html)
 			
-			if errorFlag:
-				annouceExist=annouceExist  +" {}_NEEDTOCHECK ".format(str(f))
-				
-			else:
-				annouceExist=annouceExist  +" {}_Success ".format(str(f))
+			
+			annouceExist=annouceExist  +" {}_Success ".format(str(f))
 			filename="THUTHONGBAO_{}_{}.pdf".format(str(f).upper(),str(datetime.now().date()))	
 			print(filename)
 			with open("pdffile.pdf",'rb') as pdf:
