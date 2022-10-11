@@ -154,10 +154,10 @@ def signedDocs(request):
 			pdfs = pdfs.filter(account=account).order_by("-sendingTime")
 		if request.GET.get("todate",None):
 			todate=request.GET.get("todate")
-			pdfs = pdfs.filter(createdTime__date__lte=todate).order_by("-sendingTime")|pdfs.filter(sendingTime__date__lte=todate).order_by("-sendingTime")
+			pdfs = pdfs.filter(sendingTime__date__lte=todate).order_by("-sendingTime")
 		if request.GET.get("fromdate",None):	
 			fromdate=request.GET.get("fromdate")
-			pdfs = pdfs.filter(createdTime__date__gte=fromdate).order_by("-sendingTime")|pdfs.filter(sendingTime__date__gte=fromdate).order_by("-sendingTime")
+			pdfs = pdfs.filter(sendingTime__date__gte=fromdate).order_by("-sendingTime")
 		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
 			fromdate2=request.GET.get("fromdate2")
 			todate2=request.GET.get("todate2")
