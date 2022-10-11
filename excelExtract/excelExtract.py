@@ -283,7 +283,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"{}".format(headers[i]),"B",1,"L",1)
+					pdf.cell(50,5,"{}".format(headers[i]),"B",1,"L",1)
 
 			#table data
 			for ct in listloaict2:
@@ -319,7 +319,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									if headers[col]=='Mechanics: get/discount':
@@ -337,7 +337,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 							else:
 								if row ==(len(datas)-1):
@@ -375,7 +375,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									mechanicsStringLen=len(mechanicsString)
@@ -412,7 +412,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 									
 
 			#table footer
@@ -432,7 +432,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"","B",1,"L",1)
+					pdf.cell(50,5,"","B",1,"L",1)
 					
 			#add footer
 			pdf.set_y(pdf.get_y()+5)
@@ -589,7 +589,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"{}".format(headers[i]),"B",1,"L",1)
+					pdf.cell(50,5,"{}".format(headers[i]),"B",1,"L",1)
 			
 			#table data
 			for ct in listloaict2:
@@ -623,7 +623,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									if headers[col]=='Mechanics: get/discount':
@@ -641,7 +641,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 							else:
 								if row ==(len(datas)-1):
@@ -679,7 +679,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									mechanicsStringLen=len(mechanicsString)
@@ -716,7 +716,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 
 			#table footer
@@ -736,7 +736,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"","B",1,"L",1)
+					pdf.cell(50,5,"","B",1,"L",1)
 					
 			#add footer
 			pdf.set_y(pdf.get_y()+5)
@@ -895,7 +895,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"{}".format(headers[i]),"B",1,"L",1)
+					pdf.cell(50,5,"{}".format(headers[i]),"B",1,"L",1)
 
 	# 		#table data
 			for ct in listloaict2:
@@ -930,7 +930,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 
 								else:
 									if headers[col]=='Mechanics: get/discount':
@@ -948,7 +948,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 
 							else:
 								if row ==(len(datas)-1):
@@ -986,7 +986,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 	
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 
 								else:
 									mechanicsStringLen=len(mechanicsString)
@@ -1023,7 +1023,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 
 			#table footer
@@ -1043,7 +1043,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"","B",1,"L",1)
+					pdf.cell(50,5,"","B",1,"L",1)
 					
 			#add footer
 			pdf.set_y(pdf.get_y()+5)
@@ -1206,7 +1206,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"{}".format(headers[i]),"B",1,"L",1)
+					pdf.cell(50,5,"{}".format(headers[i]),"B",1,"L",1)
 
 			#table data
 			for ct in listloaict2:
@@ -1241,7 +1241,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									if headers[col]=='Mechanics: get/discount':
@@ -1259,7 +1259,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 							else:
 								if row ==(len(datas)-1):
@@ -1297,7 +1297,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 								else:
 									mechanicsStringLen=len(mechanicsString)
@@ -1334,7 +1334,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 										
 									elif headers[col]=="Post end date":
 										if data.postEndDate:
-											pdf.cell(60,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
+											pdf.cell(50,5*line,"{}".format(data.postEndDate.strftime("%d/%m/%Y")),0,1,"L")
 										
 
 			#table footer
@@ -1354,7 +1354,7 @@ def exportFiles(loaict,fileID,loaiAccount,user):
 				else:
 					pdf.set_font('arial', 'B', size=9)
 					pdf.set_fill_color(153,204,255)
-					pdf.cell(60,5,"","B",1,"L",1)
+					pdf.cell(50,5,"","B",1,"L",1)
 					
 			#add footer
 			pdf.set_y(pdf.get_y()+5)
