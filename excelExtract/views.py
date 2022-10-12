@@ -236,9 +236,6 @@ def create_pdf(request):
 								listEmail.append(email.email)
 					except:
 						pass
-				print(listAccount)
-				print(listEmail)
-				
 				send_email.send_noti_to_confirmer(listEmail)			
 				
 			return Response({"annouce":annouce}, status=status.HTTP_200_OK)
@@ -295,7 +292,7 @@ def confirm_pdf(request):
 			print(list_id_pdf_file)
 			print(list_id)
 			numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-			send_email.send_noti_to_partner_sign_by_email2([], "longnld@pvs.com.vn")
+			send_email.send_noti_to_partner_sign_by_email2([], "thu.phamnguyen@kcc.com")
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -415,6 +412,8 @@ def send_pdf(request):
 					pdf=pdfFile.objects.get(pk=int(i))	
 					pdffile=pdfFile.objects.get(pk=int(i)).slaveFile
 					pdf.sendingTime=datetime.now()
+					pdf.save()
+					print(datetime.now())
 					linkfile=settings.URL+"/"+str(pdffile)
 					chuongtrinh=str(pdfFile.objects.get(pk=int(i)).loaict).split(",")
 					for ct in chuongtrinh:
@@ -431,7 +430,7 @@ def send_pdf(request):
 						print(email)
 				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
 			else:
-				log+=("listfile=[]")
+				log+=("there are no files")
 		return Response({"log":log}, status=status.HTTP_200_OK)
 	except:
 		return Response({"log":"failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

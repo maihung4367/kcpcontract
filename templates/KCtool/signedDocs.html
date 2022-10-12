@@ -86,7 +86,7 @@
                 <td value="{{pdf.account}}">{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
                 <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>{{pdf.sendingTime|date:"d/m/Y"}} {{pdf.sendingTime|time:"H:i"}}</td>
+                <td>{{pdf.sendingTime|date:"d/m/Y"}},{{pdf.sendingTime|time:"H:i"}}</td>
                 {% if pdf.sended %}
                 <td>{{pdf.sended|signedValue}}</td>
                 {% else%}

@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     "is_active",'is_signer','is_uploader', "pk", "last_login"]
     model = User
     ordering = ["user_name", "last_login"]
-    fieldsets = ((None, {'fields': ('user_name',)}), ('Password',{'fields': ('password',)}), ('dates',{'fields':('last_login',)}), ('Permissions', {'fields': ('is_admin','is_staff','is_active','is_superuser','is_signer','user_permissions','groups')}),)
+    fieldsets = ((None, {'fields': ('user_name',)}), ('Password',{'fields': ('password',)}), ('dates',{'fields':('last_login',)}), ('Permissions', {'fields': ('is_admin','is_staff','is_active','is_superuser','is_signer','is_uploader','user_permissions','groups')}),)
 
     add_fieldsets = ((None,{
         'classes': ('wide',),

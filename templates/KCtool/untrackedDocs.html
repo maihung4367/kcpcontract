@@ -49,8 +49,8 @@
                 
                 <td >{{pdf.slaveFile|subNameFileFilter}}</td>
                 
-                <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
-                <td><a class="btn-edit" id="{{pdf.pk}}" onclick="add_email(this.id)"><img class="icon-edit" src="{% static 'image/edit-3.png' %}" alt="edit"></a>
+                <td>{{pdf.createdTime|date:"d/m/Y"}},{{pdf.createdTime|time:"H:i"}}</td>
+                <td>
                     {% for email in pdf.emailExtracted.all %}
                         {{email}}<hr>
                         {% endfor %}
