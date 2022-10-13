@@ -26,7 +26,7 @@
                 <th>
                     <input type="checkbox" name="check_all" id="check_all" class="checkall">
                 </th>
-                <th> <select id="account" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
+                <th width="10%"> <select id="account" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
                     <option>Loại account</option>
                         {% for account in accountList %}
                         <option value="{{account}}"
@@ -37,12 +37,12 @@
                         </option>
                     {% endfor %}
                 </select></th>
-                <th>Danh mục</th>
-                <th>Tên file</th>
-                <th>Thời gian tạo</th>
-                <th>Email</th>
-                <th>Người tạo</th>
-                <th>Xem file</th>
+                <th width="10%">Danh mục</th>
+                <th width="30%">Tên file</th>
+                <th width="10%">Thời gian tạo</th>
+                <th width="20%">Email</th>
+                <th width="10%">Người tạo</th>
+                <th width="5%">Xem file</th>
             </tr>
             {% if user.is_admin %}
                 {% for pdf in unconfirmpdfs %}
