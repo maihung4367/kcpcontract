@@ -9,7 +9,9 @@
             <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
+            {% if not user.is_uploader %}
             <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
+            
             <button class="all-sign">
                 
                 <a href="#"  onclick="sign_all_pdf()">
@@ -17,7 +19,7 @@
                 Xác nhận 
                 </a>                
             </button>
-            
+            {% endif %}
         </div>
     </div>
     <div class="table_content">
@@ -44,7 +46,7 @@
                 <th width="10%">Người tạo</th>
                 <th width="5%">Xem file</th>
             </tr>
-            {% if user.is_admin %}
+            {% if user.is_admin or user.is_uploader %}
                 {% for pdf in unconfirmpdfs %}
                 {% if pdf.account in accountList %}
                 <tr>
@@ -55,7 +57,7 @@
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
                 {% if pdf.errorFlags %}
-                <td style="color: crimson;font-weight: 900;">{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td >{{pdf.slaveFile|subNameFileFilter}}</td>
                 {% else %}
                 <td >{{pdf.slaveFile|subNameFileFilter}}</td>
                 {% endif %}
