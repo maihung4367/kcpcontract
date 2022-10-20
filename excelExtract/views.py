@@ -25,7 +25,9 @@ import openpyxl
 from openpyxl.styles import Alignment,NamedStyle
 from openpyxl.writer.excel import save_virtual_workbook
 from user.forms import LoginForm
-
+import os
+import zipfile
+import io
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
@@ -358,7 +360,7 @@ def sign_and_send_pdf(request):
 								with open("file.pdf","wb") as file:
 									file.write(binarytext)
 								with open ("file.pdf","rb") as file:
-									name="ThưThôngBáo_{}_{}.pdf".format(account,str(datetime.now().date()))
+									name="THUTHONGBAO_{}_{}.pdf".format(str(account).upper(),str(datetime.now().date()))
 									newpdf=pdf.slaveFile.save(name,File(file))
 									pdf.sended=True
 									pdf.signed=True
@@ -460,7 +462,31 @@ def deleteExcelFile(request):
 			print(fileWillBeDel)
 			fileWillBeDel.delete()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+@api_view(['POST'])
+def downloadFiles(request):
+	print(request.data)
+	list_id_pdf_file = request.data["list_id_pdf_file"]
+	list_id=list_id_pdf_file.split(",")
+	filenames=[str(pdfFile.objects.get(pk=int(id)).slaveFile) for id in list_id ]
+	print(filenames)
+	zip_subdir = "somefiles"
+	s = io.BytesIO()
+	with zipfile.ZipFile(s, "w") as zf:
+		for fpath in filenames:
+			# Calculate path for file in zip
+			fdir, fname = os.path.split(fpath)
+			print(fname)
+			zip_path = os.path.join(zip_subdir, fname)
 
+			# Add file, at correct path
+			zf.write(fpath, zip_path)
+	
+	resp = HttpResponse(s.getvalue())
+	
+	# ..and correct content-disposition
+	resp['content_type']= "application/x-zip-compressed"
+	
+	return resp
 #NOT API BUT A FUNCTION WHICH GENERATE A VIRTUAL EXCEL REPORT
 def export_hnk_ticket_excel(from_date, to_date):
 	col_names = ["","Account","Category","file","CreatedTime","ConfirmedTime","SendedTime","creator","confirmer","sender","Confirmed","Signed","Sended"]
