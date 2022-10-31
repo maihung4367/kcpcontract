@@ -10,32 +10,34 @@
         </div>
         <div class="btn_content">
             {% if not user.is_uploader %}
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
-            
-            <button class="all-sign">
+                <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
                 
-                <a href="#"  onclick="sign_all_pdf()">
-                    <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                Xác nhận 
-                </a>                
-            </button>
+                <button class="all-sign">
+                    
+                    <a href="#"  onclick="sign_all_pdf()">
+                        <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
+                    Xác nhận 
+                    </a>                
+                </button>
             {% elif user.is_admin %}
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
-            
-            <button class="all-sign">
+                <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
                 
-                <a href="#"  onclick="sign_all_pdf()">
-                    <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
-                Xác nhận 
-                </a>                
-            </button>
+                <button class="all-sign">
+                    
+                    <a href="#"  onclick="sign_all_pdf()">
+                        <img src="{% static 'image/vb-sign.png' %}" alt="vb-sign">
+                    Xác nhận 
+                    </a>                
+                </button>
             {% endif %}
         </div>
     </div>
     <div class="table_content">
         <table>
             <tr>
-
+                <th>
+                    <input type="checkbox" name="check_all" id="check_all" class="checkall">
+                </th>
                 <th width="10%"> <select id="account" style="font-size:14px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
                     <option>Loại account</option>
                         {% for account in accountList %}
@@ -45,9 +47,7 @@
                         {% endif %}>
                             {{account}}
                         </option>
-                    {%                 <th>
-                    <input type="checkbox" name="check_all" id="check_all" class="checkall">
-                </th>endfor %}
+                    {% endfor %}             
                 </select></th>
                 <th width="10%">Danh mục</th>
                 <th width="20%">Tên file</th>
@@ -373,4 +373,5 @@
             });          
         }); // end ready
         </script>    
+
 {% endblock %}
