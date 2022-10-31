@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
 from excelExtract.models import accountEmail, document, excelAccount,pdfFile, excel
 from . import excelExtract
-from user.models import Profile
+from user.models import Profile, User
 from django.db import transaction
 from rest_framework import status
 from django.conf import settings
@@ -175,15 +175,26 @@ def signedDocs(request):
 
 def untrackedDocs(request):
 	if request.user.is_authenticated:
-		untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
-		Alldocs=pdfFile.objects.all().order_by("-createdTime")
-		
-		return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
+		if request.user.is_admin or request.user.is_uploader :
+			untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
+			Alldocs=pdfFile.objects.all().order_by("-createdTime")
+			
+			return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
 
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
-
+def staffManager(request):
+	if request.user.is_authenticated:
+		if request.user.is_admin :
+			staffList=User.objects.all()
+			return render(request,"KCtool/staffManager.html",{"staffList":staffList, "active_id":6})
+	else :
+		form = LoginForm()
+		return render(request, 'login.html', {'form':form})
+# def accountUpdate(request,staffId):
+# 	print(staffId)
+# 	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId})
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -294,7 +305,7 @@ def confirm_pdf(request):
 			print(list_id_pdf_file)
 			print(list_id)
 			numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-			send_email.send_noti_to_partner_sign_by_email2([], "thu.phamnguyen@kcc.com")
+			send_email.send_noti_to_partner_sign_by_email2([], "diennt@pvs.com.vn")
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -424,13 +435,13 @@ def send_pdf(request):
 					listfile.append(linkfile)
 
 			if listfile != []:
-				listemail=[]
-				for email in pdf.emailExtracted.all():
-					if email not in listemail:
-						listemail.append(email)
-						print(listfile)
-						print(email)
-				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
+				# listemail=[]
+				# for email in pdf.emailExtracted.all():
+				# 	if email not in listemail:
+				# 		listemail.append(email)
+				# 		print(listfile)
+				# 		print(email)
+				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,['diennt@pvs.com.vn',])
 			else:
 				log+=("there are no files")
 		return Response({"log":log}, status=status.HTTP_200_OK)
