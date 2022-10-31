@@ -192,9 +192,9 @@ def staffManager(request):
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
-# def accountUpdate(request,staffId):
-# 	print(staffId)
-# 	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId})
+def accountUpdate(request,staffId):
+	print(staffId)
+	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId})
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -435,13 +435,13 @@ def send_pdf(request):
 					listfile.append(linkfile)
 
 			if listfile != []:
-				# listemail=[]
-				# for email in pdf.emailExtracted.all():
-				# 	if email not in listemail:
-				# 		listemail.append(email)
-				# 		print(listfile)
-				# 		print(email)
-				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,['diennt@pvs.com.vn',])
+				listemail=[]
+				for email in pdf.emailExtracted.all():
+					if email not in listemail:
+						listemail.append(email)
+						print(listfile)
+						print(email)
+				send_email.send_noti_to_partner_sign_by_email(",".join(listct),account,listfile,listemail)
 			else:
 				log+=("there are no files")
 		return Response({"log":log}, status=status.HTTP_200_OK)
