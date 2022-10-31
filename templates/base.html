@@ -18,6 +18,123 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
+        tr:hover {background-color: #D6EEEE;}
+        #aLarm {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#aLarm.open {
+    display: flex;
+}
+
+#aLarm .modal-container {
+    background: #fff;
+    width: 500px;
+    max-width: calc(100% - 32px);
+    /*cách vào 2 bên khi thu nhỏ */
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.9s;
+    /* gọi animation */
+    border-radius: 4px;
+}
+
+#aLarm .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: #003A8C;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+}
+
+#aLarm .modal-header i {
+    margin-right: 16px;
+}
+
+#aLarm .modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+}
+
+#aLarm .modal-close:hover {
+    opacity: 0.8;
+}
+
+#aLarm .modal-body {
+    padding: 16px;
+}
+
+#aLarm .modal-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#aLarm .modal-label i {
+    margin-right: 5px;
+}
+
+#aLarm .modal-label .icon-success {
+    color: #56ff56;
+    font-size: 18px;
+}
+
+#aLarm .modal-label .icon-fail {
+    color: #ff5656;
+    font-size: 18px;
+}
+
+#aLarm .modal-detail {
+    margin-left: 25px;
+    padding: 10px 0;
+}
+
+#aLarm .modal-detail .modal-desc {
+    background: #E6ECF4;
+    padding: 5px;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+#aLarm .btn-group {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#aLarm .btn--success {
+    background: #003A8C;
+    padding: 8px 15px;
+    border: none;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#aLarm .btn--success:hover {
+    background: #E6ECF4;
+    color: #333;
+}
+
         .modal_loading {
             position: fixed;
             background-color: rgba(255, 255, 255, 0.878);
@@ -151,6 +268,15 @@
                         <a href="{% url 'KCTool:untrackedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản chưa được quản lý</a> 
                     </li>
                     {% endif %}
+                    {% if request.user.is_admin %}
+                    <li class="nav_item
+                    {% if active_id == 6 %}
+                    active
+                    {% endif %}
+                    ">
+                        <a href="{% url 'KCTool:staffManager' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Quản lý nhân sự </a> 
+                    </li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
@@ -212,6 +338,8 @@
             </div>
         </form>
     </div>
+    
+   
      <!-- Modal Info -->
  <div id="info" class="modal">
     {% get_info_profile request.user as result %}

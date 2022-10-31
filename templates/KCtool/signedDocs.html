@@ -9,6 +9,11 @@
             <span class="number_vb">{{numbersendedpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
+            <button class="all-sign" > 
+                <a href="#" onclick="download_all_pdf()">
+                    <img src="{% static 'image/icons8-download-24.png' %}" alt="email">
+                Download
+                </a>   
             {% if user.is_signer or user.is_admin %}
             <button class="all-sign" > 
                 <a href="#" onclick="send_all_pdf()">
@@ -51,14 +56,14 @@
     <div class="table_content">
         <table>
             <tr>
-                <th>
+                <th width="5%">
                     <input type="checkbox" name="check_all" id="check_all" class="checkall">
                 </th>
                 <th width="10%"> <select id="account" 
                     style="
-                    font-size:17px;
+                    font-size:14px;
                     font-weight: 600; 
-                    border: none;
+                    border: none;   
                     outline: none;
                     border-radius: 4px;
                     background: #E6ECF4;" >
@@ -72,7 +77,7 @@
                             </option>
                         {% endfor %}</th>
                 <th width="10%">Danh mục</th>
-                <th width="30%">Tên file</th>
+                <th width="20%">Tên file</th>
                 <th width="10%">Thời gian kí gửi</th> 
                 <th width="10%">Trạng thái</th>
                 <th width="20%">Email</th>
@@ -294,6 +299,62 @@
                 alert(resp.log)
                 window.location.replace(``);
             },
+            error:function(xhr, status, error){            
+              alert(xhr.responseText);
+                //window.location.replace(``);
+            }
+        }) //end ajax
+    }
+   
+</script> 
+<script>
+    function download_all_pdf(){
+        var arr_pk_pdf_file = [];
+        var postData = new FormData();
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });
+        alert(arr_pk_pdf_file)
+        
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:download_pdf' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            xhrFields:{
+            responseType: 'blob'
+        },
+        success: function (resp) {
+            console.log(resp)
+            var blob = new Blob([resp]);
+            var link=document.createElement('a');
+            var url = window.URL || window.webkitURL;
+            link.href=url.createObjectURL(blob);
+            var date= new Date()
+            var dd=date.getDate()
+            var mm = date.getMonth()+1; 
+            var yyyy = date.getFullYear();
+            if(dd<10) 
+                {
+                    dd='0'+dd;
+                } 
+
+                if(mm<10) 
+                {
+                    mm='0'+mm;
+                } 
+            var today = dd+'/'+mm+'/'+yyyy;
+            link.download=`${today}.zip`;
+            link.click();
+        },
+        
             error:function(xhr, status, error){            
               alert(xhr.responseText);
                 //window.location.replace(``);

@@ -28,6 +28,7 @@ from user.forms import LoginForm
 import os
 import zipfile
 import io
+from django.core.files.base import ContentFile
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
@@ -478,25 +479,19 @@ def downloadFiles(request):
 	print(request.data)
 	list_id_pdf_file = request.data["list_id_pdf_file"]
 	list_id=list_id_pdf_file.split(",")
-	filenames=[str(pdfFile.objects.get(pk=int(id)).slaveFile) for id in list_id ]
-	print(filenames)
-	zip_subdir = "somefiles"
-	s = io.BytesIO()
-	with zipfile.ZipFile(s, "w") as zf:
-		for fpath in filenames:
-			# Calculate path for file in zip
-			fdir, fname = os.path.split(fpath)
-			print(fname)
-			zip_path = os.path.join(zip_subdir, fname)
-
-			# Add file, at correct path
-			zf.write(fpath, zip_path)
-	
-	resp = HttpResponse(s.getvalue())
-	
-	# ..and correct content-disposition
-	resp['content_type']= "application/x-zip-compressed"
-	
+	filenames=[pdfFile.objects.get(pk=int(id)).slaveFile for id in list_id ]
+	temp_file = ContentFile(b"", name="{}.zip".format(str(datetime.now())))
+	with zipfile.ZipFile(temp_file, mode='w', compression=zipfile.ZIP_DEFLATED) as zip_file:
+		files = filenames
+		for file_ in files:
+			path = file_.name.replace("documents/slavefiles/","")
+			print(path)
+			zip_file.writestr(path, file_.read())
+	file_size = temp_file.tell()
+	temp_file.seek(0) 
+	resp = HttpResponse(temp_file, content_type='application/zip')
+	resp['Content-Disposition'] = 'attachment; filename=%s' % "{}.zip".format(str(datetime.now()))
+	resp['Content-Length'] = file_size
 	return resp
 #NOT API BUT A FUNCTION WHICH GENERATE A VIRTUAL EXCEL REPORT
 def export_hnk_ticket_excel(from_date, to_date):
