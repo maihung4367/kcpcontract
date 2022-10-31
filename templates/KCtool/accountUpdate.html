@@ -1,0 +1,95 @@
+{% extends 'base.html'%}
+{% load customtags %}
+{% load static %}
+{% block content %}
+
+<section>
+    <div class="top_content">
+        <div class="title_content">
+            <p>Staff ID {{staffId}}</p>
+           
+        </div>
+        <div class="btn_content">
+            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
+        </div>
+    </div>
+    <div class="table_content">
+        <div class="modal__content">
+            <div class="modal__title">
+            
+                <p>Thông tin tài khoản</p>          
+            </div>
+
+            <div class="modal__detail">
+                <div class="user">
+                    
+                    <div class="info_name">
+                        <p>{{result.profile.full_name}}</p>
+                        <small>User: {{result.profile.user.user_name}}</small>
+                    </div>
+                </div>
+
+                <div class="input_group">
+                    <label for="full_name">
+                        Họ và tên
+                        <input type="text" name="full_name" placeholder="Họ và tên" value="{{result.profile.full_name}}" id="full_name">
+                    </label>
+                    <label for="phone">
+                        Số điện thoại
+                        <input type="tel" name="phone" placeholder="909 999 999" value="{{result.profile.phone_number}}" id="phone_number">
+                    </label>
+                    <label for="email">
+                        Email
+                        <input type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
+                    </label>
+                    <label for="passwd">
+                        Mật khẩu
+                        <div class="form-group has-feedback">
+                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
+                            <i class="showpass show-eye-open fas fa-eye"></i>
+                          </div>
+                    </label> 
+                </div>   
+            </div>
+
+            <div class="modal__title-child">
+                <p>Thông tin công ty</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group">
+                    <label for="company_name">
+                        Tên công ty
+                        <input type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
+                    </label>
+    
+                    <label for="title_name">
+                        Chức danh
+                        <input type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__title-child">
+                <p>Thông tin địa chỉ</p>          
+            </div>
+            <div class="modal__detail">
+                <div class="input_group input_address">
+                    <label for="company_address">
+                        Địa chỉ
+                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
+                    </label>
+                    
+                </div>   
+            </div>
+            <div class="modal__footer">
+                <button class="btn_cancel">Huỷ</button>
+                <button class="btn_save" id="save-info-profile">Lưu</button>
+            </div>
+            
+        </div>
+</div>
+    </div>
+    
+ </section>
+
+{% endblock %}
