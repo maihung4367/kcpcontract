@@ -306,7 +306,7 @@ def confirm_pdf(request):
 			print(list_id_pdf_file)
 			print(list_id)
 			numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-			send_email.send_noti_to_partner_sign_by_email2([], "diennt@pvs.com.vn")
+			send_email.send_noti_to_partner_sign_by_email2([], "thu.phamnguyen@kcc.com")
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
