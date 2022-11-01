@@ -1,5 +1,5 @@
 from django import template
-from excelExtract.models import document,excel,pdfFile
+from excelExtract.models import document,excel, excelAccount,pdfFile
 from user.models import Profile
 register =template.Library() 
 
@@ -43,8 +43,20 @@ def scheckSlaveFile(excelfile):
 		return False
 	else:
 		return True
+@register.filter(name="staffProfileEmail")
+def staffProfileEmail(staff):
+	email=Profile.objects.get(user=staff).email
+	return email
 
-
+@register.filter(name="staffAccount")
+def staffAccount(staff):
+	staffProfile=Profile.objects.get(user=staff)
+	print(staffProfile)
+	if excelAccount.objects.filter(responsibleBy=staffProfile).exists():
+		account=excelAccount.objects.filter(responsibleBy=staffProfile)
+		return account
+	else:
+		return None
 @register.simple_tag()
 def get_info_profile(user):
 	profile = Profile.objects.get(user=user)
