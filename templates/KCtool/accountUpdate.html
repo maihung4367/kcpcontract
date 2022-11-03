@@ -10,80 +10,78 @@
            
         </div>
         <div class="btn_content">
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
+            <button class="all-sign" " ><a href="{% url 'KCTool:delete_profile'%}?pk={{staffId}}" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
         </div>
     </div>
     <div class="table_content">
         <div class="modal__content">
-            <div class="modal__title">
-            
-                <p>Thông tin tài khoản</p>          
-            </div>
-
             <div class="modal__detail">
-                <div class="user">
-                    
-                    <div class="info_name">
-                        <p>{{result.profile.full_name}}</p>
-                        <small>User: {{result.profile.user.user_name}}</small>
-                    </div>
-                </div>
-
+                
                 <div class="input_group">
+                    
+                    <div style="width: 70%">
                     <label for="full_name">
                         Họ và tên
-                        <input type="text" name="full_name" placeholder="Họ và tên" value="{{result.profile.full_name}}" id="full_name">
-                    </label>
+                        <input type="text" name="full_name_update" id="full_name_update" placeholder="Họ và tên" value="{{staff.full_name}}"  style="width: 60%;
+                        outline: none;
+
+                        border: 1px solid black;
+                        padding: 5px ;
+                        border-radius: 4px;
+                        margin-top: 5px;
+                        color: #003A8C;margin-left: 50px;">
+                    </label><br>
                     <label for="phone">
                         Số điện thoại
-                        <input type="tel" name="phone" placeholder="909 999 999" value="{{result.profile.phone_number}}" id="phone_number">
-                    </label>
-                    <label for="email">
+                        <input type="tel" name="phone_update" id="phone_update" placeholder="909 999 999" value="{{staff.phone_number}}" style="width: 60%;
+                        outline: none;
+                        border: 1px solid black;
+                        padding: 5px ;
+                        border-radius: 4px;
+                        margin-top: 5px;
+                        color: #003A8C; margin-left: 24px;">
+                    </label><br>
+                    <label for="email" >
                         Email
-                        <input type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
+                        <input type="email" name="email_update" id="email_update" placeholder="Nhập email" required value="{{staff.email}}" style="width: 60%;
+                        outline: none;
+                        border: 1px solid black;
+                        padding: 5px ;
+                        border-radius: 4px;
+                        margin-top: 5px;
+                        color: #003A8C;margin-left: 78px;"> 
                     </label>
-                    <label for="passwd">
-                        Mật khẩu
-                        <div class="form-group has-feedback">
-                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
-                            <i class="showpass show-eye-open fas fa-eye"></i>
-                          </div>
-                    </label> 
-                </div>   
-            </div>
-
-            <div class="modal__title-child">
-                <p>Thông tin công ty</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group">
-                    <label for="company_name">
-                        Tên công ty
-                        <input type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
-                    </label>
-    
-                    <label for="title_name">
-                        Chức danh
-                        <input type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position">
-                    </label>
+                    </div><br><hr>
+                    <div >
+                        <div>
+                            Authenticate<br><br>   
+                            <input type="checkbox"  name="authen" value="is_admin" group="authen" {% if user.is_admin %} checked {% endif %}>Admin</input><br><br>
+                            <input type="checkbox"  name="authen" value="is_uploader" group="authen" {% if user.is_uploader %} checked {% endif %}>Uploader</input><br><br>
+                            <input type="checkbox"  name="authen" value="is_signer" group="authen" {% if user.is_signer %} checked {% endif %}>Signer</input><br><br>
+                        </div>
+                    </div><hr>
+                    <div>
+                        Account<br><br>   
+                        {% for page in accountpage %} 
+                        <div style="width:15%;display: inline-block;font-size: 15px;"> {% for account in page %}
+                        <input type="checkbox"  name="account_list" value="{{account}}" group="account_list" {% if account.responsibleBy == staff %} checked {% endif %} >
+                        {{account}}</input><br><br>
+                        {% endfor %}</div>{% endfor %}
+                    </div><hr>
                     
-                </div>   
-            </div>
-            <div class="modal__title-child">
-                <p>Thông tin địa chỉ</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group input_address">
-                    <label for="company_address">
-                        Địa chỉ
-                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
-                    </label>
-                    
-                </div>   
+                </div>       
+                
             </div>
             <div class="modal__footer">
-                <button class="btn_cancel">Huỷ</button>
-                <button class="btn_save" id="save-info-profile">Lưu</button>
+                <button style="padding: 5px 10px;
+                display: flex;
+                align-items: center;
+                border: 1px solid #003A8C;
+                color: #003A8C;
+                background: #fff;
+                border-radius: 3px;
+                cursor: pointer;
+                transition: all 0.5s;" id="save_value" value="{{staff.pk}}"onclick="submitUpdate(this.value)" onmouseover="this.style.textDecoration='underline';this.style.backgroundColor='#3399ff';" onmouseout="this.style.textDecoration='none';;this.style.backgroundColor='';">Lưu</button>
             </div>
             
         </div>
@@ -91,5 +89,49 @@
     </div>
     
  </section>
-
+ <script>
+    function submitUpdate(e){
+        var account_list_array = [];
+        var authen_list_array =[];
+        var identityUser = e;
+        var full_name=$("#full_name_update").val()
+        var phone=$("#phone_update").val()
+        var email=$("#email_update").val()
+        var postData = new FormData();
+        $.each($("input:checkbox[group='account_list']:checked"), function(i){
+            account_list_array.push($(this).val());
+        });
+        $.each($("input:checkbox[group='authen']:checked"), function(i){
+            authen_list_array.push($(this).val());
+        });
+        postData.append("full_name", full_name);
+        postData.append("phone", phone);
+        postData.append("email", email);
+        postData.append("staff_pk", identityUser);
+        postData.append("account_list_array",  account_list_array);
+        postData.append("authen_list_array", authen_list_array);
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:updateProfile' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers: { "X-CSRFToken": '{{csrf_token}}' },
+            beforeSend: function() {
+                    $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+            },
+            success: function(resp) {
+                alert(resp.msg)
+                window.location.replace(``);
+            },
+            error:function(xhr, status, error){            
+              alert(xhr.responseText);
+                //window.location.replace(``);
+            }
+        }) //end ajax
+    }
+   
+</script> 
+ 
 {% endblock %}

@@ -29,6 +29,7 @@ import os
 import zipfile
 import io
 from django.core.files.base import ContentFile
+from django.core.paginator import Paginator
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
@@ -194,13 +195,48 @@ def staffManager(request):
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
 def accountUpdate(request,staffId):
-	print(staffId)
-	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId})
+	user=User.objects.get(pk=int(staffId))
+	staff=Profile.objects.get(user=user)
+	accountLists=excelAccount.objects.all()
+	accountpage=Paginator(accountLists,5)
+	
+	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId,"staff":staff,"user":user,"accountpage":accountpage})
+def addNewProfile(request):	
+	account=request.GET.get("account")
+	if account:
+		user=User.objects.create(user_name=account)
+		password=request.GET.get("password")
+		user.set_password(password)
+		is_admin=request.GET.get("is_admin")
+		if is_admin:
+			user.is_admin=True
+		is_signer=request.GET.get("is_signer")
+		if is_signer:
+			user.is_signer=True
+		is_uploader=request.GET.get("is_uploader")
+		if is_uploader:
+			user.is_uploader=True
+		user.save()
+		userProfile=Profile.objects.create(user=user)
+		userProfile.phone_number=request.GET.get("phone")
+		userProfile.email=request.GET.get("email")
+		userProfile.full_name=request.GET.get("name")
+		userProfile.save()
+		return redirect("KCTool:staffManager")
+	return render(request,"KCtool/addNewProfile.html")
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
-
+def delete_profile(request):
+	userId=request.GET.get("pk",None)
+	try:
+		ID= int(userId)
+		user=User.objects.get(pk= ID)	
+		user.delete()
+	except:
+		pass
+	return redirect("KCTool:staffManager")
 #DJANGO API VIEWS
 #----------------------------------------------------------------------------------------------------
 #CREATE PDF API
@@ -597,6 +633,51 @@ def export_hnk_ticket_excel(from_date, to_date):
 	response['Content-Disposition'] = 'attachment;filename={}_{}.xlsx'.format(from_date,to_date)
 
 	return response
+
+@api_view(["POST"])
+def updateProfile(request): ##manage staff
+	data=request.data
+	staffId=int(data['staff_pk'])
+	staff=Profile.objects.get(pk=staffId)
+	preAccountLists= excelAccount.objects.filter(responsibleBy=staff).distinct()
+
+	for account in data['account_list_array'].split(","):
+		if excelAccount.objects.filter(responsibleBy=staff,account=account): # kiểm tra xem account có phải là account cũ trong db hay khôn	
+			pass
+		else:  #đối với account mới trong request
+			try:
+				acc=excelAccount.objects.get(account=account)
+				acc.responsibleBy=staff
+				acc.save()
+			except:
+				pass
+	for account in preAccountLists: #xử lí các account bỏ tick
+		if str(account) not in data['account_list_array'].split(","):
+			account.responsibleBy=None
+			account.save()
+	authenList=data['authen_list_array'].split(",")
+	user=staff.user
+	if authenList != [''] :
+		if "is_uploader" in authenList:
+			user.is_uploader =True
+		else:
+			user.is_uploader =False
+		if "is_signer" in authenList:
+			user.is_signer =True
+		else:
+			user.is_signer =False
+		if "is_admin" in authenList:
+			user.is_admin =True
+		else:
+			user.is_admin =False
+		user.save()
+	staff.full_name = data['full_name']
+	staff.phone_number = data['phone']
+	staff.email = data['email']
+	staff.save()
+	return Response({"msg":"success"}, status=status.HTTP_200_OK)
+
+
 #UPDATE USER PROFILE
 @api_view(["POST"])
 def update_profile(request):
@@ -609,5 +690,4 @@ def update_profile(request):
 	profile.position= request.data['position']
 	profile.address = request.data['address']
 	profile.save()
-	print(request.data)
 	return Response({"msg":"success"}, status=status.HTTP_200_OK)

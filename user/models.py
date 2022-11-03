@@ -2,6 +2,7 @@ from django.db import models
 from .utils_models import UserManager
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from django.urls import reverse
 # Create your models here.
 
 
@@ -35,3 +36,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):        
         return self.user_name
+
+    def get_user_url(self):
+        return reverse("KCTool:accountUpdate",kwargs={"staffId":self.pk})

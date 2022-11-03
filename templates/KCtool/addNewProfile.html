@@ -1,0 +1,418 @@
+{% load customtags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psign-KC</title>
+    <link rel="icon" href="https://pvssolution.com/wp-content/uploads/2022/07/P-sign_logo_gold.png" type="image/gif" sizes="16x16">
+    <!-- CSS -->
+    <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        tr:hover {background-color: #D6EEEE;}
+        #aLarm {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#aLarm.open {
+    display: flex;
+}
+
+#aLarm .modal-container {
+    background: #fff;
+    width: 500px;
+    max-width: calc(100% - 32px);
+    /*cách vào 2 bên khi thu nhỏ */
+    min-height: 200px;
+    position: relative;
+    animation: modalFadeIn ease 0.9s;
+    /* gọi animation */
+    border-radius: 4px;
+}
+
+#aLarm .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: #003A8C;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+}
+
+#aLarm .modal-header i {
+    margin-right: 16px;
+}
+
+#aLarm .modal-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    padding: 12px;
+    cursor: pointer;
+}
+
+#aLarm .modal-close:hover {
+    opacity: 0.8;
+}
+
+#aLarm .modal-body {
+    padding: 16px;
+}
+
+#aLarm .modal-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#aLarm .modal-label i {
+    margin-right: 5px;
+}
+
+#aLarm .modal-label .icon-success {
+    color: #56ff56;
+    font-size: 18px;
+}
+
+#aLarm .modal-label .icon-fail {
+    color: #ff5656;
+    font-size: 18px;
+}
+
+#aLarm .modal-detail {
+    margin-left: 25px;
+    padding: 10px 0;
+}
+
+#aLarm .modal-detail .modal-desc {
+    background: #E6ECF4;
+    padding: 5px;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+#aLarm .btn-group {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#aLarm .btn--success {
+    background: #003A8C;
+    padding: 8px 15px;
+    border: none;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#aLarm .btn--success:hover {
+    background: #E6ECF4;
+    color: #333;
+}
+
+        .modal_loading {
+            position: fixed;
+            background-color: rgba(255, 255, 255, 0.878);
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        
+        .modal_loading-content {
+            width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 2em;
+            background: transparent;
+        }
+        
+        @keyframes follow-the-leader {
+            0% {
+                -webkit-transform: rotate(0deg) translateY(-200%);
+                transform: rotate(0deg) translateY(-200%);
+            }
+            60%,
+            100% {
+                -webkit-transform: rotate(360deg) translateY(-200%);
+                transform: rotate(360deg) translateY(-200%);
+            }
+        }
+        
+        .follow-the-leader {
+            height: 14px;
+            position: relative;
+            margin: 30px auto;
+            width: 14px;
+        }
+        
+        .follow-the-leader div {
+            -webkit-animation: follow-the-leader 1.875s infinite backwards;
+            animation: follow-the-leader 1.875s infinite backwards;
+            background-color: #003a8c;
+            border-radius: 100%;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .follow-the-leader div:nth-child(1) {
+            -webkit-animation-delay: 0.15s;
+            animation-delay: 0.15s;
+            background-color: rgba(45, 35, 244, 0.9);
+        }
+        
+        .follow-the-leader div:nth-child(2) {
+            -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s;
+            background-color: rgba(45, 35, 244, 0.8);
+        }
+        
+        .follow-the-leader div:nth-child(3) {
+            -webkit-animation-delay: 0.45s;
+            animation-delay: 0.45s;
+            background-color: rgba(45, 35, 244, 0.7);
+        }
+        
+        .follow-the-leader div:nth-child(4) {
+            -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+            background-color: rgba(45, 35, 244, 0.6);
+        }
+        
+        .follow-the-leader div:nth-child(5) {
+            -webkit-animation-delay: 0.75s;
+            animation-delay: 0.75s;
+            background-color: rgba(45, 35, 244, 0.5);
+        }
+        #viewPDF .modal__content {
+    border-radius: 5px;
+    position: relative;
+    width: 1115px;
+    max-width: 100%;
+    background: #fff;
+}
+    </style>
+</head>
+<body >
+    <header>
+        <div class="nav_left">
+            <a href="#">
+                <img class="logo" src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
+            </a>
+            <nav>
+                <ul class="nav_links " id="navLink">
+                 
+            </nav>
+        </div>
+        <div class="nav_right">
+            
+            <div class="header_info dropdown">
+                
+                
+               
+                <div id="navDropdown" class="dropdown-content">
+                    
+                </div>
+
+            </div>
+        </div>
+     </header>
+    
+</div>
+<section>
+    <div class="top_content">
+        
+        <div class="table_content">
+            <div class="modal__content">
+                <div class="modal__detail">
+                <form id="create_new_staff" >
+                    <div class="input_group" >
+                        Create new staff
+                        <div >
+                            <label for="account">
+                                Account
+                                <input type="text" name="account" id="ccount"   placeholder="Account" style="width: 60%;
+                                outline: none;
+        
+                                border: 1px solid black;
+                                padding: 5px ;
+                                border-radius: 4px;
+                                margin-top: 5px;
+                                color: #003A8C;margin-left: 35px;">
+                                <span id="alert_account" style="color: #d9534f;font-size:15px"></span>
+                            </label><br>
+                            <label for="password">
+                                Password
+                                
+                                <input type="password" name="password" id="password"   placeholder="Password" style="width: 60%;
+                                outline: none;
+        
+                                border: 1px solid black;
+                                padding: 5px ;
+                                border-radius: 4px;
+                                margin-top: 5px;
+                                color: #003A8C;margin-left: 24px;"><span id="alert_password" style="color: #d9534f;font-size:15px">
+                                </span>
+                            </label><br>
+                        <label for="name">
+                            Họ và tên
+                            <input type="text" name="name" id="name" placeholder="Họ và tên"   style="width: 60%;
+                            outline: none;
+    
+                            border: 1px solid black;
+                            padding: 5px ;
+                            border-radius: 4px;
+                            margin-top: 5px;
+                            color: #003A8C;margin-left: 27px;"><span id="alert_name" style="color: #d9534f;font-size:15px"></span>
+                        </label><br>
+                        <label for="phone">
+                            Số điện thoại
+                            <input type="tel" name="phone" id="phone" placeholder="909 999 999"  style="width: 60%;
+                            outline: none;
+                            border: 1px solid black;
+                            padding: 5px ;
+                            border-radius: 4px;
+                            margin-top: 5px;
+                            color: #003A8C; ">
+                        </label><br>
+                        <label for="email" >
+                            Email
+                            <input type="email" name="email" id="email" placeholder="Nhập email bắt buộc" required  style="width: 60%;
+                            outline: none;
+                            border: 1px solid black;
+                            padding: 5px ;
+                            border-radius: 4px;
+                            margin-top: 5px;
+                            color: #003A8C;margin-left: 53px;"> <span id="alert_email" style="color: #d9534f;font-size:15px"></span>
+                        </label>
+                        </div><br><hr>
+                        <div >
+                            <div>
+                                Authenticate<br><br>   
+                                <input type="checkbox"  name="is_admin"  >Admin</input><br><br>
+                                <input type="checkbox"  name="is_uploader"  >Uploader</input><br><br>
+                                <input type="checkbox"  name="is_signer"  >Signer</input><br><br>
+                            </div>
+                        </div><hr>
+                        
+                        
+                    </div>       
+                    
+                </div>
+                <div class="modal__footer">
+                    <button style="padding: 5px 10px;
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid #003A8C;
+                    color: #003A8C;
+                    background: #fff;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    transition: all 0.5s;" id="create" value="{{staff.pk}}"  type="submit" this.style.textDecoration='underline';this.style.backgroundColor='#3399ff';" onmouseout="this.style.textDecoration='none';;this.style.backgroundColor='';">Lưu</button>
+                </div>
+               
+            </div>
+        </div>
+    </form>  
+    </div>
+</section>
+<script>
+    $(document).ready(function() {
+        //valid form
+        // submit form
+                // valid email
+            function ValidateEmail(value){
+              regex = new RegExp("^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$");
+              var isValid =  regex.test(value);
+              return isValid;
+          }
+          //valid password
+          function ValidatePassword(value){
+              regex = new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$");
+              var isValid =  regex.test(value);
+              return isValid;
+          }
+  
+          //valid number
+          function ValidatePassword(value){
+              regex = new RegExp("[0-9]");
+              var isValid =  regex.test(value);
+              return isValid;
+          }
+  
+          
+            $("#create").click(function() {
+          
+          function ValidateNumber(value){
+            regex = new RegExp("^[0-9]+$");
+            var isValid =  regex.test(value);
+            return isValid;
+          }
+            var valid = true;
+		    var account = $("#account").val()
+		    var password = $("#password").val()
+		    var name = $("#name").val()
+		    var phone = $("#phone").val()
+		    var email = $("#email").val()
+            if(!ValidateEmail(email)){
+			    $("#alert_email").text("Your email is not valid");
+			    valid &= false;
+		        } else{
+			        $("#alert_email").text("");
+		}
+            
+		if(!ValidatePassword(password)){
+			$("#alert_password").text("Password must contain at least 8 characters which contain at least one numeric digit and a special character.");
+			valid &= false;
+		} else{
+			$("#alert_password").text("");
+		}
+        if (!name){
+            $("#alert_name").text("Need to input name.");
+			valid &= false;
+		} else{
+			$("#alert_name").text("");
+        }
+          if(valid){
+            $(this).prop("disabled",true);
+            $("#create_new_staff").submit();
+     
+        }   
+       
+		
+      })
+  })
+</script>  
+     
+    </body>
+    </html>

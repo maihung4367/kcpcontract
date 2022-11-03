@@ -21,7 +21,8 @@ class excelAccount(models.Model):
     standardName=models.CharField(max_length=60,null=True, blank=True)
     def __str__(self):
         return "{}".format(str(self.account))       
-    
+    class Meta:
+        ordering = ['-id']
 class accountEmail(models.Model):
     account=models.ForeignKey(excelAccount,on_delete=models.CASCADE)
     email=models.EmailField(blank=True,null=True)

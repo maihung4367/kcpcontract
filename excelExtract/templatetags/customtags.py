@@ -57,6 +57,16 @@ def staffAccount(staff):
 		return account
 	else:
 		return None
+
+@register.filter(name="staffUser")
+def staffUser(staff):
+	staffProfile=Profile.objects.get(user=staff)
+	print(staffProfile)
+	if excelAccount.objects.filter(responsibleBy=staffProfile).exists():
+		account=excelAccount.objects.filter(responsibleBy=staffProfile)
+		return account
+	else:
+		return None
 @register.simple_tag()
 def get_info_profile(user):
 	profile = Profile.objects.get(user=user)

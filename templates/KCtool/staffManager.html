@@ -9,59 +9,40 @@
            
         </div>
         <div class="btn_content">
-            <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
+            <button class="all-sign" ><a href="{% url 'KCTool:addNewProfile'%}"  onmouseover="this.style.color='white';this.style.backgroundColor='green';this.innerHTML='Add';this.style.fontWeight=''  "  onmouseout="this.style.color='green';this.style.backgroundColor='';this.innerHTML='+';this.style.fontWeight='1000'"style="font-size: 20px;font-weight:1000;color:green;">+</a></button>    
         </div>
     </div>
     <div class="table_content">
         <table>
             <tr>
-                <th width="5%" >
-                    <input type="checkbox" name="check_all" id="check_all" class="checkall">
-                </th>
+                
+                <th width="5%">ID</th>
                 <th width="20%">Account</th>
-                    <!-- <option>Loại account</option>
-                        {% for staff  in untrackedAccount%}
-                        <option value="{{account}}"
-                        {% if account == "{{account}}" %}
-                            selected
-                        {% endif %}>
-                            {{account}}
-                        </option>
-                    {% endfor %}
-                </select></th> -->
                 <th width="10%">Tên</th>
                 <th width="10%">Upload</th>
                 <th width="10%">Sign</th>
+                <th width="10%">Admin</th>
                 <th width="20%">Email</th>
-            
-                <th width="5%">ID</th>
+                
             </tr>
-            
-                {% for staff in staffList %}
-               
+                {% for staff in staffList %} 
                 <tr>
-                <td>
-                   
-                    <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
-                </td>   
+                    <td><a href="{{ staff.get_user_url}}" style="font-size:20px ;" onmouseover="this.style.textDecoration='underline';this.style.color='red';" onmouseout="this.style.textDecoration='none';;this.style.color='';">{{staff.pk}}</a></td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{% if staff|staffAccount %}
                     {% for account in staff|staffAccount %}
                         {{account}} <br>
-                    {% endfor %}
-                    {% endif %}
-                </td>
+                    {% endfor %}{% endif %}</td>
                 <td>{{staff.user_name}}</td>
+                <td >{% if staff.is_uploader %}<img src="{% static 'image/double-tick.png' %}" style="width:30px;height:30px;"></img>
+                {% else %}<img src="{% static 'image/cross-mark.png' %}" style="width:30px;height:30px;"></img>{% endif %}</td>
+                <td >{% if staff.is_signer %}<img src="{% static 'image/double-tick.png' %}" style="width:30px;height:30px;"></img>
+                {% else %}<img src="{% static 'image/cross-mark.png' %}" style="width:30px;height:30px;"></img>{% endif %}</td>
+                <td >{% if staff.is_admin %}<img src="{% static 'image/double-tick.png' %}" style="width:30px;height:30px;"></img>
+                    {% else %}<img src="{% static 'image/cross-mark.png' %}" style="width:30px;height:30px;"></img>{% endif %}</td>
+                <td>{{staff|staffProfileEmail}}</td>  
                 
-                <td ><img src="{% static 'image/double-tick.png' %}" style="width:30px;height:30px;"></img></td>
-                
-                <td><img src="{% static 'image/double-tick.png' %}" style="width:30px;height:30px;"></img></td>
-                <td>{{staff|staffProfileEmail}}</td>
-                    
-                
-                <td><a href="{{ staff.get_user_url}} ">{{staff.pk}}</a></td>
                 </tr>        
                 {% endfor %}
-          
         </table>
     </div>
     
@@ -254,6 +235,7 @@
     }
    
 </script>
+
 <script>
     function delete_file(){
         var arr_pk_pdf_file = [];
