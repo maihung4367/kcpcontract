@@ -25,7 +25,7 @@
             
         </div>
     </div>
-    <div class="table_content">
+    <div class="table_content" id="style-scroll">
         <table>
             <tr>
                 <th>
@@ -59,7 +59,7 @@
                 {% if  user.is_uploader %}
                 <td class="td-action"><a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% else %}
-                <td class="td-action"><a  id="{{file.pk}}"  onclick = "alert('You are not allowed')"><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
+                <td class="td-action"><a href="#aLarm" id="{{file.pk}}"  onclick="notallowed()" ><img src="{% static 'image/icon-pdf_blue.png'%}" alt="document" class="create-pdf"></a></td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -273,31 +273,7 @@
         </header>
 
         <div class="modal-body">
-            <label for="quantity" class="modal-label">
-                <i class="fa-solid fa-circle-check icon-success"></i>
-                Thành công
-            </label>
-            <p class="modal-detail">
-                <span class="modal-desc">Danh mục:</span> Primary, Claimback
-            </p>
-            <p class="modal-detail">
-                <span class="modal-desc">Loại Account:</span> Vinmart, BHX
-            </p>
-
-            <label for="email" class="modal-label">
-                <i class="fa-solid fa-circle-question icon-fail"></i>
-                Không có dữ liệu
-            </label>
-            <p class="modal-detail">
-                <span class="modal-desc">Danh mục:</span> Gift assignment
-            </p>
-            <p class="modal-detail">
-                <span class="modal-desc">Loại Account:</span> Lan Chi, Lotte
-            </p>
-
-            <div class="btn-group">
-                <button class="btn--success"> OK </button>
-            </div>
+            <h3 class="alarm-content"></h3>
         </div>
 
     </div>
@@ -423,7 +399,11 @@
     }
   
 </script>
-
+<script>
+    function notallowed(){
+        document.getElementsByClassName("alarm-content").innerHTML = "Not Allowed"; 
+    };
+</script>
     <script>
         function alertttttttt() {
           alert("The form was submitted");

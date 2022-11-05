@@ -12,13 +12,13 @@
             <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
         </div>
     </div>
-    <div class="table_content">
+    <div class="table_content" id="style-scroll">
         <table>
             <tr>
-                <th>
+                <th width="5%" >
                     <input type="checkbox" name="check_all" id="check_all" class="checkall">
                 </th>
-                <th width="10%"> <select id="account" style="font-size:17px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
+                <th width="10%"> <select id="account" style="font-size:14px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >
                     <option>Loại account</option>
                         {% for account in untrackedAccount%}
                         <option value="{{account}}"
@@ -30,7 +30,7 @@
                     {% endfor %}
                 </select></th>
                 <th width="10%">Danh mục</th>
-                <th width="30%">Tên file</th>
+                <th width="20%">Tên file</th>
                 <th width="10%">Thời gian tạo</th>
                 <th width="20%">Email</th>
                 <th width="10%">Người tạo</th>
@@ -43,11 +43,11 @@
                 <td>
                    
                     <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
-                </td>
+                </td>   
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.account}}</td>
                 <td>{{pdf.loaict}}</td>
                 
-                <td >{{pdf.slaveFile|subNameFileFilter}}</td>
+                <td ><p style="width: 80%">{{pdf.slaveFile|subNameFileFilter}}</p></td>
                 
                 <td>{{pdf.createdTime|date:"d/m/Y"}},{{pdf.createdTime|time:"H:i"}}</td>
                 <td>
@@ -70,6 +70,30 @@
          <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
         </div>
 </footer>
+<div id="viewPDF" class="modal"  >
+    
+    <div class="modal__content">
+        <div class="modal__title">
+            <i class="fa-solid fa-file-pdf"></i>
+            <p>View file</p>          
+        </div>
+
+        <div class="modal__detail">
+            <span id="change_link_pdf">
+             
+            </span>
+        </div>
+
+        
+        <div class="modal__footer">
+            <a href="#" > <button class="btn_save">Xong</button></a>
+        </div>
+        <a href="#" class="modal__close">&times;</a>
+       
+    </div>
+
+</div>
+
 <!-- Modal Info -->
  <div id="info" class="modal">
     <form action="/" method="post">
@@ -185,29 +209,6 @@
             <a href="#" class="modal__close">&times;</a>
         </div>
     </form>
-</div>
-<div id="viewPDF" class="modal"  >
-    
-    <div class="modal__content">
-        <div class="modal__title">
-            <i class="fa-solid fa-file-pdf"></i>
-            <p>View file</p>          
-        </div>
-
-        <div class="modal__detail">
-            <span id="change_link_pdf">
-             
-            </span>
-        </div>
-
-        
-        <div class="modal__footer">
-            <a href="#" > <button class="btn_save">Xong</button></a>
-        </div>
-        <a href="#" class="modal__close">&times;</a>
-       
-    </div>
-
 </div>
 
 <script>

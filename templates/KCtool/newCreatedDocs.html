@@ -32,7 +32,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="table_content">
+    <div class="table_content" id="style-scroll">
         <table>
             <tr>
                 <th>
@@ -109,7 +109,14 @@
             {% endif %}
         </table>
     </div>
-    
+    <div class="pagination" id="pagination">
+        <a href="#">«</a>
+        <a href="#" class="numb-page">1</a>
+        <a class="numb-page" href="#">2</a>
+        <a href="#" class="numb-page">3</a>
+        <a href="#" class="numb-page">4</a>
+        <a href="#">»</a>
+    </div>
  </section>
  <footer>
      <div class="copy-right">
@@ -259,7 +266,7 @@
 
 <script>
     function view_pdf_modal(id) {
-        //alert(id)
+        // alert(id);
         $("#change_link_pdf").html(`<embed src="${id}" width="1100" height="500" type="application/pdf">`)
     }
 
