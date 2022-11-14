@@ -9,11 +9,11 @@
            
         </div>
         <div class="btn_content">
-            <button class="all-sign" ><a href="{% url 'KCTool:addNewProfile'%}"  onmouseover="this.style.color='white';this.style.backgroundColor='green';this.innerHTML='Add';this.style.fontWeight=''  "  onmouseout="this.style.color='green';this.style.backgroundColor='';this.innerHTML='+';this.style.fontWeight='1000'"style="font-size: 20px;font-weight:1000;color:green;">+</a></button>    
+            <button class="all-sign" ><a href="{% url 'KCTool:addNewProfile'%}"  onmouseover="this.style.color='white';this.style.backgroundColor='green'  "  onmouseout="this.style.color='green';this.style.backgroundColor='white'"style="font-size: 20px;font-weight:1000;color:green;">+</a></button>    
         </div>
     </div>
     <div class="table_content" id="style-scroll">
-        <table>
+        <table id="tableId">
             <tr>
                 
                 <th width="5%">ID</th>
@@ -26,6 +26,7 @@
                 
             </tr>
                 {% for staff in staffList %} 
+            
                 <tr>
                     <td><a href="{{ staff.get_user_url}}" style="font-size:20px ;" onmouseover="this.style.textDecoration='underline';this.style.color='red';" onmouseout="this.style.textDecoration='none';;this.style.color='';">{{staff.pk}}</a></td>
                 <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{% if staff|staffAccount %}
@@ -41,7 +42,8 @@
                     {% else %}<img src="{% static 'image/cross-mark.png' %}" style="width:30px;height:30px;"></img>{% endif %}</td>
                 <td>{{staff|staffProfileEmail}}</td>  
                 
-                </tr>        
+                </tr>  
+           
                 {% endfor %}
         </table>
     </div>
@@ -310,4 +312,27 @@
             });          
         }); // end ready
         </script>    
+
+<script>
+    function addRowHandlers() {
+    var table = document.getElementById("tableId");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = 
+            function(row) 
+            {
+                return function() { 
+                                        var tr = row.getElementsByTagName("td")[0];
+                                        var a=tr.getElementsByTagName("a")[0];
+                                        var link = a.href;
+                                        window.open(link,"_self")
+                                 };
+            };
+
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+}
+window.onload = addRowHandlers();
+</script>       
 {% endblock %}

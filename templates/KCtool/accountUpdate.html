@@ -10,7 +10,9 @@
            
         </div>
         <div class="btn_content">
-            <button class="all-sign" " ><a href="{% url 'KCTool:delete_profile'%}?pk={{staffId}}" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
+            <button class="all-sign" onclick="history.back()"   ><a><img src="{% static 'image/goback.png'%}" alt="icon-clear" height="22">Go Back</a></button>
+
+            <button class="all-sign"  ><a href="{% url 'KCTool:delete_profile'%}?pk={{staffId}}" ><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>    
         </div>
     </div>
     <div class="table_content">
@@ -81,7 +83,8 @@
                 background: #fff;
                 border-radius: 3px;
                 cursor: pointer;
-                transition: all 0.5s;" id="save_value" value="{{staff.pk}}"onclick="submitUpdate(this.value)" onmouseover="this.style.textDecoration='underline';this.style.backgroundColor='#3399ff';" onmouseout="this.style.textDecoration='none';;this.style.backgroundColor='';">Lưu</button>
+                transition: all 0.5s; display: inline-block;" id="save_value" value="{{staff.pk}}"onclick="submitUpdate(this.value)" onmouseover="this.style.textDecoration='underline';this.style.backgroundColor='#3399ff';" onmouseout="this.style.textDecoration='none';;this.style.backgroundColor='';">Lưu</button>
+                
             </div>
             
         </div>
