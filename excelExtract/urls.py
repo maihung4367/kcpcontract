@@ -15,11 +15,12 @@ urlpatterns = [
     path("send_pdf",views.send_pdf, name="send_pdf"),
     path("download_pdf",views.downloadFiles, name="download_pdf"),
     path("delete_file",views.deleteFile, name="delete_file"),
+    path("RestoreFiles",views.restoreFile, name="restoreFiles"),
     path("delete_excel_file",views.deleteExcelFile, name="delete_file_excel"),
     path('update-profile', views.update_profile, name="update_profile"),
     path("UntrackedDocs/",views.untrackedDocs,name="untrackedDocs"),
     path("updateProfile",views.updateProfile,name="updateProfile"),
     path("delete_profile/",views.delete_profile,name="delete_profile"),
     path("NewProfile/",views.addNewProfile,name="addNewProfile"),
-
+    path("RecycleBin/",views.deletedDocs,name="deletedDocs"),
 ]

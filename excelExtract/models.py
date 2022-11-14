@@ -62,5 +62,7 @@ class pdfFile(models.Model):
     signed=models.BooleanField(default=False)   
     sended=models.BooleanField(default=False) 
     errorFlags=models.BooleanField(default=False) 
+    is_deleted=models.BooleanField(default=False)  
+    deletedTime=models.DateTimeField(blank=True,null=True)
     def __str__(self):
         return "{}".format(str(self.slaveFile).replace("documents/slavefiles/",""))

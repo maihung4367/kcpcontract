@@ -9,7 +9,9 @@
             <span class="number_vb">{{numberunconfirmpdfs}} văn bản</span>
         </div>
         <div class="btn_content">
+            <button class="all-sign" " ><a href="{% url 'KCTool:deletedDocs' %}"><img src="{% static 'image/recyclebin.png'%}" alt="icon-clear" height="22">Thùng rác</a></button>
             {% if not user.is_uploader %}
+                
                 <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
                 
                 <button class="all-sign">
@@ -20,6 +22,7 @@
                     </a>                
                 </button>
             {% elif user.is_admin %}
+               
                 <button class="all-sign" " ><a href="#" onclick = "delete_file()"><img src="{% static 'image/icon-clear.png'%}" alt="icon-clear">Xóa</a></button>
                 
                 <button class="all-sign">
@@ -59,6 +62,7 @@
             {% if user.is_admin or user.is_uploader %}
                 {% for pdf in unconfirmpdfs %}
                 {% if pdf.account in accountList %}
+                
                 <tr>
                 <td>
                    
@@ -81,11 +85,13 @@
                 <td>{{pdf.creator}} </td>
                 <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
                 </tr>   
+                 
                 {% endif %}       
                 {% endfor %}
             {% else %}
                 {% for pdf in unconfirmpdfs %}
                     {% if pdf.account in listaccount %}
+                    
                         <tr>
                             <td>
                             
@@ -104,6 +110,7 @@
                                 
                             <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
                         </tr>
+                        
                     {% endif %}
                 {% endfor %}
             {% endif %}

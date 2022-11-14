@@ -72,14 +72,14 @@ def kcToolPage(request):
 		numberUnsignepdfs=0
 		if request.user.is_admin:
 			
-			for pdf in pdfFile.objects.filter(confirmed=False):
+			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
 					numberUnsignepdfs+=1
 		else:
 			user=request.user
 			profile=Profile.objects.get(user=user)
 			
-			for pdf in pdfFile.objects.filter(confirmed=False):
+			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy=profile).all():
 					numberUnsignepdfs+=1
 		if request.method=='POST':
@@ -105,17 +105,17 @@ def kcToolPage(request):
 def newCreatedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
-		unconfirmpdfs=pdfFile.objects.filter(confirmed=False).order_by("-id")
+		unconfirmpdfs=pdfFile.objects.filter(confirmed=False,is_deleted=False).order_by("-id")
 		numberunconfirmpdfs=0
 		if request.user.is_admin:
-			for pdf in pdfFile.objects.filter(confirmed=False):
+			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
 					numberunconfirmpdfs+=1
 		else:
 			user=request.user
 			profile=Profile.objects.get(user=user)
 			
-			for pdf in pdfFile.objects.filter(confirmed=False):
+			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
 				if pdf.account in excelAccount.objects.filter(responsibleBy=profile).all():
 					numberunconfirmpdfs+=1
 		accountList=excelAccount.objects.filter(responsibleBy__isnull=False)
@@ -125,7 +125,7 @@ def newCreatedDocs(request):
 		if request.GET.get("account",None):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
 			print(account.pk)
-			unconfirmpdfs = pdfFile.objects.filter(confirmed=False,account=account).order_by("-id")
+			unconfirmpdfs = pdfFile.objects.filter(confirmed=False,account=account,is_deleted=False).order_by("-id")
 		return render(request,"KCtool/newCreatedDocs.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
 	else :
 		form = LoginForm()
@@ -179,7 +179,7 @@ def untrackedDocs(request):
 	if request.user.is_authenticated:
 		if request.user.is_admin or request.user.is_uploader :
 			untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
-			Alldocs=pdfFile.objects.all().order_by("-createdTime")
+			Alldocs=pdfFile.objects.filter(is_deleted=False).order_by("-createdTime")
 			
 			return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
 
@@ -224,6 +224,9 @@ def addNewProfile(request):
 		userProfile.save()
 		return redirect("KCTool:staffManager")
 	return render(request,"KCtool/addNewProfile.html")
+def deletedDocs(request):
+	deletedDocs=pdfFile.objects.filter(is_deleted=True)
+	return render(request,"KCtool/deletedDocs.html",{"deletedDocs":deletedDocs})
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -497,8 +500,9 @@ def deleteFile(request):
 		print(list_id)
 		for id in list_id:
 			fileWillBeDel=pdfFile.objects.get(pk=int(id))
-			print(fileWillBeDel)
-			fileWillBeDel.delete()
+			fileWillBeDel.is_deleted=True
+			fileWillBeDel.deletedTime=datetime.now()
+			fileWillBeDel.save()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
 #DELETE THE EXCEL FILE
 @api_view(["POST"])
@@ -513,6 +517,19 @@ def deleteExcelFile(request):
 			print(fileWillBeDel)
 			fileWillBeDel.delete()
 	return Response({"msg":"delete success"}, status=status.HTTP_200_OK)
+#Restore THE PDF FILE
+@api_view(["POST"])
+def restoreFile(request): 
+	print(request.data)
+	if request.data["list_id_pdf_file"]:
+		list_id_pdf_file = request.data["list_id_pdf_file"]
+		list_id=list_id_pdf_file.split(",")
+		print(list_id)
+		for id in list_id:
+			fileWillBeDel=pdfFile.objects.get(pk=int(id))
+			fileWillBeDel.is_deleted=False
+			fileWillBeDel.save()
+	return Response({"msg":"restore success"}, status=status.HTTP_200_OK)
 @api_view(['POST'])
 def downloadFiles(request):
 	print(request.data)
