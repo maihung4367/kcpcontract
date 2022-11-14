@@ -342,7 +342,10 @@ def confirm_pdf(request):
 			print(list_id_pdf_file)
 			print(list_id)
 			numberunsignepdfs=len(pdfFile.objects.filter(signed=False,sended=False,confirmed=True))
-			send_email.send_noti_to_partner_sign_by_email2([], "thu.phamnguyen@kcc.com")
+			signer=User.objects.filter(is_signer=True)[0]
+			signerName=str(Profile.objects.filter(user=signer)[0].email)
+			print(signerName)
+			send_email.send_noti_to_partner_sign_by_email2([], signerName)
 			return Response({"code":"00"}, status=status.HTTP_200_OK)
 	except:
 		err_mess = sys.exc_info()[0].__name__ + ": "+ str(sys.exc_info()[1])
@@ -657,20 +660,20 @@ def updateProfile(request): ##manage staff
 			account.save()
 	authenList=data['authen_list_array'].split(",")
 	user=staff.user
-	if authenList != [''] :
-		if "is_uploader" in authenList:
-			user.is_uploader =True
-		else:
-			user.is_uploader =False
-		if "is_signer" in authenList:
-			user.is_signer =True
-		else:
-			user.is_signer =False
-		if "is_admin" in authenList:
-			user.is_admin =True
-		else:
-			user.is_admin =False
-		user.save()
+	print("authenlist",authenList)
+	if "is_uploader" in authenList:
+		user.is_uploader =True
+	else:
+		user.is_uploader =False
+	if "is_signer" in authenList:
+		user.is_signer =True
+	else:
+		user.is_signer =False
+	if "is_admin" in authenList:
+		user.is_admin =True
+	else:
+		user.is_admin =False
+	user.save()
 	staff.full_name = data['full_name']
 	staff.phone_number = data['phone']
 	staff.email = data['email']
