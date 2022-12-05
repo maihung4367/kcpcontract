@@ -30,6 +30,8 @@ import zipfile
 import io
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
+import logging
+logger = logging.getLogger("debug_purposes")
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
 	pdf = fitz.open(pdf_file_location)
