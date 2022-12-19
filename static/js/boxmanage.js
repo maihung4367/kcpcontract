@@ -1,4 +1,4 @@
-//Box Add
+
 
 const boxAdd = document.querySelector(".box-add");
 const btnAdd = document.querySelector(".box-table .btn-add");
@@ -18,7 +18,6 @@ btnAdd.addEventListener("click", () => {
     else maincontentManage.classList.remove("open");
 });
 
-//Box Edit
 const boxEdit = document.querySelector(".box-edit");
 const btnEdit = document.querySelector(".box-table .btn-edit");
 

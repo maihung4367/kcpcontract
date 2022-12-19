@@ -7,8 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="icon" href="./image/P-sign logo blue.png" type="image/gif" sizes="16x16" />
-
+    <link rel="icon" href="{% static 'image/P-sign_logo_blue.png' %}" type="image/gif" sizes="16x16" />
+    <style>
+        #page--login header h3 {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+}
+    </style>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -22,6 +28,7 @@
                 <header class="head-form">
                     <a href="https://pvssolution.com/">
                         <img src="{% static 'image/P-sign_logo_white.png' %} " alt="logo">
+                        <h3>Kimberly-Clark</h3>
                     </a>
                 </header>
                 <div class="field-set">

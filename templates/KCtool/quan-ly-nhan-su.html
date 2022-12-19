@@ -8,13 +8,15 @@
     </div>
 {% endblock %}
 {% block content %}
+<div class="footer-content">
+<div class="box-table open">
 <section class="content" id="style-scroll-content">
     <div class="top-content">
 
         <div class="btn-add">
             <button class="btn--primary">
                 <span>+</span>
-                Thêm nhân vên
+                Thêm nhân viên
             </button>
         </div>
 
@@ -45,6 +47,8 @@
         </table>
     </div>
 </section>
+</div>
+
 <div id="style-scroll-table" class="box-add open">
     <h4>Thêm nhân viên</h4>
     <div class="box-input">
@@ -243,4 +247,26 @@
 }
 window.onload = addRowHandlers();
 </script>        -->
+<!-- <script>
+   
+
+const boxAdd = document.querySelector(".box-add");
+const btnAdd = document.querySelector(".box-table .btn-add");
+
+const maincontentManage = document.querySelector(".box-table");
+
+btnAdd.addEventListener("click", () => {
+    if (boxAdd.className === "box-add") boxAdd.classList.add("open");
+    else boxAdd.classList.remove("open");
+    boxEdit.classList.add("open");
+
+    
+});
+btnAdd.addEventListener("click", () => {
+    if (maincontentManage.className === "maincontentmanage")
+        maincontentManage.classList.add("open");
+    else maincontentManage.classList.remove("open");
+});
+
+</script> -->
 {% endblock %}
