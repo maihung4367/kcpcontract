@@ -38,3 +38,14 @@ def send_noti_to_confirmer(customer_emails):
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=customer_emails)
 	msg.content_subtype = "html"
 	msg.send()
+# def send_report():
+	
+# 	subject = "Report File hàng tháng - Psign tháng 11"
+# 	html_message = get_template("template_email_summary_report.html").render({"ct":"ct"})
+
+# 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=['longnld@pvs.com.vn','dk@pvs.com.vn'])
+# 	msg.content_subtype = "html"
+
+# 	msg.attach_file('2022-11-01_2022-11-30.xlsx')
+		
+# 	msg.send()

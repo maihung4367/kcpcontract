@@ -1,102 +1,108 @@
-<!DOCTYPE html>
-<html>
-    <style>
-        .modal_loading {
-            position: fixed;
-            background-color: rgba(255, 255, 255, 0.25);
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 999;
-            transition: all 0.3s;
-        }
-        
-        .modal_loading-content {
-            width: 400px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 2em;
-            background: transparent;
-        }
-        
-        @keyframes follow-the-leader {
-            0% {
-                -webkit-transform: rotate(0deg) translateY(-200%);
-                transform: rotate(0deg) translateY(-200%);
-            }
-            60%,
-            100% {
-                -webkit-transform: rotate(360deg) translateY(-200%);
-                transform: rotate(360deg) translateY(-200%);
-            }
-        }
-        
-        .follow-the-leader {
-            height: 14px;
-            position: relative;
-            margin: 30px auto;
-            width: 14px;
-        }
-        
-        .follow-the-leader div {
-            -webkit-animation: follow-the-leader 1.875s infinite backwards;
-            animation: follow-the-leader 1.875s infinite backwards;
-            background-color: #003a8c;
-            border-radius: 100%;
-            height: 100%;
-            position: absolute;
-            width: 100%;
-        }
-        
-        .follow-the-leader div:nth-child(1) {
-            -webkit-animation-delay: 0.15s;
-            animation-delay: 0.15s;
-            background-color: rgba(45, 35, 244, 0.9);
-        }
-        
-        .follow-the-leader div:nth-child(2) {
-            -webkit-animation-delay: 0.3s;
-            animation-delay: 0.3s;
-            background-color: rgba(45, 35, 244, 0.8);
-        }
-        
-        .follow-the-leader div:nth-child(3) {
-            -webkit-animation-delay: 0.45s;
-            animation-delay: 0.45s;
-            background-color: rgba(45, 35, 244, 0.7);
-        }
-        
-        .follow-the-leader div:nth-child(4) {
-            -webkit-animation-delay: 0.6s;
-            animation-delay: 0.6s;
-            background-color: rgba(45, 35, 244, 0.6);
-        }
-        
-        .follow-the-leader div:nth-child(5) {
-            -webkit-animation-delay: 0.75s;
-            animation-delay: 0.75s;
-            background-color: rgba(45, 35, 244, 0.5);
-        }
-    </style>
-<body>
 
-<p>When you submit the form, a function is triggered which alerts some text.</p>
-
-<form id="myForm" action="/action_page.php" onsubmit="myFunction()">
-  Enter name: <input type="text" name="fname" >
-  <input type="submit" value="Submit" >
-</form>
-
-<script>
-document.getElementById("myForm").addEventListener("submit", myFunction);
-
-function myFunction() {
-    $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>')
-}
-</script>
-
-</body>
-</html>
+{% extends 'base.html'%}
+{% load static %}
+{% load customtags%}
+{% block title %}
+<div class="header-title">
+    <h3>File Excel tải lên</h3>
+    <span>{{num_files}}</span>
+</div>
+{% endblock %}
+{% block content %}
+<section class="content" id="style-scroll-content">
+            <div class="top-content">
+                <div id="btn-upload" class="btn-content">
+                    <div class="upload-btn-wrapper">
+                        {% if user.is_admin or user.is_uploader %}
+                        <button class="btn"  >
+                            <span>+</span>
+                            Tải tài liệu lên
+                        </button>
+                        <input type="file" name="Excel_File" id="Excel_File" />
+                        {% else %}
+                        <button class="btn" disabled >
+                            <span>+</span>
+                            Tải tài liệu lên
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="table-content" id="style-scroll-table">
+                <table>
+                    <tr>
+                        <th style="width: 5%;">STT</th>
+                        <th style="width: 40%;text-align: start;">Tên file</th>
+                        <th style="width: 20%;text-align: start;">Người tải lên</th>
+                        <th style="width: 15%;">Thời gian tải lên</th>
+                        <th style="width: 20%;">Thao tác</th>
+                    </tr>
+                    {%  for file in files %}
+                    <tr>
+                        <td class="td-center">{{file.pk}}</td>
+                        <td class="td-filename">
+                            <a href="#" class="filename-link">
+                                <img src="{% static 'image/icon-exl.png' %} " alt="document" />
+                                <span title="{{file.document|nameFileFilter}}">{{file.document|nameFileFilter}}
+                                </span>
+                            </a>
+                        </td>
+                        <td>{{file.upload_by.full_name}}</td>
+                        <td class="td-center">{{file.uploadTime|date:"d/m/Y"}} {{file.uploadTime|time:"H:i"}}</td>
+                        <td class="td-center">
+                            {% if file|checkSlaveFile  %}
+                            <button class="btn-clear" title="Xóa file" style="transform: none;" disabled>
+                                <i class="fa-regular fa-trash-can icon-trash" style="color:#7a8377" ></i>
+                            </button>
+                            {% else %}
+                            <button class="btn-clear" title="Xóa file" id="{{file.pk}}" onclick = "delete_excel(this.id)" >
+                                <i class="fa-regular fa-trash-can icon-trash" ></i>
+                            </button>
+                            {% endif %}
+                            <button class="modal-btn-pdf" title="Tạo PDF">
+                                <a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><i class="fa-regular fa-file-pdf icon-pdf"></i></i></a>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+        <script>
+            var input = document.querySelector('#Excel_File');
+            input.addEventListener('input', updateValue);
+            function updateValue(e) {
+                var form_data = new FormData();
+                var file= $("#Excel_File")[0].files[0];
+                form_data.append("Excel_File", file);
+                
+                var csrftoken ='{{ csrf_token }}';
+                $.ajax({
+                        type: "post",
+                        url: "{% url 'KCTool:kcToolPage' %}",
+                        data: form_data,
+                        cache: false,
+                        processData:false,
+                        contentType: false,
+                        headers:{
+                            "X-CSRFToken": csrftoken
+                        },     
+                        beforeSend: function() {
+                            $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+                        },
+                        success: function() {
+                            
+                            window.location.replace(``);
+                        },
+                        error:function(xhr, status, error){            
+                            alert(status,error); 
+                            window.location.replace(``);
+                            //window.location.replace(``);
+                        }
+                    }) //end ajax
+                
+        }
+        </script>
+{% endblock %}
+ 
+        

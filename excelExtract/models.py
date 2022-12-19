@@ -57,6 +57,7 @@ class pdfFile(models.Model):
     createdTime=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     confirmedTime=models.DateTimeField(blank=True,null=True)
     sendingTime=models.DateTimeField(blank=True,null=True)
+    SignedTime=models.DateTimeField(blank=True,null=True)
     emailExtracted=models.ManyToManyField(accountEmail,blank=True)
     confirmed=models.BooleanField(default=False) 
     signed=models.BooleanField(default=False)   

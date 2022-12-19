@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %}
+    <div class="header-title">
+        <h3>Thông tin hỗ trợ</h3>
+        
+    </div>
+{% endblock %}
+{% block content %}
+<section class="content" id="style-scroll-table">
+    <div class="container">
+
+        <div class="info-company">
+            <h3>Công ty TNHH Phần Mềm PVS</h3>
+            <ul>
+                <li>
+                    <p>Địa chỉ: 60 Đường D1, Phường Tân Hưng, Quận 7, Thành phố Hồ Chí Minh</p>
+                </li>
+                <li>
+                    <p>Mail: Support@pvs.com.vn</p>
+                </li>
+                <li>
+                    <p>Hotline: (028) 777 39 999</p>
+                </li>
+            </ul>
+        </div>
+        <div class="info-soft">
+            <div class="row">
+                <img src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
+                <p>Psign là phần mềm ký hợp đồng điện tử được phát triển bởi PVS Software</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,6 +1,8 @@
 from django import template
 from excelExtract.models import document,excel, excelAccount,pdfFile
 from user.models import Profile
+import re
+from datetime import datetime
 register =template.Library() 
 
 @register.filter(name="nameFileFilter")
@@ -11,7 +13,23 @@ def nameFileFilter(value,*args):
 def subNameFileFilter(value,*args):
 	value=str(value)
 	return value.replace("documents/slavefiles/","")
-
+@register.filter(name="short_name")
+def short_name(value,*args):
+	value=str(value).replace("documents/slavefiles/","")
+	match = re.search(r'\d{4}-\d{2}-\d{2}', value)	
+	# print(value,match)
+	try:
+		date = datetime.strptime(match.group(), '%Y-%m-%d').date()
+		index=value.find(str(date))
+		lenIndex=len(str(date))
+		name=value[0:index+lenIndex]+ "...pdf"
+		
+		if len(value[0:index+lenIndex]) >= 27:
+			name=value[0:26] + "...pdf"
+		# print(name,len(name))
+		return name
+	except:
+		return value
 @register.filter(name="accountFilter")
 def accountFilter(value):
 	# listloaict=[]
@@ -40,9 +58,9 @@ def signedValue(value):
 def scheckSlaveFile(excelfile):
 	if pdfFile.objects.filter(masterFile=excelfile,confirmed=True).exists():
 		
-		return False
-	else:
 		return True
+	else:
+		return False
 @register.filter(name="staffProfileEmail")
 def staffProfileEmail(staff):
 	email=Profile.objects.get(user=staff).email
@@ -71,3 +89,18 @@ def staffUser(staff):
 def get_info_profile(user):
 	profile = Profile.objects.get(user=user)
 	return {"profile":profile}
+# ---------------------------------------------------------------------------------
+@register.filter(name="email_filter_innerhtml")
+def email_filter_innerhtml(email):
+	string=str(email)
+	for i,char in enumerate(string):
+		if char == "@":
+			name_of_string=string[0:i]
+			return 	name_of_string
+
+@register.filter(name="split_loaict_string")
+def split_loaict_string(string):
+	loaict_list=[]
+	for f in string.split(','):
+		loaict_list.append(f)
+	return loaict_list

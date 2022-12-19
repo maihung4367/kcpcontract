@@ -1,0 +1,321 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load customtags %}
+
+{% block title %}
+    <div class="header-title">
+        <h3>Văn bản chờ xác nhận</h3>
+        <span>{{numberunconfirmpdfs}}</span>
+    </div>
+{% endblock %}
+{% block content %}
+    <section class="content" id="style-scroll-content">
+        <div class="top-content">
+            <div  class="btn-trash">
+                <button onclick = "delete_file()" title="Xóa">
+                    <i class="fa-regular fa-trash-can icon-delete"></i>
+                </button>
+                <a href="{% url 'KCTool:deletedDocs' %}" title="Thùng rác" >
+                    <img src="{% static 'image/icon-trash.png' %} " alt="icon-trash">
+                </a>
+            </div>
+            <div class="btn-check">
+                <button class="btn--primary" onclick="confirm_all()">
+                    <img src="{% static 'image/da-ky.png' %}" alt="da-ky">
+                    <span>Xác nhận</span>
+                </button>
+            </div>
+        </div>
+        <div class="table-content" id="style-scroll-table">
+            <table id="statusTable" class="table" onmouseover="style.cursor='pointer'">
+                <tr>
+                    <th style="width: 5%"  >
+                        <label class="input_label">
+                            <input type="checkbox" name="checkAll" id="check_all" class="checkAll" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </th>
+                    <th style="width: 30%;text-align: start;">Tên file</th>
+                    <th style="width: 15%;text-align: start;"> Loại account
+
+                    </th>
+                    <th style="width: 15%;text-align: start;">Danh mục</th>
+                    <th style="width: 10%;text-align: start">Thời gian tạo</th>
+                    <th style="width: 15%;text-align: start;">Email</th>
+
+                </tr>
+                {% if user.is_admin or user.is_uploader %}
+                {% for pdf in unconfirmpdfs %}
+                {% if pdf.account in accountList %}
+                <tr>
+                    <td class="td-center" onmouseover="style.cursor='default'"   >
+                        <label class="input_label" >
+                            <input type="checkbox"  value="{{pdf.pk}}" name="check" id="check" class="checkitem" group="pk_pdf_file" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td class="td-filename">                
+                        <a href="#viewPDF"  id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)" class="filename-link modal-btn-pdf" >
+                            <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="box-group">
+                            <span class="box box-account">{{pdf.account}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="box-group">
+                            {% for chuongtrinh in pdf.loaict|split_loaict_string %}
+                            <span class="box box-category">{{chuongtrinh}}</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
+                    <td>
+                        <div class="box-group">
+                            {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                
+                {% endif %}       
+                {% endfor %}
+                {% else %}
+                    {% for pdf in unconfirmpdfs %}
+                    {% if pdf.account in listaccount %}
+                    <tr>
+                        <td class="td-center" onmouseover="style.cursor='default'" >
+                            <label class="input_label">
+                                <input type="checkbox"  value="{{pdf.pk}}" name="check" id="check" class="checkitem" group="pk_pdf_file"/>
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td class="td-filename">                
+                            <a href="#viewPDF"  id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)" class="filename-link modal-btn-pdf" >
+                                <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="box-group">
+                                <span class="box box-account">{{pdf.account}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="box-group">
+                                {% for chuongtrinh in pdf.loaict|split_loaict_string %}
+                                <span class="box box-category">{{chuongtrinh}}</span>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>{{pdf.createdTime|date:"d/m/Y"}} {{pdf.createdTime|time:"H:i"}}</td>
+                        <td>
+                            <div class="box-group">
+                                {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+            </table>
+        </div>
+    </section>
+<!-- Modal view PDF -->
+<div id="viewPDF" class="modal modal-open-pdf">
+    <!-- <form action="/" method="post"> -->
+        
+        <div class="modal__content modal-container-pdf">
+            <div class="modal__title">
+                <i class="fa-solid fa-file-pdf"></i>
+                <p>View file</p>
+            </div>
+
+            <div class="modal__detail">
+                <span id="change_link_pdf">
+
+                </span>
+                
+            </div>
+
+            <div class="modal__footer">
+                <button class="btn--primary">Xong</button>
+            </div>
+
+            <a href="#" class="modal__close modal-close-pdf">&times;</a>
+        </div>
+    <!-- </form> -->
+</div>
+
+<script>
+    function view_pdf_modal(id) {
+        // alert(id);
+        $("#change_link_pdf").html(`<embed src="${id}" width="1100" height="600" type="application/pdf">`)
+    }
+
+
+</script>
+<script src="{% static 'js/checked.js' %}"></script>
+<script>
+    function confirm_all(){
+        var arr_pk_pdf_file = [];
+        var postData = new FormData();
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });
+        alert(arr_pk_pdf_file)
+        
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = '{{ csrf_token }}';
+        console.log(csrftoken)
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:confirm_pdf' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                alert("ok")
+                window.location.replace(``);
+            },
+            error:function(xhr, status, err){            
+                alert(status,err); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+    }
+   
+</script>
+<script>
+    function delete_file(){
+        var arr_pk_pdf_file = [];
+        var postData = new FormData();
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });     
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = '{{ csrf_token }}';
+        if (postData){
+            var result = confirm("Want to delete?");
+            if (result) {
+            //Logic to delete the item
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:delete_file' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                
+                success: function(resp) {
+                    alert(resp.msg)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    //window.location.replace(``);
+                }
+            }) //end ajax
+    }
+    
+        }
+        
+    }
+    </script>
+    <script>
+       
+        function  warnning_delete(id){
+        alert("You not allowed!!")
+    }
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#account_type").change(function() {
+                var account_id = $("#solved_by option:selected").val();
+               
+                console.log(account_id);
+               
+            });     
+        }); // end ready
+    </script>    
+    <script>
+        $(document).ready(function() {
+            $("#account").change(function() {
+                var account = $("#account option:selected").val();
+                console.log(account);
+                var url = "{% url 'KCTool:newCreatedDocs' %}?";
+                if (account !== "Loại account") {
+                    url += "&account=" + account;
+                }
+                
+                console.log(url);
+                
+                
+                window.location.replace(url);
+                // form.submit();
+            });          
+        }); // end ready
+        </script>    
+<script>
+    function addRowHandlers() {
+    var table = document.getElementById("statusTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+       
+        var createClickHandler = 
+            function(row) 
+            {
+                return function() { 
+                                        var tr = row.getElementsByTagName("td")[1];
+                                        var a=tr.getElementsByTagName("a")[0];
+                                        a.click()
+                                 };
+            };
+        currentRow.cells[1].onclick = createClickHandler(currentRow);
+        currentRow.cells[2].onclick = createClickHandler(currentRow);
+        currentRow.cells[3].onclick = createClickHandler(currentRow);
+        currentRow.cells[4].onclick = createClickHandler(currentRow);
+        currentRow.cells[5].onclick = createClickHandler(currentRow);    
+       
+    }
+}
+window.onload = addRowHandlers();
+</script>
+<!-- <script>
+    $(document).ready(function() {
+    $(".checkAll").on("click", function() {
+        $(this)
+            .closest("table")
+            .find("tbody :checkbox")
+            .prop("checked", this.checked)
+            .closest("tr")
+            .toggleClass("selected", this.checked);
+    });
+
+    $("tbody :checkbox").on("click", function() {
+        // toggle selected class to the checkbox in a row
+        $(this).closest("tr").toggleClass("selected", this.checked);
+
+        // add selected class on check all
+        $(this)
+            .closest("table")
+            .find(".checkAll")
+            .prop(
+                "checked",
+                $(this).closest("table").find("tbody :checkbox:checked").length ==
+                $(this).closest("table").find("tbody :checkbox").length
+            );
+    });
+});
+</script> -->
+{% endblock %}

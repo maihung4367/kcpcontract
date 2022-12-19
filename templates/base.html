@@ -1,186 +1,16 @@
-{% load customtags %}
 {% load static %}
+{% load customtags %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psign-KC</title>
-    <link rel="icon" href="{% static 'image/P-sign_logo_blue.png' %}" type="image/gif" sizes="16x16">
-    <!-- CSS -->
-    <link
-     rel="stylesheet"
-     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Psign KC</title>
+    <link rel="icon" href="{% static 'image/P-sign_logo_blue.png' %}" type="image/gif" sizes="16x16" />
     <style>
-    #tableId tr:hover {background-color: #D6EEEE;cursor: pointer;}
-    tr:hover {background-color: #D6EEEE;}
-        /* Table Content */
-        #eSign { z-index: 9999; }
-        #info { z-index: 9999; }
-section .table_content {
-    margin-top: 20px;
-    overflow-y: scroll;
-    height: 490px;
-}
-
-section .table_content table {
-    width: 100%;
-}
-
-section .table_content th {
-    background: #e6ecf4;
-    padding: 20px;
-    font-weight: 500;
-    text-align: left;
-    font-size: 17px;
-    position: sticky;
-    top: 0;
-}
-
-section .table_content td .icon-edit {
-    margin-bottom: -5px;
-}
-
-
-/* style scroll */
-
-#style-scroll::-webkit-scrollbar {
-    width: 6px;
-    background-color: #f5f5f5;
-}
-
-#style-scroll::-webkit-scrollbar-thumb {
-    background-color: #003a8c;
-}
-
-#style-scroll::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #f5f5f5;
-}
-
-
-        #aLarm {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-#aLarm.open {
-    display: flex;
-}
-
-#aLarm .modal-container {
-    background: #fff;
-    width: 500px;
-    max-width: calc(100% - 32px);
-    /*cách vào 2 bên khi thu nhỏ */
-    min-height: 200px;
-    position: relative;
-    animation: modalFadeIn ease 0.9s;
-    /* gọi animation */
-    border-radius: 4px;
-}
-
-#aLarm .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    background: #003A8C;
-    font-size: 20px;
-    color: #fff;
-    border-radius: 4px 4px 0 0;
-}
-
-#aLarm .modal-header i {
-    margin-right: 16px;
-}
-
-#aLarm .modal-close {
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: #fff;
-    padding: 12px;
-    cursor: pointer;
-}
-
-#aLarm .modal-close:hover {
-    opacity: 0.8;
-}
-
-#aLarm .modal-body {
-    padding: 16px;
-}
-
-#aLarm .modal-label {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 12px;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-#aLarm .modal-label i {
-    margin-right: 5px;
-}
-
-#aLarm .modal-label .icon-success {
-    color: #56ff56;
-    font-size: 18px;
-}
-
-#aLarm .modal-label .icon-fail {
-    color: #ff5656;
-    font-size: 18px;
-}
-
-#aLarm .modal-detail {
-    margin-left: 25px;
-    padding: 10px 0;
-}
-
-#aLarm .modal-detail .modal-desc {
-    background: #E6ECF4;
-    padding: 5px;
-    border-radius: 4px;
-    font-style: italic;
-}
-
-#aLarm .btn-group {
-    text-align: center;
-    margin-top: 10px;
-}
-
-#aLarm .btn--success {
-    background: #003A8C;
-    padding: 8px 15px;
-    border: none;
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-
-#aLarm .btn--success:hover {
-    background: #E6ECF4;
-    color: #333;
-}
-
+        
         .modal_loading {
             position: fixed;
             background-color: rgba(255, 255, 255, 0.878);
@@ -201,7 +31,6 @@ section .table_content td .icon-edit {
             padding: 2em;
             background: transparent;
         }
-        
         @keyframes follow-the-leader {
             0% {
                 -webkit-transform: rotate(0deg) translateY(-200%);
@@ -266,230 +95,331 @@ section .table_content td .icon-edit {
     width: 1115px;
     max-width: 100%;
     background: #fff;
-}
+}   
+
+
     </style>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <!-- CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" integrity="sha512-aD9ophpFQ61nFZP6hXYu4Q/b/USW7rpLCQLX6Bi0WJHXNO7Js/fUENpBQf/+P4NtpzNX0jSgR5zVvPOJp+W2Kg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+     />
+     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
-<body >
-    <header>
-        <div class="nav_left">
-            <a href="#">
-                <img class="logo" src="{% static 'image/P-sign_logo_white.png' %}" alt="logo">
-            </a>
-            <nav>
-                <ul class="nav_links " id="navLink">
-                    <li class="nav_item 
-                    {% if active_id == 1 %}
-                    active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:kcToolPage' %}" > <img class="icon-vb" src="{% static 'image/nav-icon_exl.png' %}" alt="cho-ky"> File excel</a>
-                    </li>
-                    <li class="nav_item
+
+<body {% if active_id == 6 %}  
+id="page--manage"
+{% elif  active_id == 8 %} 
+id="page--delete"
+{% elif  active_id > 1 %}  id="page--sub" {% endif %}>
+    <div class="sidebar open">
+        <div class="toggle">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="logo">
+            <a href="{% url 'KCTool:kcToolPage' %}"><img src="{% static 'image/P-sign_logo_white.png' %}" alt="logo" /></a>
+            <h3>Kimberly-Clark</h3>
+        </div>
+        <nav>
+            <!-- <div class="nav-title">Management</div> -->
+            <div id="navLink">
+                <a class="nav-item nav-link 
+                {% if active_id == 1 %}
+                active
+            {% endif %}" href="{% url 'KCTool:kcToolPage' %}">
+                    <i class="fas fa-file-excel fix-size"></i>
+                    <span>File Excel</span>
+                </a>
+
+                <a class="nav-item nav-link dropdown-btn">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Quản lý văn bản</span>
+                    <i class="fas fa-angle-down icon-dropdown"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-item nav-link
                     {% if active_id == 2 %}
                     active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:newCreatedDocs' %}" > <img class="icon-vb" src="{% static 'image/cho-ky.png'%}" alt="cho-ky"> Văn bản vừa tạo</a>
+                    {% endif %}">
+                        <a href="{% url 'KCTool:newCreatedDocs' %}">
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
+                            <span>Văn bản chờ xác nhận</span>
+                        </a>
                     </li>
-                    <li class="nav_item
+                    <li class="sub-item nav-link
                     {% if active_id == 3 %}
                     active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:confirmedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã xác nhận</a> 
+                    {% endif %}">
+                        <a href="{% url 'KCTool:confirmedDocs' %}">
+                            <i class="fas fa-file-circle-check"></i>
+                            <span>Văn bản đã xác nhận</span>
+                        </a>
                     </li>
-                    <li class="nav_item
+                    <li class="sub-item nav-lin
                     {% if active_id == 4 %}
                     active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:signedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản đã ký</a> 
+                    {% endif %}">
+                        <a href="{% url 'KCTool:signedDocs' %}">
+                            <i class="fas fa-file-signature"></i>
+                            <span>Văn bản đã ký</span>
+                        </a>
                     </li>
-                    {% if request.user.is_admin or request.user.is_uploader %}
-                    <li class="nav_item
+                    <li class="sub-item nav-link
                     {% if active_id == 5 %}
                     active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:untrackedDocs' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Văn bản chưa được quản lý</a> 
+                    {% endif %}">
+                        <a href="{% url 'KCTool:untrackedDocs' %}">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                            <span>Văn bản chưa được quản lý</span>
+                        </a>
                     </li>
-                    {% endif %}
-                    {% if request.user.is_admin %}
-                    <li class="nav_item
-                    {% if active_id == 6 %}
-                    active
-                    {% endif %}
-                    ">
-                        <a href="{% url 'KCTool:staffManager' %}" > <img class="icon-vb" src="{% static 'image/da-ky.png' %}" alt="da-ky"> Quản lý nhân sự </a> 
-                    </li>
-                    {% endif %}
                 </ul>
-            </nav>
-        </div>
-        <div class="nav_right">
-            
-            <div class="header_info dropdown">
-                <button onclick="myFunction()" class="btn_info" >
-                    <img class="dropbtn" src="{% static 'image/avatar-icon.png'%} " alt="avatar-icon">
-                
-                    <i class="fa-solid fa-angle-down dropbtn"></i>
-                </button>
-                
-               
+                {% if user.is_admin %}
+                <a class="nav-item nav-link" href="{% url 'KCTool:staffManager' %}">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Quản lý nhân sự</span>
+                </a>
+                {% endif %}
+                <hr />
+                <!-- <div class="nav-title">Supports</div> -->
+
+                <a class="nav-item nav-link" href="{% url 'KCTool:info_page' %}">
+                    <i class="fa-sharp fa-solid fa-circle-info"></i>
+                    <span>Thông tin hỗ trợ</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content open">
+        <div class="header-content">
+            <!-- <div class="header-title">
+                <h3>File Excel tải lên</h3>
+                <span>34</span>
+            </div> -->
+            {% block title %}
+            {% endblock %}
+            <div class="header-info header-dropdown">
+                <button onclick="dropDownInfo()" class="btn-info">
+            <img
+              class="dropbtn"
+              src="{% static 'image/avatar-icon-blue.png' %}"
+              alt="avatar-icon"
+            />
+
+            <i class="fa-solid fa-angle-down dropbtn"></i>
+          </button>
+
                 <div id="navDropdown" class="dropdown-content">
-                    <a href="#info">
-                        <img src="{% static 'image/UserList.png' %}" alt="UserList">
-                        Thông tin tài khoản
+                    <a href="#info" class="info">
+                        <i class="fa-solid fa-user-gear icon-file"></i> Thông tin tài khoản
                     </a>
-                    <a href="#eSign">
-                        <img src="{% static 'image/edit.png' %}" >
-                        Xuất log 
+                    <a href="#eSign" class="esign">
+                        <i class="fa-solid fa-file-lines icon-file"></i> Xuất log
                     </a>
-                    <hr class="hr_submenu">
-                    <a href="{% url 'user:logout' %}">
-                        <img src="{% static 'image/log-out.png' %}" alt="log-out">
-                        Đăng xuất
+                    <hr class="hr_submenu" />
+                    <a href="{% url 'user:logout' %}" class="logout">
+                        <i class="fa-solid fa-right-from-bracket icon-file"></i> Đăng xuất
                     </a>
                 </div>
-
             </div>
         </div>
-     </header>
-     <!-- Modal logging -->
-    <div id="eSign" class="modal">
-        <form action="{% url 'KCTool:signedDocs' %}?" method="GET" id="form">
+        {% block content %}
+        {% endblock %}
+       
+    </div>
+
+    <footer>
+        <div class="copy-right">
+            <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
+        </div>
+    </footer>
+    
+    <!-- Modal Create PDF -->
+    <div id="createPDF" class="modal modal-open-pdf">
+        {% comment %} <form> {% endcomment %}
+            <div class="modal-container modal-container-pdf">
+                <div class="modal-header ">
+                    <i class="fa-regular fa-file-pdf"></i>
+                    <p class="title">Tạo PDF</p>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-item">
+                            <p class="modal-label">Danh mục</p>
+                            <select class="select-category" multiple="multiple">
+                                {% comment %}
+                                    <option value="Công việc" data-badge="">Công việc</option>
+                                    <option value="Hóa đơn" data-badge="">Hóa đơn</option>
+                                    <option value="Khách hàng VIP" data-badge="">Khách hàng VIP</option>
+                                    <option value="Khách hàng tiềm năng" data-badge="">Khách hàng tiềm năng</option>
+                                    <option value="Văn bản ký" data-badge="">Văn bản ký</option>{% endcomment %}
+                    
+                            </select>
+                        </div>
+                        <div class="input-item">
+                            <p class="modal-label">Loại Account</p>
+                            <select class="select-account" multiple="multiple">
+                                {% comment %}
+                                    <option value="All">Tất cả</option>
+                                    <option value="Ecom">Ecom</option>
+                                    <option value="Toan Thi">Toan Thi</option>
+                                    <option value="E-MART">E-MART</option>
+                                    <option value="Emart Sala">Emart Sala</option>
+                                    <option value="Vnshop">Vnshop</option>
+                                    <option value="Tiki">Tiki</option>
+                                    <option value="Shopee">Shopee</option>{% endcomment %}
+                    
+                                </select>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="modal-footer">
+                    <button class="btn--primary" id="create-pdf-modal">Tạo file</button>
+                </div>
+
+                <a href="#" class="modal-close modal-close-pdf">&times;</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Info -->
+    <div id="info" class="modal">
+    {% get_info_profile request.user as result %}
+    {% comment %} <form action="/" method="post"> {% endcomment %}
             <div class="modal__content">
                 <div class="modal__title">
-                    <img src="{% static 'image/edit.png' %}" >
+                    <img src="{% static 'image/UserList.png' %}" alt="UserList">
+                    <p>Thông tin tài khoản</p>
+                </div>
+
+                <div class="modal__detail">
+                    <div class="user">
+                        <span class="avarta_name">D</span>
+                        <div class="info_name">
+                            <p>{{result.profile.full_name}}</p>
+                            <small>User: {{result.profile.user.user_name}}</small>
+                        </div>
+                    </div>
+
+                    <div class="input_group">
+                        <label class="input_title" for="full_name">
+                            Họ và tên
+                            <input class="input_item" type="text" name="full_name" placeholder="Họ và tên" value="{{result.profile.full_name}}" id="full_name">
+                        </label>
+                        <label class="input_title" for="phone">
+                            Số điện thoại
+                            <input class="input_item" type="tel" id="numbPhone" name="phone" placeholder="0909 999 999" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="{{result.profile.phone_number}}" id="phone_number">
+                        </label>
+                        <label class="input_title" for="email">
+                            Email
+                            <input class="input_item" type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
+                        </label>
+                        <label class="input_title" for="passwd">
+                            Mật khẩu
+                            <div class="form-group has-feedback">
+                                <input class="input_item" type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
+                                <i class="showpass show-eye-open fas fa-eye"></i>
+                              </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal__title-child">
+                    <p>Thông tin công ty</p>
+                </div>
+                <div class="modal__detail">
+                    <div class="input_group">
+                        <label class="input_title" for="company_name">
+                            Tên công ty
+                            <input class="input_item" type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
+                        </label>
+
+                        <label class="input_title" for="title_name">
+                            Chức danh
+                            <input class="input_item" type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position" >
+                        </label>
+
+                    </div>
+                </div>
+                <div class="modal__title-child">
+                    <p>Thông tin địa chỉ</p>
+                </div>
+                <div class="modal__detail">
+                    <div class="input_group input_address">
+                        <label class="input_title" for="company_address">
+                            Địa chỉ
+                            <input class="input_item" type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
+                        </label>
+
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button class="btn--secondary">Huỷ</button>
+                    <button class="btn--primary ml-5" id="save-info-profile">Lưu</button>
+                </div>
+
+                <a href="#" class="modal__close">&times;</a>
+            </div>
+            {% comment %} </form> {% endcomment %}
+    </div>
+
+    <!-- Modal Upload E-Sign -->
+    <div id="eSign" class="modal">
+        <form action="{% url 'KCTool:signedDocs' %}?" method="GET">
+            <div class="modal__content">
+                <div class="modal__title">
+                    <i class="far fa-file-alt icon-file"></i>
                     <p> Xuất log</p>
                 </div>
                 <div class="modal__detail">
                     <div class="input_group">
                         <div class="input-date">
-                            Từ <input style="padding: 5px;
-                            border-radius: 4px;
-                            border: 1px solid #b4b4b4;
-                            outline: none;"type="date" id="fromdate2" name="fromdate2" value="{{ fromdate2 }}"> đến 
-                            <input style="padding: 5px;
-                            border-radius: 4px;
-                            border: 1px solid #b4b4b4;
-                            outline: none;" type="date" id="todate2" name="todate2" value="{{ todate2 }}">
+                            Từ <input type="date" id="fromdate2" name="fromdate2" value="{{ fromdate2 }}"> đến <input type="date" id="todate2" name="todate2" value="{{ todate2 }}">
                         </div>
                     </div>
                 </div>
                 <div class="modal__footer">
-                    <button type="submit" class="btn_save btn-submit">Xuất</button>
+                    <button type="submit" class="btn--primary">Xuất</button>
                 </div>
                 <a href="#" class="modal__close">&times;</a>
             </div>
         </form>
     </div>
-    
-   
-     <!-- Modal Info -->
- <div id="info" class="modal">
-    {% get_info_profile request.user as result %}
-    {% comment %} <form action="/" method="post"> {% endcomment %}
-        <div class="modal__content">
-            <div class="modal__title">
-                <img src="{% static 'image/UserList.png' %}" alt="UserList">
-                <p>Thông tin tài khoản</p>          
-            </div>
 
-            <div class="modal__detail">
-                <div class="user">
-                    <span class="avarta_name">D</span>
-                    <div class="info_name">
-                        <p>{{result.profile.full_name}}</p>
-                        <small>User: {{result.profile.user.user_name}}</small>
-                    </div>
-                </div>
-
-                <div class="input_group">
-                    <label for="full_name">
-                        Họ và tên
-                        <input type="text" name="full_name" placeholder="Họ và tên" value="{{result.profile.full_name}}" id="full_name">
-                    </label>
-                    <label for="phone">
-                        Số điện thoại
-                        <input type="tel" name="phone" placeholder="909 999 999" value="{{result.profile.phone_number}}" id="phone_number">
-                    </label>
-                    <label for="email">
-                        Email
-                        <input type="email" name="email" placeholder="Nhập email" required value="{{result.profile.email}}" id="email">
-                    </label>
-                    <label for="passwd">
-                        Mật khẩu
-                        <div class="form-group has-feedback">
-                            <input type="password" name="passwd" id="password" placeholder="Nhập mật khẩu">
-                            <i class="showpass show-eye-open fas fa-eye"></i>
-                          </div>
-                    </label> 
-                </div>   
-            </div>
-
-            <div class="modal__title-child">
-                <p>Thông tin công ty</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group">
-                    <label for="company_name">
-                        Tên công ty
-                        <input type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
-                    </label>
-    
-                    <label for="title_name">
-                        Chức danh
-                        <input type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position">
-                    </label>
-                    
-                </div>   
-            </div>
-            <div class="modal__title-child">
-                <p>Thông tin địa chỉ</p>          
-            </div>
-            <div class="modal__detail">
-                <div class="input_group input_address">
-                    <label for="company_address">
-                        Địa chỉ
-                        <input type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
-                    </label>
-                    
-                </div>   
-            </div>
-            <div class="modal__footer">
-                <button class="btn_cancel">Huỷ</button>
-                <button class="btn_save" id="save-info-profile">Lưu</button>
-            </div>
-            
-            <a href="#" class="modal__close">&times;</a>
-        </div>
-    {% comment %} </form> {% endcomment %}
-</div>
-     {% block content %}
-
-     {% endblock %}
-      <!-- JS -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
- <script>
-    // toggle password visibility
-    $('#password + .showpass').on('click', function() {
-    $(this).toggleClass('show-eye-close').toggleClass('show-eye-open'); // toggle our classes for the eye icon
-    $('#password').togglePassword(); // activate the hideShowPassword plugin
-    });
- </script>
- 
- <script type="text/javascript">
-    $(function(){
-        /*Check & uncheck all*/
-        $(document).on('change', '.checkall', function(){
-            var $_this = $(this);
-            $('.checkitem').prop('checked', $_this.prop('checked'));
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js" integrity="sha512-4MvcHwcbqXKUHB6Lx3Zb5CEAVoE9u84qN+ZSMM6s7z8IeJriExrV3ND5zRze9mxNlABJ6k864P/Vl8m0Sd3DtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // multi seclect
+        $(".select-category").select2({
+            closeOnSelect: false,
+            placeholder: "Chọn danh mục",
+            allowHtml: true,
+            allowClear: true,
+            tags: true
         });
-    });
- </script>
- <script>
+        $(".select-account").select2({
+            closeOnSelect: false,
+            placeholder: "Chọn loại account",
+            allowHtml: true,
+            allowClear: true,
+            tags: true
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
+    <script>
+        // toggle password visibility
+        $('#password + .showpass').on('click', function() {
+            $(this).toggleClass('show-eye-close').toggleClass('show-eye-open'); // toggle our classes for the eye icon
+            $('#password').togglePassword(); // activate the hideShowPassword plugin
+        });
+    </script>
+<script>
     $('#save-info-profile').on('click', function(){
         var full_name = $("#full_name").val()
         var phone_number = $("#phone_number").val()
@@ -504,7 +434,7 @@ section .table_content td .icon-edit {
         postData.append("company_name", company_name);
         postData.append("position", position);
         postData.append("address", address);
-        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        var csrftoken = '{{ csrf_token }}';
         $.ajax({
             type: "post",
             url: "{% url 'KCTool:update_profile' %}",
@@ -548,8 +478,125 @@ section .table_content td .icon-edit {
      }); // end ready
     
  </script> 
- 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
- <script src="{% static 'js/main.js' %}"></script>
-    </body>
-    </html>
+ <script>
+    function create_pdf_function(id){
+        var csrftoken = '{{ csrf_token }}';
+        var postData = new FormData();
+        postData.append("pk_excel", id);
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:getListAccount' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                $(".select-category").html(`${resp.list_loaiCt}`)
+                $(".select-account").html(`${resp.list_accounts}`)
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+        // click create pdf
+        //ajax
+        $('#create-pdf-modal').click(function(event){
+         
+            var options_category = $('.select-category option:selected');
+
+            var values_category = $.map(options_category ,function(option) {
+                return option.value;
+            });
+            var options_account = $('.select-account option:selected');
+
+            var values_account = $.map(options_account ,function(option) {
+                return option.value;
+            });
+            //alert(values_category)
+            //alert(values_account)
+            //event.stopImmediatePropagation();
+            //event.preventDefault();
+            
+            var postData = new FormData();
+            postData.append("pk_excel", id);
+            postData.append("values_category", values_category);
+            postData.append("values_account", values_account);
+            var csrftoken = '{{ csrf_token }}';
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:create_pdf' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                beforeSend: function() {
+                    $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+                },
+                success: function(resp) {
+                    alert(resp.annouce)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    window.location.replace(``);
+                }
+            }) //end ajax
+        })
+    }
+  
+</script>
+<script>
+function delete_excel(id){
+    var arr_pk_excel_file = [];
+    var postData = new FormData();
+    
+    arr_pk_excel_file.push(id);
+    
+    postData.append("list_id_excel_file", arr_pk_excel_file);
+    var csrftoken = '{{ csrf_token }}';
+    if (postData){
+        var result = confirm("Want to delete?");
+        if (result) {
+        //Logic to delete the item
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:delete_file_excel' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                alert(resp.msg)
+                window.location.replace(``);
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+}
+
+    }
+    
+}
+</script>
+<script src="{% static 'js/menu.js' %} "></script>
+<script src="{% static 'js/modal.js' %} "></script>
+<script src="{% static 'js/script.js' %} "></script>
+<script src="{% static 'js/checked.js' %} "></script>
+<script src="{% static 'js/filter.js' %} "></script>
+<script src="{% static 'js/boxmanage.js' %} "></script>
+</body>
+</html>

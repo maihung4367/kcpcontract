@@ -1,77 +1,87 @@
 {% extends 'base.html'%}
 {% load customtags %}
 {% load static %}
-{% block content %}
-<section>
-    <div class="top_content">
-        <div class="title_content">
-            <p>Danh sách văn bản đã xác nhận</p>
-            <span class="number_vb">{{numberconfirmedpdfs}} văn bản</span>
-        </div>
-        <div class="btn_content">
-            {% if user.is_signer or user.is_admin %}
-            <button class="all-sign" > 
-                <a href="#" onclick="send_all_pdf()">
-                    <img src="{% static 'image/icon-email.png' %}" alt="email">
-                Kí và gửi
-                </a>                
-            </button>
-            {% else %}
-            <button class="all-sign" > 
-                <a href="#" onclick="alert('Not allowed!!')">
-                    <img src="{% static 'image/icon-email.png' %}" alt="email">
-                Kí và gửi
-                </a>                
-            </button>
-            {% endif %}
-            
-        </div>
-      
+
+{% block title %}
+    <div class="header-title">
+        <h3>Văn bản đã xác nhận</h3>
+        <span>{{numberconfirmedpdfs}}</span>
     </div>
-      
-    <div class="table_content" id="style-scroll">
-        <table>
+{% endblock %}
+{% block content %}
+<section class="content" id="style-scroll-content">
+    <div class="top-content display-r">
+        <div class="btn-check ">
+            {% if user.is_signer or user.is_admin %} 
+            <button class="btn--primary"  onclick="send_all_pdf() " > 
+            {% else %} 
+            <button class="btn--primary"  onclick="alert('Not allowed!!')" >
+            {% endif %}
+           
+                <img src="{% static 'image/icon-email-white.png' %}" alt="icon-email-white">
+                <span>Kí và gửi</span>
+            </button>
+        </div>
+    </div>
+    <div class="table-content" id="style-scroll-table">
+        <table id="statusTable" class="table">
             <tr>
-                <th width="5%"  >
-                    <input type="checkbox" name="check_all" id="check_all" class="checkall" >
+                <th style="width: 5%;">
+                    <label class="input_label">
+                        <input type="checkbox" name="checkAll" id="check_all" class="checkAll" />
+                        <span class="checkmark"></span>
+                    </label>
                 </th>
-                <th width="10%"  style="font-size:14px;font-weight: 600; border: none;outline: none;border-radius: 4px;background: #E6ECF4;" >Loại account</th>
-                <th width="10%">Danh mục</th>
-                <th width="20%">Tên file</th>
-                <th width="10%">Thời gian xác nhận</th>
-                <th width="20%">Email</th>
-                <th width="10%">Người xác nhận</th>
-                <th width="10%">Trạng thái</th>
-                <th width="5%">Xem file</th>
+                <th style="width: 25%;text-align: start;">Tên file</th>
+                <th style="width: 15%;text-align: start;">Loại account
+
+                </th>
+                <th style="width: 15%;text-align: start;">Danh mục</th>
+                <th style="width: 12%;text-align: start;">Thời gian xác nhận</th>
+                <th style="width: 10%;text-align: start;">Email</th>
+                <th style="width: 10%;text-align: start;">Người xác nhận</th>
+                
             </tr>
+            {% for pdf in pdfs %}
             <tr>
-                {% for pdf in pdfs %}
-                <td>
-                    <input type="checkbox" name="check" value="{{pdf.pk}}" id="check" class="checkitem" group="pk_pdf_file">
+                <td class="td-center " onmouseover="style.cursor='default'" >
+                    <label class="input_label">
+                        <input value="{{pdf.pk}}" type="checkbox" name="check" id="check" class="checkitem" group="pk_pdf_file" />
+                        <span class="checkmark"></span>
+                    </label>
                 </td>
-                <td value="{{pdf.account}}">{{pdf.account}}</td>
-                <td>{{pdf.loaict}}</td>
-                <td>{{pdf.slaveFile|subNameFileFilter}}</td>
-                <td>{{pdf.confirmedTime|date:"d/m/Y"}},{{pdf.confirmedTime|time:"H:i"}}</td>
-                <td>{% for email in pdf.emailExtracted.all %}
-                    {{email}}<hr>
-                    {% endfor %}
+                <td class="td-filename">
+                    <a href="#viewPDF"  id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)" class="filename-link modal-btn-pdf" >
+                        <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
+                    </a>
+                </td>
+                <td>
+                    <div class="box-group">
+                        <span class="box box-account">{{pdf.account}}</span>
+                        
+                    </div>
+                </td>
+                <td>
+                    <div class="box-group">
+                        {% for chuongtrinh in pdf.loaict|split_loaict_string %}
+                            <span class="box box-category">{{chuongtrinh}}</span>
+                            {% endfor %}
+                    </div>
+
+                </td>
+                <td>{{pdf.confirmedTime|date:"d/m/Y"}} {{pdf.confirmedTime|time:"H:i"}}</td>
+                <td>
+                    <div class="box-group">
+                        {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}
+                    </div>
                 </td>
                 <td>{{pdf.confirmer}}</td>
-                <td style="color:rgba(207, 7, 7, 0.779) ;font-weight: 900;">{{pdf.confirmed|confirmedValue}}</td>
-                
-                <td><a href="#viewPDF" id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)"><img src="{% static 'image/document.png' %}" alt="document"></a></td>
+    
             </tr>
-                {% endfor %}
+            {% endfor %}
         </table>
     </div>
-   
- </section>
- <footer>
-    <div class="copy-right">
-        <p>&copy; <a href="https://pvssolution.com">pvssolution.com</a></p>
-    </div>
- </footer>
+</section>
 
  <!-- Modal Info -->
  {% comment %} <div id="info" class="modal">
@@ -190,34 +200,39 @@
         </div>
     </form>
 </div>
-<div id="viewPDF" class="modal"  >
-    
-    <div class="modal__content">
-        <div class="modal__title">
-            <i class="fa-solid fa-file-pdf"></i>
-            <p>View file</p>          
-        </div>
-
-        <div class="modal__detail">
-            <span id="change_link_pdf">
-             
-            </span>
-        </div>
-
+<!-- Modal view PDF -->
+<div id="viewPDF" class="modal modal-open-pdf">
+    <!-- <form action="/" method="post"> -->
         
-        <div class="modal__footer">
-            <a href="#" > <button class="btn_save">Xong</button></a>
-        </div>
-        <a href="#" class="modal__close">&times;</a>
-       
-    </div>
+        <div class="modal__content modal-container-pdf">
+            <div class="modal__title">
+                <i class="fa-solid fa-file-pdf"></i>
+                <p>View file</p>
+            </div>
 
+            <div class="modal__detail">
+                <span id="change_link_pdf">
+
+                </span>
+                
+            </div>
+
+            <div class="modal__footer">
+                <button class="btn--primary">Xong</button>
+            </div>
+
+            <a href="#" class="modal__close modal-close-pdf">&times;</a>
+        </div>
+    <!-- </form> -->
 </div>
+
 <script>
     function view_pdf_modal(id) {
-        //alert(id)
-        $("#change_link_pdf").html(`<embed src="${id}" width="1100" height="500" type="application/pdf">`)
+        // alert(id);
+        $("#change_link_pdf").html(`<embed src="${id}" width="1100" height="600" type="application/pdf">`)
     }
+
+
 </script>
 <script>
     function send_all_pdf(){
@@ -255,5 +270,30 @@
     }
    
 </script> 
-
+<script>
+    function addRowHandlers() {
+    var table = document.getElementById("statusTable");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = 
+            function(row) 
+            {
+                return function() { 
+                                        var tr = row.getElementsByTagName("td")[1];
+                                        var a=tr.getElementsByTagName("a")[0];
+                                        a.click()
+                                 };
+            };
+        
+        currentRow.cells[1].onclick = createClickHandler(currentRow);
+        currentRow.cells[2].onclick = createClickHandler(currentRow);
+        currentRow.cells[3].onclick = createClickHandler(currentRow);
+        currentRow.cells[4].onclick = createClickHandler(currentRow);
+        currentRow.cells[5].onclick = createClickHandler(currentRow);   
+        currentRow.cells[6].onclick = createClickHandler(currentRow);    
+    }
+}
+window.onload = addRowHandlers();
+</script>
 {% endblock %}

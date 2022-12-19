@@ -1,5 +1,3 @@
-from audioop import reverse
-from urllib import response
 from django.shortcuts import render,redirect
 import sys
 from rest_framework.decorators import api_view
@@ -20,7 +18,6 @@ import json
 from django.core.files import File
 from django.db.models import Q
 import fitz
-from django.urls import reverse_lazy
 import openpyxl
 from openpyxl.styles import Alignment,NamedStyle
 from openpyxl.writer.excel import save_virtual_workbook
@@ -69,25 +66,11 @@ def kcToolPage(request):
 	if request.user.is_authenticated:
 		form=uploadDocumentForm()
 		files=document.objects.all().order_by("-id")
-		pdffiles=pdfFile.objects.all().order_by("-id")
-		demoPdfFiles=pdfFile.objects.last()
-		numberUnsignepdfs=0
-		if request.user.is_admin:
-			
-			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
-				if pdf.account in excelAccount.objects.filter(responsibleBy__isnull=False):
-					numberUnsignepdfs+=1
-		else:
-			user=request.user
-			profile=Profile.objects.get(user=user)
-			
-			for pdf in pdfFile.objects.filter(confirmed=False,is_deleted=False):
-				if pdf.account in excelAccount.objects.filter(responsibleBy=profile).all():
-					numberUnsignepdfs+=1
+		num_files=len(files)
 		if request.method=='POST':
 			# with transaction.atomic():
 			# 	try:
-					file=request.FILES['document']
+					file=request.FILES['Excel_File']
 					print(file)
 					if file:
 						try:
@@ -98,7 +81,7 @@ def kcToolPage(request):
 							excelExtract.importDataExcel(file)
 				# except:
 				# 	pass
-		return render(request,"KCtool/KCtool.html",{"form":form,"files":files,"pdffiles":pdffiles,"demoPdfFiles":demoPdfFiles,"numberUnsignepdfs":numberUnsignepdfs, "active_id":1})
+		return render(request,"index.html",{"form":form,"files":files,"num_files":num_files, "active_id":1})
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
@@ -128,7 +111,7 @@ def newCreatedDocs(request):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
 			print(account.pk)
 			unconfirmpdfs = pdfFile.objects.filter(confirmed=False,account=account,is_deleted=False).order_by("-id")
-		return render(request,"KCtool/newCreatedDocs.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
+		return render(request,"KCtool/vb-cho-xac-nhan.html",{"numberunconfirmpdfs":numberunconfirmpdfs,"unconfirmpdfs":unconfirmpdfs, "URL":settings.URL, "active_id":2,"accountList":accountList,"user":user,"listaccount":listaccount,"account":request.GET.get("account",None)})
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form}) 
@@ -139,7 +122,7 @@ def confirmedDocs(request):
 		numberconfirmedpdfs=len(pdfFile.objects.filter(confirmed=True,sended=False,signed=False))
 		pdfs=pdfFile.objects.filter(confirmed=True,sended=False,signed=False).order_by("-id")
 		accountList=excelAccount.objects.all()	
-		return render(request,"KCtool/confirmedDocs.html",{"numberconfirmedpdfs":numberconfirmedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
+		return render(request,"KCtool/vb-da-xac-nhan.html",{"numberconfirmedpdfs":numberconfirmedpdfs,"pdfs":pdfs, "active_id":3,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
 
 	else :
 		form = LoginForm()
@@ -149,21 +132,28 @@ def signedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
 		numbersendedpdfs=len(pdfFile.objects.filter(sended=True))
-		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-sendingTime")
+		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
 		accountList=excelAccount.objects.all()
+		set_loai_ct=set()
+		for pdf in pdfs:
+			loaict=(pdf.loaict).split(',')
+			for ct in loaict:
+				set_loai_ct.add(ct)
+		list_loai_ct=list(set_loai_ct)
+		print(request.GET)
 		if request.GET.get("key_word",""):
 			key_word = request.GET.get("key_word")
-			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("-sendingTime")	
+			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("-SignedTime")	
 		if request.GET.get("account",None):
 			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
 			print(account.pk)			
-			pdfs = pdfs.filter(account=account).order_by("-sendingTime")
+			pdfs = pdfs.filter(account=account).order_by("-SignedTime")
 		if request.GET.get("todate",None):
 			todate=request.GET.get("todate")
-			pdfs = pdfs.filter(sendingTime__date__lte=todate).order_by("-sendingTime")
+			pdfs = pdfs.filter(sendingTime__date__lte=todate).order_by("-SignedTime")
 		if request.GET.get("fromdate",None):	
 			fromdate=request.GET.get("fromdate")
-			pdfs = pdfs.filter(sendingTime__date__gte=fromdate).order_by("-sendingTime")
+			pdfs = pdfs.filter(sendingTime__date__gte=fromdate).order_by("-SignedTime")
 		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
 			fromdate2=request.GET.get("fromdate2")
 			todate2=request.GET.get("todate2")
@@ -171,7 +161,7 @@ def signedDocs(request):
 			return export_hnk_ticket_excel(fromdate2,todate2)
 			
 			
-		return render(request,"KCtool/signedDocs.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2")})
+		return render(request,"KCtool/vb-da-ky.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2"),"list_loai_ct":list_loai_ct})
 
 	else :
 		form = LoginForm()
@@ -179,11 +169,9 @@ def signedDocs(request):
 
 def untrackedDocs(request):
 	if request.user.is_authenticated:
-		if request.user.is_admin or request.user.is_uploader :
-			untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
-			Alldocs=pdfFile.objects.filter(is_deleted=False).order_by("-createdTime")
-			
-			return render(request,"KCtool/untrackedDocs.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
+		untrackedAccount=excelAccount.objects.filter(responsibleBy__isnull=True)
+		Alldocs=pdfFile.objects.filter(is_deleted=False).order_by("-createdTime")
+		return render(request,"KCtool/vb-chua-duoc-quan-ly.html",{"Alldocs":Alldocs,"untrackedAccount":untrackedAccount, "active_id":5})
 
 	else :
 		form = LoginForm()
@@ -191,8 +179,9 @@ def untrackedDocs(request):
 def staffManager(request):
 	if request.user.is_authenticated:
 		if request.user.is_admin :
-			staffList=User.objects.all()
-			return render(request,"KCtool/staffManager.html",{"staffList":staffList, "active_id":6})
+			staffList=Profile.objects.all().order_by("-pk")
+			numberstaff=len(staffList)
+			return render(request,"KCtool/quan-ly-nhan-su.html",{"staffList":staffList,"numberstaff":numberstaff, "active_id":6})
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
@@ -228,7 +217,13 @@ def addNewProfile(request):
 	return render(request,"KCtool/addNewProfile.html")
 def deletedDocs(request):
 	deletedDocs=pdfFile.objects.filter(is_deleted=True)
-	return render(request,"KCtool/deletedDocs.html",{"deletedDocs":deletedDocs})
+	numberdeletedpdfs=len(deletedDocs)
+	return render(request,"KCtool/vb-da-xoa.html",{"deletedDocs":deletedDocs,"active_id":8,"numberdeletedpdfs":numberdeletedpdfs})
+
+
+
+def info_page(request):
+	return render(request,"KCtool/thong-tin-ho-tro.html")
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -420,7 +415,7 @@ def sign_and_send_pdf(request):
 									newpdf=pdf.slaveFile.save(name,File(file))
 									pdf.sended=True
 									pdf.signed=True
-									pdf.sendingTime=datetime.now()
+									pdf.SignedTime=datetime.now()
 									pdf.save()
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
 								listfile.append(fileurl)
@@ -457,7 +452,7 @@ def send_pdf(request):
 		
 		list_id=list_id_pdf_file.split(",")
 		accountCate=[]
-			
+	
 		for i in list_id:
 			account = str(pdfFile.objects.get(pk=int(i)).account)
 			if account not in accountCate:
@@ -554,11 +549,11 @@ def downloadFiles(request):
 #NOT API BUT A FUNCTION WHICH GENERATE A VIRTUAL EXCEL REPORT
 def export_hnk_ticket_excel(from_date, to_date):
 	col_names = ["","Account","Category","file","CreatedTime","ConfirmedTime","SendedTime","creator","confirmer","sender","Confirmed","Signed","Sended"]
-	actlogs = pdfFile.objects.filter(createdTime__date__gte=from_date,createdTime__date__lte=to_date)|pdfFile.objects.filter(sendingTime__date__gte=from_date,createdTime__date__lte=to_date)
+	actlogs = pdfFile.objects.filter(createdTime__date__gte=from_date,createdTime__date__lte=to_date)|pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date)
 
 	wb = openpyxl.Workbook()
 	wb.iso_dates = True
-	ws = wb.create_sheet(title="actlog")
+	ws = wb['Sheet']
 
 	# create title
 	for col in range(1, len(col_names)):

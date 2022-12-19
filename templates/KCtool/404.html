@@ -1,0 +1,31 @@
+{% load static %}
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 PAGE NOT FOUND</title>
+    <link rel="icon" href="{% static 'image/P-sign_logo_blue.png' %}" type="image/gif" sizes="16x16" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body id="page--404">
+    <div class="container">
+        <div class="error">
+            <h1 class="error-title">
+                4<span>04</span>
+            </h1>
+            <img src="{% static 'image/magnifier.png' %} " alt="">
+        </div>
+        <p class="error-message-1">ERROR</p>
+        <p class="error-message-2">PAGE NOT FOUND</p>
+        <p class="error-message-3">"I think you just went to a page non-existing page"</p>
+    </div>
+</body>
+
+</html>

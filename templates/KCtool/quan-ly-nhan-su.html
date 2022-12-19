@@ -1,0 +1,246 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load customtags%}
+{% block title %}
+    <div class="header-title">
+        <h3>Quản lý nhân sự</h3>
+        <span>{{numberstaff}}</span>
+    </div>
+{% endblock %}
+{% block content %}
+<section class="content" id="style-scroll-content">
+    <div class="top-content">
+
+        <div class="btn-add">
+            <button class="btn--primary">
+                <span>+</span>
+                Thêm nhân vên
+            </button>
+        </div>
+
+    </div>
+    <div class="table-content" id="style-scroll-table">
+        <table>
+            <tr>
+                <th style="width: 5%;">STT</th>
+                <th style="width: 30%;text-align: start;">Tên</th>
+                <th style="width: 20%;text-align: start;">Tên đăng nhập</th>
+                <th style="width: 15%;text-align: start;">Số điện thoại</th>
+                <th style="width: 30%;text-align: start;">Email</th>
+            </tr>
+            {% for staff in staffList %} 
+            <tr>
+                <td class="td-center">{{staff.pk}}</td>
+                <td>
+                    <a class="btn-edit">{{staff.full_name}}</a>
+                </td>
+                <td>{{staff.user}}</td>
+                <td>{{staff.phone_number}}</td>
+                <td>
+                    {{staff.email}}
+                </td>
+            </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</section>
+<div id="style-scroll-table" class="box-add open">
+    <h4>Thêm nhân viên</h4>
+    <div class="box-input">
+        <label>Họ và tên
+            <input type="text" class="input-item" name="" id="" placeholder="Họ và tên">
+        </label>
+        <label>Số điện thoại <span class="required">*</span>
+            <input type="text" class="input-item" name="" id="" placeholder="Số điện thoại" required>
+        </label>
+        <label>Email <span class="required">*</span>
+            <input type="email" class="input-item" name="" id="" placeholder="Email của bạn" required>
+        </label>
+        <label>Tên đăng nhập
+            <input type="text" class="input-item" name="" id="" placeholder="Tài khoản">
+        </label>
+        <label>Mật khẩu
+            <input type="password" class="input-item" name="" id="" placeholder="Mật khẩu">
+        </label>
+        <hr class="hr">
+        <p>Ủy quyền</p>
+        <div class="checkbox-list">
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Admin</p>
+            </label> <br>
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Uploader</p>
+            </label> <br>
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Signer</p>
+            </label>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button class="btn--secondary">Hủy</button>
+        <button class="btn--primary">Lưu</button>
+    </div>
+</div>
+<div id="style-scroll-content" class="box-edit open">
+    <h4>Nhân viên ID 11</h4>
+    <div class="box-input">
+        <label>Họ và tên
+            <input type="text" class="input-item" name="" id="" placeholder="Họ và tên">
+        </label>
+        <label>Số điện thoại <span class="required">*</span>
+            <input type="text" class="input-item" name="" id="" placeholder="Số điện thoại" required>
+        </label>
+        <label>Email <span class="required">*</span>
+            <input type="email" class="input-item" name="" id="" placeholder="Email của bạn" required>
+        </label>
+        <label>Tên đăng nhập
+            <input type="text" class="input-item" name="" id="" placeholder="Tài khoản">
+        </label>
+        <label>Mật khẩu
+            <input type="password" class="input-item" name="" id="" placeholder="Mật khẩu">
+        </label>
+        <hr class="hr">
+        <p>Ủy quyền</p>
+        <div class="checkbox-list">
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Admin</p>
+            </label> <br>
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Uploader</p>
+            </label> <br>
+            <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Signer</p>
+            </label>
+        </div>
+        <hr class="hr">
+        <p>Account</p>
+        <div class="checkbox-list-2" id="style-scroll-table">
+            <div class="col-6">
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Ecom</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>TRICOOP- Pharmacity</p>
+                 </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Toan Thi</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Emart Sala</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Tiki</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Shopee</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Lazada</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Kidsplaza</p>
+                </label>
+            </div>
+            <div class="col-6">
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>TRICOOP</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>EMART</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>COOP</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>BeepBeep</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Bibomart</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>ConCung Offline</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <span class="checkmark"></span>
+                <p>Big C</p>
+                </label>
+                <label class="input_label">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <span class="checkmark"></span>
+                <p>Aeon</p>
+            </label>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button class="btn--secondary">Hủy</button>
+        <button class="btn--primary">Lưu</button>
+    </div>
+</div>
+</div>
+
+<!-- <script>
+    function addRowHandlers() {
+    var table = document.getElementById("tableId");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+        var currentRow = table.rows[i];
+        var createClickHandler = 
+            function(row) 
+            {
+                return function() { 
+                                        var tr = row.getElementsByTagName("td")[0];
+                                        var a=tr.getElementsByTagName("a")[0];
+                                        var link = a.href;
+                                        window.open(link,"_self")
+                                 };
+            };
+
+        currentRow.onclick = createClickHandler(currentRow);
+    }
+}
+window.onload = addRowHandlers();
+</script>        -->
+{% endblock %}

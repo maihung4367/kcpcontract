@@ -22,6 +22,7 @@ from excelExtract import urls as KCtool_url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('KCTool',include(KCtool_url,namespace="KCTool")),
+    path('Psign-kc/',include(KCtool_url,namespace="KCTool")),
     path('', include('user.urls',namespace="user")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

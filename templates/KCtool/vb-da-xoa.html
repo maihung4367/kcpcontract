@@ -1,0 +1,162 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load customtags%}
+{% block title %}
+    <div class="header-title">
+        <h3>Văn bản đã xóa</h3>
+        <span>{{numberdeletedpdfs}}</span>
+    </div>
+{% endblock %}
+{% block content %}
+<section class="content" id="style-scroll-content">
+    <div class="top-content">
+        <div class="alarm-content">
+            <p>
+                <span>Lưu ý:</span> Các văn bản sẽ tự động xóa vĩnh viễn sau 14 ngày tính từ thời gian xóa
+            </p>
+        </div>
+        <div class="btn-check">
+            <button class="btn--primary" onclick="RestoreFiles()">
+                <i class="fa-solid fa-recycle icon-restore"></i>
+                <span>Phục hồi</span>
+            </button>
+        </div>
+    </div>
+    <div class="table-content" id="style-scroll-table">
+        <table id="tableId" class="table">
+            <tr>
+                <th style="width: 5%;">
+                    <label class="input_label">
+                        <input type="checkbox" name="checkAll" id="check_all" class="checkAll" />
+                        <span class="checkmark"></span>
+                    </label>
+                </th>
+                <th style="width: 30%;text-align: start;">Tên file</th>
+                <th style="width: 15%;text-align: start;">Loại account
+                </th>
+                <th style="width: 15%;text-align: start;">Danh mục</th>
+                <th style="width: 15%;text-align: start;">Thời gian tạo</th>
+                <th style="width: 10%;text-align: start;">Email</th>
+            </tr>
+            {% for pdf in deletedDocs %}
+            <tr>
+                <td class="td-center">
+                    <label class="input_label">
+                        <input value="{{pdf.pk}}" type="checkbox" name="check" id="check" class="checkitem" group="pk_pdf_file"/>
+                        <span class="checkmark"></span>
+                    </label>
+                </td>
+                <td class="td-filename">
+                    <a href="#viewPDF"  id="{{URL}}/{{pdf.slaveFile}}" onclick="view_pdf_modal(this.id)" class="filename-link modal-btn-pdf" >
+                        <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
+                    </a>
+                </td>
+                <td>
+                    <div class="box-group">
+                        <span class="box box-account">{{pdf.account}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="box-group">
+                        {% for chuongtrinh in pdf.loaict|split_loaict_string %}
+                <span class="box box-category">{{chuongtrinh}}</span>
+                {% endfor %}
+                    </div>
+
+                </td>
+                <td>{{pdf.deletedTime|date:"d/m/Y"}} {{pdf.deletedTimeTime|time:"H:i"}}</td>
+                <td>
+                    <div class="box-group">
+                        {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+<div id="viewPDF" class="modal"  >
+    
+    <div class="modal__content">
+        <div class="modal__title">
+            <i class="fa-solid fa-file-pdf"></i>
+            <p>View file</p>          
+        </div>
+
+        <div class="modal__detail">
+            <span id="change_link_pdf">
+             
+            </span>
+        </div>
+
+        
+        <div class="modal__footer">
+            <a href="#" > <button class="btn_save">Xong</button></a>
+        </div>
+        <a href="#" class="modal__close">&times;</a>
+       
+    </div>
+
+</div>
+
+
+
+
+<script>
+    function view_pdf_modal(id) {
+        //alert(id)
+        $("#change_link_pdf").html(`<embed src="${id}" width="1100" height="500" type="application/pdf">`)
+    }
+
+  
+</script> 
+
+<script>
+    function RestoreFiles(){
+        var arr_pk_pdf_file = [];
+        var postData = new FormData();
+        $.each($("input:checkbox[group='pk_pdf_file']:checked"), function(i){
+            arr_pk_pdf_file.push($(this).val());
+        });     
+        postData.append("list_id_pdf_file", arr_pk_pdf_file);
+        var csrftoken = "{{ csrf_token }}";
+        if (postData){
+            var result = confirm("Want to restore?");
+            if (result) {
+            //Logic to delete the item
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:restoreFiles' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers:{
+                    "X-CSRFToken": csrftoken
+                },
+                
+                success: function(resp) {
+                    alert(resp.msg)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                    alert(status,error); 
+                    //window.location.replace(``);
+                }
+            }) //end ajax
+    }
+    
+        }
+        
+    }
+    </script>
+    <script>
+       
+        function  warnning_delete(id){
+        alert("You not allowed!!")
+    }
+
+    </script>
+
+
+{% endblock %}
