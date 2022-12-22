@@ -104,3 +104,7 @@ def split_loaict_string(string):
 	for f in string.split(','):
 		loaict_list.append(f)
 	return loaict_list
+
+@register.filter(name="make_hyphen")
+def make_hyphen(value):
+	return str(value).replace(" ","_")

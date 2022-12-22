@@ -28,6 +28,8 @@ import io
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
 import logging
+from itertools import chain
+import re
 logger = logging.getLogger("debug_purposes")
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
@@ -140,20 +142,38 @@ def signedDocs(request):
 			for ct in loaict:
 				set_loai_ct.add(ct)
 		list_loai_ct=list(set_loai_ct)
-		print(request.GET)
-		if request.GET.get("key_word",""):
-			key_word = request.GET.get("key_word")
-			pdfs=pdfs.filter(slaveFile__icontains=key_word).order_by("-SignedTime")	
-		if request.GET.get("account",None):
-			account=excelAccount.objects.filter(account=request.GET.get("account"))[0]
-			print(account.pk)			
-			pdfs = pdfs.filter(account=account).order_by("-SignedTime")
-		if request.GET.get("todate",None):
-			todate=request.GET.get("todate")
-			pdfs = pdfs.filter(sendingTime__date__lte=todate).order_by("-SignedTime")
-		if request.GET.get("fromdate",None):	
-			fromdate=request.GET.get("fromdate")
-			pdfs = pdfs.filter(sendingTime__date__gte=fromdate).order_by("-SignedTime")
+		number_qr=0
+		if request.GET.getlist("list_ac") or request.GET.getlist("list_ct") or request.GET.get('daterange') :
+			first_qs=pdfFile.objects.none()
+			if  request.GET.getlist("list_ac"):
+				if  'All' in request.GET.getlist("list_ac"):
+					first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
+				else:
+					for f in request.GET.getlist("list_ac"):
+						account=excelAccount.objects.get(account=f)
+						current_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True,account=account).order_by("-SignedTime")
+						first_qs=first_qs|current_qs 
+			else:
+				first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
+			if request.GET.getlist("list_ct"):
+				second_qs=pdfFile.objects.none()
+				if  'All' in request.GET.getlist("list_ct"):
+					second_qs=first_qs
+				else:
+					for f in request.GET.getlist("list_ct"):
+						print(first_qs.filter(loaict__icontains=f))
+						second_qs=second_qs|first_qs.filter(loaict__icontains=f)
+			else:
+				second_qs=first_qs
+			if request.GET.get('daterange') :
+				daterange=request.GET.get('daterange').split(' - ')
+				start_date=datetime.strptime(daterange[0], '%m/%d/%Y')
+				end_date=datetime.strptime(daterange[1], '%m/%d/%Y')
+				third_qs=second_qs.filter(SignedTime__gte=start_date,SignedTime__lte=end_date)
+			else:
+				third_qs=second_qs
+			number_qr=len(third_qs)
+			pdfs=third_qs
 		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
 			fromdate2=request.GET.get("fromdate2")
 			todate2=request.GET.get("todate2")
@@ -161,7 +181,7 @@ def signedDocs(request):
 			return export_hnk_ticket_excel(fromdate2,todate2)
 			
 			
-		return render(request,"KCtool/vb-da-ky.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"key_word":request.GET.get("key_word",""),"account":request.GET.get("account",None),"fromdate":request.GET.get("fromdate"),"todate":request.GET.get("todate"),"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2"),"list_loai_ct":list_loai_ct})
+		return render(request,"KCtool/vb-da-ky.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2"),"list_loai_ct":list_loai_ct,'number_qr':number_qr})
 
 	else :
 		form = LoginForm()
@@ -181,42 +201,79 @@ def staffManager(request):
 		if request.user.is_admin :
 			staffList=Profile.objects.all().order_by("-pk")
 			numberstaff=len(staffList)
-			return render(request,"KCtool/quan-ly-nhan-su.html",{"staffList":staffList,"numberstaff":numberstaff, "active_id":6})
+			list_account=excelAccount.objects.all().order_by('account')
+			pages=Paginator(list_account,10)	
+			if pages.num_pages > 2:
+				for index in range(1,100):
+					if Paginator(list_account,index).num_pages == 2:
+						pages=Paginator(list_account,index)
+						break
+			# for page in pages:
+			# 	for account in page:
+			# 		print(page,account)
+			return render(request,"KCtool/quan-ly-nhan-su.html",{"staffList":staffList,"numberstaff":numberstaff, "active_id":6,'pages':pages})
 	else :
 		form = LoginForm()
 		return render(request, 'login.html', {'form':form})
-def accountUpdate(request,staffId):
-	user=User.objects.get(pk=int(staffId))
-	staff=Profile.objects.get(user=user)
-	accountLists=excelAccount.objects.all()
-	accountpage=Paginator(accountLists,5)
-	
-	return render(request,"KCtool/accountUpdate.html",{"staffId":staffId,"staff":staff,"user":user,"accountpage":accountpage})
-def addNewProfile(request):	
-	account=request.GET.get("account")
-	if account:
-		user=User.objects.create(user_name=account)
-		password=request.GET.get("password")
-		user.set_password(password)
-		is_admin=request.GET.get("is_admin")
-		if is_admin:
-			user.is_admin=True
-		is_signer=request.GET.get("is_signer")
-		if is_signer:
-			user.is_signer=True
-		is_uploader=request.GET.get("is_uploader")
-		if is_uploader:
-			user.is_uploader=True
-		user.save()
-		userProfile=Profile.objects.create(user=user)
-		userProfile.phone_number=request.GET.get("phone")
-		userProfile.email=request.GET.get("email")
-		userProfile.full_name=request.GET.get("name")
-		userProfile.save()
-		return redirect("KCTool:staffManager")
-	return render(request,"KCtool/addNewProfile.html")
+
+
+
+
+
+@api_view(["POST"])
+def addNewProfile(request):
+	data=request.data
+	print(data)
+	if not data["full_name_create"]:
+		return Response({"full_name_required":"Full name required"}, status=status.HTTP_200_OK)
+	if not data['new_email_create']:
+		return Response({"Email_err":"Email required"}, status=status.HTTP_200_OK)
+	else:
+		if Profile.objects.filter(email=data['new_email_create']).exists():
+			return Response({"Email_err":"Email existed"}, status=status.HTTP_200_OK)
+		else:
+			if not re.fullmatch(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b' ,data['new_email_create']):
+				return Response({"Email_err":"Invalid Email"}, status=status.HTTP_200_OK)
+					
+	if not (data['user_name_create']):
+		return Response({"user_input_err":"Please enter Username"}, status=status.HTTP_200_OK)
+	else:
+		if User.objects.filter(user_name=data['user_name_create']).exists():
+			return Response({"user_input_err":"Username existed"}, status=status.HTTP_200_OK)
+	if data['password_create']:
+		if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{6,}', data['password_create']):
+			return Response({"password_err":"Invalid password"}, status=status.HTTP_200_OK)
+	else:
+		return Response({"password_err":"Password required"}, status=status.HTTP_200_OK)
+	with transaction.atomic():
+		try:
+			user_name=data['user_name_create']
+			password=data['password_create']
+			user=User.objects.create(user_name=user_name)
+			user.set_password(password)
+			if data['admin_role']:
+				user.is_admin=True
+			if data['upload_role']:
+				user.is_uploader=True
+			if data['sign_role']:
+				user.is_signer=True
+			user.save()
+			userProfile=Profile.objects.create(user=user)
+			try:
+				userProfile.phone_number=data["phone_number_create"]
+			except:
+				userProfile.phone_number=None
+			try:
+				userProfile.email=data["new_email_create"]
+			except:
+				raise Exception()
+			userProfile.full_name=data["full_name_create"]
+			userProfile.save()
+		except:
+			return Response({"msg":"failed"}, status=status.HTTP_403_FORBIDDEN)
+	return Response({"msg":"success"}, status=status.HTTP_200_OK)
 def deletedDocs(request):
-	deletedDocs=pdfFile.objects.filter(is_deleted=True)
+	deletedDocs=pdfFile.objects.filter(is_deleted=True).order_by('-pk')
 	numberdeletedpdfs=len(deletedDocs)
 	return render(request,"KCtool/vb-da-xoa.html",{"deletedDocs":deletedDocs,"active_id":8,"numberdeletedpdfs":numberdeletedpdfs})
 
@@ -653,46 +710,53 @@ def export_hnk_ticket_excel(from_date, to_date):
 
 @api_view(["POST"])
 def updateProfile(request): ##manage staff
-	data=request.data
-	staffId=int(data['staff_pk'])
-	staff=Profile.objects.get(pk=staffId)
-	preAccountLists= excelAccount.objects.filter(responsibleBy=staff).distinct()
-
-	for account in data['account_list_array'].split(","):
-		if excelAccount.objects.filter(responsibleBy=staff,account=account): # kiểm tra xem account có phải là account cũ trong db hay khôn	
-			pass
-		else:  #đối với account mới trong request
-			try:
-				acc=excelAccount.objects.get(account=account)
-				acc.responsibleBy=staff
-				acc.save()
-			except:
-				pass
-	for account in preAccountLists: #xử lí các account bỏ tick
-		if str(account) not in data['account_list_array'].split(","):
-			account.responsibleBy=None
-			account.save()
-	authenList=data['authen_list_array'].split(",")
-	user=staff.user
-	print("authenlist",authenList)
-	if "is_uploader" in authenList:
-		user.is_uploader =True
-	else:
-		user.is_uploader =False
-	if "is_signer" in authenList:
-		user.is_signer =True
-	else:
-		user.is_signer =False
-	if "is_admin" in authenList:
-		user.is_admin =True
-	else:
-		user.is_admin =False
-	user.save()
-	staff.full_name = data['full_name']
-	staff.phone_number = data['phone']
-	staff.email = data['email']
-	staff.save()
-	return Response({"msg":"success"}, status=status.HTTP_200_OK)
+	with transaction.atomic():
+		try:
+			data=request.data
+			print(data)
+			staffId=int(data['staff_pk'])
+			staff=Profile.objects.get(pk=staffId)
+			preAccountLists= excelAccount.objects.filter(responsibleBy=staff).distinct()
+			list_preAccountLists=[str(f.account) for  f in preAccountLists]
+			print(list_preAccountLists)
+			for account in preAccountLists: #xử lí các account bỏ tick
+				if str(account) not in data['account_list_array'].split(","):
+					account.responsibleBy=None
+					account.save()
+			for account in data['account_list_array'].split(","):
+				if account in preAccountLists: # kiểm tra xem account có phải là account cũ trong db hay khôn	
+					pass
+				else:  #đối với account mới trong request
+					try:
+						acc=excelAccount.objects.get(account=account)
+						acc.responsibleBy=staff
+						acc.save()
+					except:
+						pass
+				authenList=data['authen_list_array'].split(",")
+				user=staff.user
+				print("authenlist",authenList)
+				if "is_uploader" in authenList:
+					user.is_uploader =True
+				else:
+					user.is_uploader =False
+				if "is_signer" in authenList:
+					user.is_signer =True
+				else:
+					user.is_signer =False
+				if "is_admin" in authenList:
+					user.is_admin =True
+				else:
+					user.is_admin =False
+				user.save()
+				staff.full_name = data['full_name']
+				staff.phone_number = data['phone']
+				staff.email = data['email']
+				staff.save()
+				return Response({"msg":"success"}, status=status.HTTP_200_OK)
+		except:
+			raise Exception()
+	
 
 
 #UPDATE USER PROFILE
@@ -708,3 +772,10 @@ def update_profile(request):
 	profile.address = request.data['address']
 	profile.save()
 	return Response({"msg":"success"}, status=status.HTTP_200_OK)
+@api_view(["POST"])
+def get_info(request):
+	pk=request.data['staff_pk']
+	staff=Profile.objects.get(pk=pk)
+	user_of_staff=staff.user
+	list_responsibled_account=excelAccount.objects.filter(responsibleBy=staff).values('account')
+	return Response({ 'msg':'success','full_name':staff.full_name,'phone_number':staff.phone_number,'email':staff.email,'user_name':user_of_staff.user_name,'is_admin':user_of_staff.is_admin,'is_uploader':user_of_staff.is_uploader ,'is_signer':user_of_staff.is_signer,'list_responsibled_account':list_responsibled_account}, status=status.HTTP_200_OK)

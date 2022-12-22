@@ -1,33 +1,23 @@
+var x = document.getElementById("boxEdit");
+var y = document.getElementById("boxAdd");
 
+function btnEdit() {
+    x.style.display = "block";
+    y.style.display = "none";
+}
 
-const boxAdd = document.querySelector(".box-add");
-const btnAdd = document.querySelector(".box-table .btn-add");
+function btnAdd() {
+    if (y.style.display === "none") {
+        y.style.display = "block";
+        x.style.display = "none";
 
-const maincontentManage = document.querySelector(".box-table");
+    } else {
+        y.style.display = "none";
 
-btnAdd.addEventListener("click", () => {
-    if (boxAdd.className === "box-add") boxAdd.classList.add("open");
-    else boxAdd.classList.remove("open");
-    boxEdit.classList.add("open");
+    }
+}
 
-    
-});
-btnAdd.addEventListener("click", () => {
-    if (maincontentManage.className === "maincontentmanage")
-        maincontentManage.classList.add("open");
-    else maincontentManage.classList.remove("open");
-});
-
-const boxEdit = document.querySelector(".box-edit");
-const btnEdit = document.querySelector(".box-table .btn-edit");
-
-btnEdit.addEventListener("click", () => {
-    if (boxEdit.className === "box-edit") boxEdit.classList.add("open");
-    else boxEdit.classList.remove("open");
-    boxAdd.classList.add("open");
-});
-btnEdit.addEventListener("click", () => {
-    if (maincontentManage.className === "maincontentmanage")
-        maincontentManage.classList.add("open");
-    else maincontentManage.classList.remove("open");
-});
+function btnClose() {
+    y.style.display = "none";
+    x.style.display = "none";
+}

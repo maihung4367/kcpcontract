@@ -3,7 +3,6 @@ from . import views
 app_name='KCTool'
 urlpatterns = [
     path('',views.kcToolPage,name="kcToolPage" ),
-    path("user_update/(?P<staffId>\d+)$",views.accountUpdate,name="accountUpdate"),
     path("vb-cho-xac-nhan/",views.newCreatedDocs,name="newCreatedDocs"),
     path("vb-da-xac-nhan/",views.confirmedDocs,name="confirmedDocs"),
     path("StaffManage/",views.staffManager,name="staffManager"),
@@ -23,6 +22,7 @@ urlpatterns = [
     path("delete_profile/",views.delete_profile,name="delete_profile"),
     path("NewProfile/",views.addNewProfile,name="addNewProfile"),
     path("RecycleBin/",views.deletedDocs,name="deletedDocs"),
+    path('get_info',views.get_info,name='get_info'),
 
     path("thong-tin-ho-tro",views.info_page,name="info_page")
 ]

@@ -14,7 +14,7 @@
     <div class="top-content">
 
         <div class="btn-add">
-            <button class="btn--primary">
+            <button class="btn--primary" onclick="btnAdd() ">
                 <span>+</span>
                 Thêm nhân viên
             </button>
@@ -24,18 +24,16 @@
     <div class="table-content" id="style-scroll-table">
         <table>
             <tr>
-                <th style="width: 5%;">STT</th>
+                <th style="width: 5%;;border-radius: 4px 0px 0px 4px;">STT</th>
                 <th style="width: 30%;text-align: start;">Tên</th>
                 <th style="width: 20%;text-align: start;">Tên đăng nhập</th>
                 <th style="width: 15%;text-align: start;">Số điện thoại</th>
                 <th style="width: 30%;text-align: start;">Email</th>
             </tr>
             {% for staff in staffList %} 
-            <tr>
+            <tr  onclick="btnEdit();get_info($(this).data('value'))" class="btn-edit" data-value="{{staff.pk}}">
                 <td class="td-center">{{staff.pk}}</td>
-                <td>
-                    <a class="btn-edit">{{staff.full_name}}</a>
-                </td>
+                <td>{{staff.full_name}}</td>
                 <td>{{staff.user}}</td>
                 <td>{{staff.phone_number}}</td>
                 <td>
@@ -48,64 +46,69 @@
     </div>
 </section>
 </div>
-
-<div id="style-scroll-table" class="box-add open">
+<div id="boxAdd" class="box-add open style-scroll-table">
     <h4>Thêm nhân viên</h4>
+    <span class="btn-close" onclick="btnClose()">&times;</span>
+    <hr>
     <div class="box-input">
         <label>Họ và tên
-            <input type="text" class="input-item" name="" id="" placeholder="Họ và tên">
+            <input type="text" class="input-item" name="" id="full_name_create" placeholder="Họ và tên">
         </label>
-        <label>Số điện thoại <span class="required">*</span>
-            <input type="text" class="input-item" name="" id="" placeholder="Số điện thoại" required>
+        <label>Số điện thoại <span class="required"></span>
+            <input type="text" class="input-item" name="" id="phone_number_create" placeholder="Số điện thoại" required>
         </label>
-        <label>Email <span class="required">*</span>
-            <input type="email" class="input-item" name="" id="" placeholder="Email của bạn" required>
+        <label>Email <span class="required">*</span>  <span  class="required" id="new_email_create_required"></span>
+            <input type="email" class="input-item" name="" id="new_email_create" placeholder="Email của bạn" required>
+           
         </label>
-        <label>Tên đăng nhập
-            <input type="text" class="input-item" name="" id="" placeholder="Tài khoản">
+        <label>Tên đăng nhập <span  class="required" id="username_required"></span>
+            <input type="text" class="input-item" name="" id="user_name_create" placeholder="Tài khoản">
         </label>
-        <label>Mật khẩu
-            <input type="password" class="input-item" name="" id="" placeholder="Mật khẩu">
+        <label>Mật khẩu <span  class="required" id="password_required"></span>
+            <input type="password" class="input-item" name="" id="password_create" placeholder="Mật khẩu">
         </label>
         <hr class="hr">
         <p>Ủy quyền</p>
         <div class="checkbox-list">
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox" name="" id="admin_role">
                 <span class="checkmark"></span>
                 <p>Admin</p>
             </label> <br>
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="upload_role">
                 <span class="checkmark"></span>
                 <p>Uploader</p>
             </label> <br>
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox"  name="" id="sign_role">
                 <span class="checkmark"></span>
                 <p>Signer</p>
             </label>
         </div>
     </div>
     <div class="btn-group">
-        <button class="btn--secondary">Hủy</button>
-        <button class="btn--primary">Lưu</button>
+        <button class="btn--secondary" >Hủy</button>
+        <button class="btn--primary" id="create-new-profile" >Lưu</button>
     </div>
 </div>
-<div id="style-scroll-content" class="box-edit open">
-    <h4>Nhân viên ID 11</h4>
+<div id="boxEdit" class="box-edit open style-scroll-table">
+    <h4 id="title_info_modal"></h4>
+    <span class="btn-close" onclick="btnClose()">&times;</span>
+
+    <hr>
     <div class="box-input">
         <label>Họ và tên
-            <input type="text" class="input-item" name="" id="" placeholder="Họ và tên">
+            <input type="text" class="input-item" name="" id="staff_fullname" placeholder="Họ và tên">
         </label>
         <label>Số điện thoại <span class="required">*</span>
-            <input type="text" class="input-item" name="" id="" placeholder="Số điện thoại" required>
+            <input type="text" class="input-item" name="" id="staff_phonenumber" placeholder="Số điện thoại" required>
         </label>
         <label>Email <span class="required">*</span>
-            <input type="email" class="input-item" name="" id="" placeholder="Email của bạn" required>
+            <input type="email" class="input-item" name="" id="staff_email" placeholder="Email của bạn" required>
         </label>
         <label>Tên đăng nhập
-            <input type="text" class="input-item" name="" id="" placeholder="Tài khoản">
+            <input type="text" class="input-item" name="" id="staff_username" placeholder="Tài khoản">
         </label>
         <label>Mật khẩu
             <input type="password" class="input-item" name="" id="" placeholder="Mật khẩu">
@@ -114,17 +117,17 @@
         <p>Ủy quyền</p>
         <div class="checkbox-list">
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox" name="authen" id="is_admin" value="is_admin"  group="authen">
                 <span class="checkmark"></span>
                 <p>Admin</p>
             </label> <br>
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox"  name="authen" id="is_uploader" value="is_uploader" group="authen"> 
                 <span class="checkmark"></span>
                 <p>Uploader</p>
             </label> <br>
             <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
+                <input type="checkbox" class="checkitem input-checkbox"  name="authen" id="is_signer" value="is_signer" group="authen">
                 <span class="checkmark"></span>
                 <p>Signer</p>
             </label>
@@ -132,99 +135,91 @@
         <hr class="hr">
         <p>Account</p>
         <div class="checkbox-list-2" id="style-scroll-table">
+            {% for page in pages%}
             <div class="col-6">
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
+                {% for account in page%}
+                <label class="input_label"> 
+                <input type="checkbox" class="checkitem input-checkbox" value="{{account}}" name="account_list" id="{{account|make_hyphen}}"  group="account_list" >
                 <span class="checkmark"></span>
-                <p>Ecom</p>
+                <p>{{account}}</p>
                 </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>TRICOOP- Pharmacity</p>
-                 </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Toan Thi</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
-                <span class="checkmark"></span>
-                <p>Emart Sala</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Tiki</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Shopee</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
-                <span class="checkmark"></span>
-                <p>Lazada</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Kidsplaza</p>
-                </label>
+                {% endfor %}
             </div>
-            <div class="col-6">
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
-                <span class="checkmark"></span>
-                <p>TRICOOP</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>EMART</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>COOP</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
-                <span class="checkmark"></span>
-                <p>BeepBeep</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Bibomart</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>ConCung Offline</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox" name="" id="">
-                <span class="checkmark"></span>
-                <p>Big C</p>
-                </label>
-                <label class="input_label">
-                <input type="checkbox" class="checkitem input-checkbox"  name="" id="">
-                <span class="checkmark"></span>
-                <p>Aeon</p>
-            </label>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <div class="btn-group">
-        <button class="btn--secondary">Hủy</button>
-        <button class="btn--primary">Lưu</button>
+        <button class="btn--secondary" >Hủy</button>
+        <button class="btn--primary" id="save-changes-btn" value="" onclick="save_changes(this.value)">Lưu</button>
     </div>
 </div>
 </div>
+<script>
+    $('#create-new-profile').on('click', function(){
+        var full_name_create = $("#full_name_create").val()
+        var phone_number_create = $("#phone_number_create").val()
+        var new_email_create = $("#new_email_create").val()
+        var user_name_create = $("#user_name_create").val()
+        var password_create=$("#password_create").val()
+        var postData = new FormData();
+        if ($("#admin_role").is(':checked')){
+            var admin_role= "true";
+            postData.append("admin_role", admin_role);}
+        if ($("#upload_role").is(':checked')){
+            var upload_role= "true";
+            postData.append("upload_role", upload_role);}
+        if ($("#sign_role").is(':checked')){
+            var sign_role= "true";
+            postData.append("sign_role", sign_role);}
+        
+        postData.append("full_name_create", full_name_create);
+        postData.append("phone_number_create", phone_number_create);
+        postData.append("new_email_create",new_email_create);
+        postData.append("user_name_create", user_name_create);
+        postData.append("password_create", password_create);
+        
+       
+        
 
+        var csrftoken = '{{ csrf_token }}';
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:addNewProfile' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            beforeSend: function() {
+                            $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+                        },
+            success: function(resp) {
+                $('.modal_loading').fadeOut(500, function() { $(".modal_loading").remove(); });
+                if (resp["Email_err"] ){
+                    $("#new_email_create_required").html(resp["Email_err"]);
+                }
+                else $("#new_email_create_required").html('');
+                if (resp["user_input_err"] ){
+                    $("#username_required").html(resp["user_input_err"]);
+                }
+                else $("#username_required").html('');
+                if (resp["password_err"] ){
+                    $("#password_required").html(resp["password_err"]);
+                }
+                else $("#password_required").html('')
+                
+            },
+            error:function(xhr, status, error){      
+                $('.modal_loading').fadeOut(500, function() { $(".modal_loading").remove(); });      
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+
+    })
+</script>
 <!-- <script>
     function addRowHandlers() {
     var table = document.getElementById("tableId");
@@ -269,4 +264,128 @@ btnAdd.addEventListener("click", () => {
 });
 
 </script> -->
+<script>
+    var x = document.getElementById("boxEdit");
+var y = document.getElementById("boxAdd");
+
+function btnEdit() {
+    x.style.display = "block";
+    y.style.display = "none";
+}
+
+function btnAdd() {
+    if (y.style.display === "none") {
+        y.style.display = "block";
+        x.style.display = "none";
+
+    } else {
+        y.style.display = "none";
+
+    }
+}
+
+function btnClose() {
+    y.style.display = "none";
+    x.style.display = "none";
+}
+</script>
+<script>
+    function get_info(e) {
+        var csrftoken = '{{ csrf_token }}';
+        var postData = new FormData();
+        postData.append("staff_pk", e);
+        $("input:checkbox").attr('checked', false );    // turn of all checkbox
+        $.ajax({
+            type: "post",
+            url: "{% url 'KCTool:get_info' %}",
+            data: postData,
+            cache: false,
+            processData:false,
+            contentType: false,
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            
+            success: function(resp) {
+                $("#staff_fullname").val(`${resp.full_name}`);
+                $("#staff_phonenumber").val(`${resp.phone_number}`);
+                $("#staff_email").val(`${resp.email}`);
+                $("#staff_username").val(`${resp.user_name}`);   
+                $("#title_info_modal").html(`Nhân viên ID ${e}`); 
+                $("#save-changes-btn").val(e);  
+                if (resp.is_admin){
+                    $("#is_admin").attr('checked', true);
+                }
+                else $("#is_admin").attr('checked', false);
+                if (resp.is_uploader){
+                    $("#is_uploader").attr('checked', true);
+                }
+                else  $("#is_uploader").attr('checked', false);
+                if (resp.is_signer){
+                    $("#is_signer").attr('checked', true);
+                }
+                else  $("#is_signer").attr('checked', false);
+                
+                if (resp["list_responsibled_account"] ){
+                   var array_account= resp["list_responsibled_account"];
+                   array_account.forEach(element => {
+                        console.log(`#${(element.account.replace(" ", "_"))}`);
+                        $(`#${(element.account.replace(" ", "_"))}`).attr('checked', true);
+                   });
+                }
+            },
+            error:function(xhr, status, error){            
+                alert(status,error); 
+                //window.location.replace(``);
+            }
+        }) //end ajax
+        
+}
+</script>
+<script type="text/javascript">
+    function save_changes(x){
+            var account_list_array = [];
+            var authen_list_array =[];
+            var identityUser = x;
+            var full_name=$("#staff_fullname").val()
+            var phone=$("#staff_phonenumber").val()
+            var email=$("#staff_email").val()
+            var username=$("#staff_username").val(); 
+            var postData = new FormData();
+            $.each($("input:checkbox[group='account_list']:checked"), function(i){
+                account_list_array.push($(this).val());
+            });
+            $.each($("input:checkbox[group='authen']:checked"), function(i){
+                authen_list_array.push($(this).val());
+            });
+            postData.append("full_name", full_name);
+            postData.append("phone", phone);
+            postData.append("email", email);
+            postData.append("staff_pk", identityUser);
+            postData.append("account_list_array",  account_list_array);
+            postData.append("authen_list_array", authen_list_array);
+            $.ajax({
+                type: "post",
+                url: "{% url 'KCTool:updateProfile' %}",
+                data: postData,
+                cache: false,
+                processData:false,
+                contentType: false,
+                headers: { "X-CSRFToken": '{{csrf_token}}' },
+                beforeSend: function() {
+                        $('body').append('<div class="modal_loading"> <div class="modal_loading-content"><div class="follow-the-leader"><div></div><div></div><div></div><div></div></div></div></div>');
+                },
+                success: function(resp) {
+                    alert(resp.msg)
+                    window.location.replace(``);
+                },
+                error:function(xhr, status, error){            
+                alert(xhr.responseText);
+                    //window.location.replace(``);
+                }
+            }) //end ajax
+        } 
+</script>
+
+ 
 {% endblock %}

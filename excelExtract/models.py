@@ -20,7 +20,7 @@ class excelAccount(models.Model):
     responsibleBy=models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
     standardName=models.CharField(max_length=60,null=True, blank=True)
     def __str__(self):
-        return "{}".format(str(self.account))       
+        return "{}".format(str(self.account))           
     class Meta:
         ordering = ['-id']
 class accountEmail(models.Model):

@@ -16,13 +16,15 @@
             </button>
         </div>
         <div class="btn-check display-r">
-            <button class="btn-reset">
+            {% if number_qr != 0 %}
+            <button class="btn-reset" onClick=" window.location.href = '{% url "KCTool:signedDocs" %}' ">
                 <i class="fa-solid fa-arrows-rotate"></i>
             </button>
+            {% endif %}
             <button class="btn--secondary btn-filter" onclick="openNav()">
                 <i class="fa-solid fa-filter"></i>
                 Lọc theo
-                <span class="alarm-number">3</span>
+                <span class="alarm-number">{{number_qr}}</span>
             </button>
             {% if user.is_signer or user.is_admin %}
             <button class="btn--primary" onclick="send_all_pdf()">
@@ -41,11 +43,12 @@
             Lọc theo
         </div>
         <hr>
+        <form  action="{% url 'KCTool:signedDocs' %}?" method="GET" id="form">
         <div class="sidenav-content">
             
             <label>
             Loại Account
-            <select class="select-account" multiple="multiple" id="list_ac">
+            <select class="select-account" multiple="multiple" id="list_ac" name="list_ac">
                 <option value="All" >Tất cả</option>
                 {% for account in accountList %}
                 <option value="{{account}}" >{{account}}</option>
@@ -54,7 +57,7 @@
         </label>
             <label>
             Danh mục
-            <select class="select-category" multiple="multiple" id="list_ct">
+            <select class="select-category" multiple="multiple" id="list_ct" name="list_ct">
                 <option value="All" >Tất cả</option>
                 {% for ct in list_loai_ct %}
                 <option value="{{ct}}">{{ct}}</option>
@@ -65,21 +68,22 @@
             Thời gian
             <div id="reportrange" style="background: #fff; cursor: pointer; padding: 8px 10px; border: 1px solid #ccc; width: 100%; border-radius: 4px;margin-top: 10px;">
                 <i class="fa fa-calendar"></i>&nbsp;
-                <span></span> <i class="fa fa-caret-down"></i>
+                <input type="text" name="daterange" value="" > <i class="fa fa-caret-down"></i>
             </div>
         </label>
         </div>
         <div class="btn-success display-r">
-            <button class="btn--primary open-btn" onclick="closeNav();filter_table()">
+            <button class="btn--primary open-btn" onclick="closeNav()" type="submit">
                 Xác nhận
             </button>
         </div>
+    </form>
     </div>
     <!-- Sidenav Filter-->
     <div class="table-content" id="style-scroll-table">
         <table id="statusTable" class="table">
             <tr>
-                <th style="width: 5%;z-index: 1;">
+                <th style="width: 5%;z-index: index 1 ;">
                     <label class="input_label">
                         <input type="checkbox" name="checkAll" id="check_all" class="checkAll" />
                         <span class="checkmark"></span>
@@ -277,14 +281,15 @@
 </script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function() {
 
         var start = moment().subtract(29, 'days');
         var end = moment();
 
         function cb(start, end) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            
+            $('input[name=daterange]').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
 
         $('#reportrange').daterangepicker({
@@ -303,7 +308,27 @@
         cb(start, end);
 
     });
-</script>
+</script> -->
+<script type="text/javascript">
+    $(function() {
+    
+      $('input[name="daterange"]').daterangepicker({
+          autoUpdateInput: false,
+          locale: {
+              cancelLabel: 'Clear'
+          }
+      });
+    
+      $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+      });
+    
+      $('input[name="daterange"]').on('cancel.daterangepicker',  function(ev, picker) {
+          $(this).val('');
+      });
+    
+    });
+    </script>
 <script>
     function addRowHandlers() {
     var table = document.getElementById("statusTable");

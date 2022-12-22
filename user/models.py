@@ -11,11 +11,11 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=15, null=True, blank = True)
     position = models.CharField(max_length=255, null=True, blank = True)
-    email = models.EmailField(null=True, blank = True,unique=True,default="abc@abc.com")
+    email = models.EmailField(null=True, blank = True,unique=True)
     address = models.CharField(max_length=255, null=True, blank = True)
     company_name = models.CharField(max_length=255, null=True, blank = True)
     def __str__(self):        
-        return self.full_name
+        return self.full_name or 'emptyName'
 
 class User(AbstractBaseUser, PermissionsMixin):
     user_name = models.CharField("user name",max_length=254,unique=True)
@@ -36,6 +36,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):        
         return self.user_name
-
-    def get_user_url(self):
-        return reverse("KCTool:accountUpdate",kwargs={"staffId":self.pk})

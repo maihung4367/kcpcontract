@@ -239,7 +239,7 @@ id="page--delete"
     </footer>
     
     <!-- Modal Create PDF -->
-    <div id="createPDF" class="modal modal-open-pdf">
+    <div id="createPDF" class="modal modal-open-pdf" style="z-index: 2;">
         {% comment %} <form> {% endcomment %}
             <div class="modal-container modal-container-pdf">
                 <div class="modal-header ">
@@ -338,12 +338,12 @@ id="page--delete"
                     <div class="input_group">
                         <label class="input_title" for="company_name">
                             Tên công ty
-                            <input class="input_item" type="text" name="company_name" placeholder="Nhập tên công ty" value="{{result.profile.company_name}}" id="company_name">
+                            <input class="input_item" type="text" name="company_name" placeholder="Nhập tên công ty" {% if result.profile.company_name != "None"  %} value="{{result.profile.company_name}}" {% endif %}id="company_name">
                         </label>
 
                         <label class="input_title" for="title_name">
                             Chức danh
-                            <input class="input_item" type="text" name="title_name" placeholder="Nhập chức danh" value="{{result.profile.position}}" id="position" >
+                            <input class="input_item" type="text" name="title_name" placeholder="Nhập chức danh" {% if result.profile.position != "None"  %} value="{{result.profile.position}}"  {% endif %}" id="position" >
                         </label>
 
                     </div>
@@ -355,7 +355,7 @@ id="page--delete"
                     <div class="input_group input_address">
                         <label class="input_title" for="company_address">
                             Địa chỉ
-                            <input class="input_item" type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" value="{{result.profile.address}}" id="address">
+                            <input class="input_item" type="text" name="company_address" placeholder="Nhập thông tin địa chỉ" {% if result.profile.address != "None"  %} value="{{result.profile.address}}"  {% endif %}  id="address">
                         </label>
 
                     </div>
