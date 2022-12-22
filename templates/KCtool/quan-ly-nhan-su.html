@@ -197,6 +197,10 @@
                         },
             success: function(resp) {
                 $('.modal_loading').fadeOut(500, function() { $(".modal_loading").remove(); });
+                if (resp["full_name_required"] ){
+                    $("#full_name_create").html(resp["full_name_required"]);
+                }
+                else $("#full_name_create").html('');
                 if (resp["Email_err"] ){
                     $("#new_email_create_required").html(resp["Email_err"]);
                 }
