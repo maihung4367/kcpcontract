@@ -111,12 +111,12 @@
                         <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
                     </a>
                 </td>
-                <td>
+                <td >
                     <div class="box-group">
                         <span class="box box-account">{{pdf.account}}</span>
                     </div>
-                </td>
-                <td>
+                </td >
+                <td >
                     <div class="box-group">
                         {% for chuongtrinh in pdf.loaict|split_loaict_string %}
                         <span class="box box-category">{{chuongtrinh}}</span>
@@ -329,7 +329,7 @@
     
     });
     </script>
-<!-- <script>
+<script>
     function addRowHandlers() {
     var table = document.getElementById("statusTable");
     var rows = table.getElementsByTagName("tr");
@@ -353,6 +353,7 @@
        
     }
 }
-window.onload = addRowHandlers();
-</script> -->
+console.log("clicked");
+window.onload = addRowHandlers;
+</script>
 {% endblock %}
