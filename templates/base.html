@@ -142,7 +142,7 @@ id="page--delete"
                     <li class="sub-item nav-link
                     {% if active_id == 2 %}
                     active
-                    {% endif %}">
+                    {% endif %}"  onclick="location.href='{% url "KCTool:newCreatedDocs" %}'">
                         <a href="{% url 'KCTool:newCreatedDocs' %}">
                             <i class="fa-solid fa-file-circle-exclamation"></i>
                             <span>Văn bản chờ xác nhận</span>
@@ -151,16 +151,13 @@ id="page--delete"
                     <li class="sub-item nav-link
                     {% if active_id == 3 %}
                     active
-                    {% endif %}">
+                    {% endif %}" onclick="location.href='{% url "KCTool:confirmedDocs" %}'">
                         <a href="{% url 'KCTool:confirmedDocs' %}">
                             <i class="fas fa-file-circle-check"></i>
                             <span>Văn bản đã xác nhận</span>
                         </a>
                     </li>
-                    <li class="sub-item nav-lin
-                    {% if active_id == 4 %}
-                    active
-                    {% endif %}">
+                    <li class="sub-item nav-lin {% if active_id == 4 %} active {% endif %}" onclick="location.href='{% url "KCTool:signedDocs" %}'">
                         <a href="{% url 'KCTool:signedDocs' %}">
                             <i class="fas fa-file-signature"></i>
                             <span>Văn bản đã ký</span>
@@ -169,7 +166,7 @@ id="page--delete"
                     <li class="sub-item nav-link
                     {% if active_id == 5 %}
                     active
-                    {% endif %}">
+                    {% endif %}" onclick="location.href='{% url "KCTool:untrackedDocs" %}'">
                         <a href="{% url 'KCTool:untrackedDocs' %}">
                             <i class="fa-solid fa-file-circle-question"></i>
                             <span>Văn bản chưa được quản lý</span>

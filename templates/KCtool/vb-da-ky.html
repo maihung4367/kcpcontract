@@ -111,12 +111,12 @@
                         <span title="{{pdf.slaveFile|subNameFileFilter}}">{{pdf.slaveFile|short_name}}</span>
                     </a>
                 </td>
-                <td >
+                <td onmouseover="style.cursor='default'">
                     <div class="box-group">
                         <span class="box box-account">{{pdf.account}}</span>
                     </div>
                 </td >
-                <td >
+                <td onmouseover="style.cursor='default'">
                     <div class="box-group">
                         {% for chuongtrinh in pdf.loaict|split_loaict_string %}
                         <span class="box box-category">{{chuongtrinh}}</span>
@@ -124,8 +124,8 @@
                     </div>
 
                 </td>
-                <td>{{pdf.SignedTime|date:"d/m/Y"}} {{pdf.SignedTime|time:"H:i"}}</td>
-                    <td>
+                <td onmouseover="style.cursor='default'">{{pdf.SignedTime|date:"d/m/Y"}} {{pdf.SignedTime|time:"H:i"}}</td>
+                    <td onmouseover="style.cursor='default'">
                         <div class="box-group">
                             {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}
                         </div>
@@ -329,7 +329,7 @@
     
     });
     </script>
-<script>
+<!-- <script>
     function addRowHandlers() {
     var table = document.getElementById("statusTable");
     var rows = table.getElementsByTagName("tr");
@@ -355,5 +355,5 @@
 }
 console.log("clicked");
 window.onload = addRowHandlers;
-</script>
+</script> -->
 {% endblock %}
