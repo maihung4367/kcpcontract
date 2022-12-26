@@ -50,18 +50,34 @@
                         <td>{{file.upload_by.full_name}}</td>
                         <td class="td-center">{{file.uploadTime|date:"d/m/Y"}} {{file.uploadTime|time:"H:i"}}</td>
                         <td class="td-center">
-                            {% if file|checkSlaveFile  %}
-                            <button class="btn-clear" title="Xóa file" style="transform: none;" disabled>
-                                <i class="fa-regular fa-trash-can icon-trash" style="color:#7a8377" ></i>
+                            {% if user.is_admin or user.is_uploader %}
+                                {% if file|checkSlaveFile  %}
+                                <button class="btn-clear" title="Xóa file" style="transform: none;" disabled>
+                                    <i class="fa-regular fa-trash-can icon-trash" style="color:#7a8377" ></i>
+                                </button>
+                                {% else %}
+                                <button class="btn-clear" title="Xóa file" id="{{file.pk}}" onclick = "delete_excel(this.id)" >
+                                    <i class="fa-regular fa-trash-can icon-trash" ></i>
+                                </button>
+                                {% endif %}
+                            
+                            <button class="modal-btn-pdf" title="Tạo PDF">
+                                <a  id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"  ><i class="fa-regular fa-file-pdf icon-pdf"></i></i></a>
                             </button>
                             {% else %}
-                            <button class="btn-clear" title="Xóa file" id="{{file.pk}}" onclick = "delete_excel(this.id)" >
-                                <i class="fa-regular fa-trash-can icon-trash" ></i>
+                                {% if file|checkSlaveFile  %}
+                                <button class="btn-clear" title="Xóa file" style="transform: none;" disabled>
+                                    <i class="fa-regular fa-trash-can icon-trash" style="color:#7a8377" ></i>
+                                </button>
+                                {% else %}
+                                <button class="btn-clear" title="Xóa file" id="{{file.pk}}"  >
+                                    <i class="fa-regular fa-trash-can icon-trash" ></i>
+                                </button>
+                                {% endif %}
+                            <button  title="Tạo PDF">
+                                <a  id="{{file.pk}}"  ><i class="fa-regular fa-file-pdf icon-pdf"></i></i></a>
                             </button>
                             {% endif %}
-                            <button class="modal-btn-pdf" title="Tạo PDF">
-                                <a href="#createPDF" id="{{file.pk}}"  onclick = "create_pdf_function(this.id)"><i class="fa-regular fa-file-pdf icon-pdf"></i></i></a>
-                            </button>
                         </td>
                     </tr>
                     {% endfor %}

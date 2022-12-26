@@ -163,6 +163,7 @@ id="page--delete"
                             <span>Văn bản đã ký</span>
                         </a>
                     </li>
+                    {% if user.is_admin or user.is_uploader %}
                     <li class="sub-item nav-link
                     {% if active_id == 5 %}
                     active
@@ -172,6 +173,7 @@ id="page--delete"
                             <span>Văn bản chưa được quản lý</span>
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
                 {% if user.is_admin %}
                 <a class="nav-item nav-link" href="{% url 'KCTool:staffManager' %}">
