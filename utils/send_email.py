@@ -7,6 +7,9 @@ from user.models import User,Profile
 import requests
 from excelExtract.models import pdfFile
 from django.template.loader import render_to_string
+from openpyxl.styles import Alignment,NamedStyle,PatternFill,Font
+from io import BytesIO
+import openpyxl
 def send_noti_to_partner_sign_by_email(ct,account,list_system_link_file_pdf, customer_email):
 	
 	subject = "KCV_THÔNG BÁO CHƯƠNG TRÌNH {} THÁNG {} {} ".format(str(ct).upper(),datetime.now().strftime("%m.%Y"),str(account).upper())
@@ -38,14 +41,4 @@ def send_noti_to_confirmer(customer_emails):
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=customer_emails)
 	msg.content_subtype = "html"
 	msg.send()
-# def send_report():
-	
-# 	subject = "Report File hàng tháng - Psign tháng 11"
-# 	html_message = get_template("template_email_summary_report.html").render({"ct":"ct"})
 
-# 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=['longnld@pvs.com.vn','dk@pvs.com.vn'])
-# 	msg.content_subtype = "html"
-
-# 	msg.attach_file('2022-11-01_2022-11-30.xlsx')
-		
-# 	msg.send()

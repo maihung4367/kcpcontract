@@ -19,7 +19,7 @@ from django.core.files import File
 from django.db.models import Q
 import fitz
 import openpyxl
-from openpyxl.styles import Alignment,NamedStyle
+from openpyxl.styles import Alignment,NamedStyle,PatternFill,Font
 from openpyxl.writer.excel import save_virtual_workbook
 from user.forms import LoginForm
 import os
@@ -177,8 +177,9 @@ def signedDocs(request):
 		if request.GET.get("fromdate2",None) and request.GET.get("fromdate2",None):	
 			fromdate2=request.GET.get("fromdate2")
 			todate2=request.GET.get("todate2")
+			print(fromdate2,type(fromdate2))
 			# actlogs = pdfFile.objects.filter(createdTime__date__gte=fromdate2,createdTime__date__lte=todate2)|pdfFile.objects.filter(sendingTime__date__gte=fromdate2,createdTime__date__lte=todate2)
-			return export_hnk_ticket_excel(fromdate2,todate2)
+			return export_virtual_excel(fromdate2,todate2)
 			
 			
 		return render(request,"KCtool/vb-da-ky.html",{"numbersendedpdfs":numbersendedpdfs,"pdfs":pdfs, "active_id":4,"user":user,"accountList":accountList,"fromdate2":request.GET.get("fromdate2"),"todate2":request.GET.get("todate2"),"list_loai_ct":list_loai_ct,'number_qr':number_qr})
@@ -604,19 +605,28 @@ def downloadFiles(request):
 	resp['Content-Length'] = file_size
 	return resp
 #NOT API BUT A FUNCTION WHICH GENERATE A VIRTUAL EXCEL REPORT
-def export_hnk_ticket_excel(from_date, to_date):
-	col_names = ["","Account","Category","file","CreatedTime","ConfirmedTime","SendedTime","creator","confirmer","sender","Confirmed","Signed","Sended"]
-	actlogs = pdfFile.objects.filter(createdTime__date__gte=from_date,createdTime__date__lte=to_date)|pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date)
+def export_virtual_excel(from_date, to_date):
+	col_names = ["","Account","Category","File","CreatedTime","ConfirmedTime","SendedTime","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
+	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)
 
 	wb = openpyxl.Workbook()
 	wb.iso_dates = True
 	ws = wb['Sheet']
+	ws.title='Report'
+
 
 	# create title
+	light_blue_fill = PatternFill(start_color='87CEFA',
+                   end_color='87CEFA',
+                   fill_type='solid')
+	font = Font(name='Arial', size=12, bold=False,
+              	vertAlign=None, underline='none', strike=False,
+                color='FF000000')
 	for col in range(1, len(col_names)):
 		_ = ws.cell(column=col,row=1,value=col_names[col])
-	
-	alignment=Alignment(horizontal='general')
+		_.fill = light_blue_fill
+		_.font = font
+	alignment = Alignment(horizontal='general')
 	normal_format = NamedStyle(name="normal",alignment=alignment)
 	datetime_format = NamedStyle(name="datetime",number_format="DD/MMM/YYYY h:mm",alignment=alignment)
 	date_format = NamedStyle(name="date",number_format="DD/MMM/YYYY",alignment=alignment)
@@ -705,7 +715,7 @@ def export_hnk_ticket_excel(from_date, to_date):
 
 	response = HttpResponse(content=save_virtual_workbook(wb), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 	response['Content-Disposition'] = 'attachment;filename={}_{}.xlsx'.format(from_date,to_date)
-
+	print(response)
 	return response
 
 @api_view(["POST"])
