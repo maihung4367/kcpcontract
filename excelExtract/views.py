@@ -653,17 +653,17 @@ def export_virtual_excel(from_date, to_date):
 			if col_names[col] == "Category" :
 				if ticket.loaict:
 					c = ws.cell(column=col,row=row,value=str(ticket.loaict))
-			if col_names[col] == "file" :
+			if col_names[col] == "File" :
 				if ticket.slaveFile:
 					c = ws.cell(column=col,row=row,value=str(ticket.slaveFile).replace("documents/slavefiles/","") )
-			if col_names[col] == "file" :
+			if col_names[col] == "File" :
 				if ticket.slaveFile:
 					c = ws.cell(column=col,row=row,value=str(ticket.slaveFile).replace("documents/slavefiles/","") )
 				else:
 					c = ws.cell(column=col,row=row,value="")
 				c.style = datetime_format
 				
-			elif col_names[col] == "creator":
+			elif col_names[col] == "Creator":
 				c = ws.cell(column=col,row=row,value=str(ticket.creator))
 				c.style = date_format
 			elif col_names[col] == "CreatedTime":
@@ -684,19 +684,19 @@ def export_virtual_excel(from_date, to_date):
 					c.style = normal_format
 				else:
 					c = ws.cell(column=col,row=row,value="")
-			elif col_names[col] == "creator":
+			elif col_names[col] == "Creator":
 				if ticket.sendingTime:
 					c = ws.cell(column=col,row=row,value=str(ticket.creator))
 					c.style = normal_format
-			elif col_names[col] == "confirmer":
+			elif col_names[col] == "Confirmer":
 				if ticket.confirmer:
 					c = ws.cell(column=col,row=row,value=str(ticket.confirmer))
 					c.style = normal_format
-			elif col_names[col] == "sender":
+			elif col_names[col] == "Sender":
 				if ticket.signer:
 					c = ws.cell(column=col,row=row,value=str(ticket.signer))
 					c.style = normal_format		
-			elif col_names[col] == "sended":
+			elif col_names[col] == "Sended":
 				if ticket.sended:
 					c = ws.cell(column=col,row=row,value=str(ticket.sended))
 					c.style = normal_format		
