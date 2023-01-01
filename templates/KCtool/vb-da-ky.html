@@ -124,7 +124,8 @@
                     </div>
 
                 </td>
-                <td >{{pdf.SignedTime|date:"d/m/Y"}} {{pdf.SignedTime|time:"H:i"}}</td>
+
+                <td > {% if pdf.SignedTime %}{{pdf.SignedTime|date:"d/m/Y"}} {{pdf.SignedTime|time:"H:i"}} {% else %} {{pdf.sendingTime|date:"d/m/Y"}} {{pdf.sendingTime|time:"H:i"}} {% endif %}</td>
                     <td >
                         <div class="box-group">
                             {% for email in pdf.emailExtracted.all %}<span class="box box-mail" title="{{email}}">{{email|email_filter_innerhtml}}</span>{% endfor %}

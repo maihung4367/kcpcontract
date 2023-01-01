@@ -134,7 +134,7 @@ def signedDocs(request):
 	if request.user.is_authenticated:
 		user=request.user
 		numbersendedpdfs=len(pdfFile.objects.filter(sended=True))
-		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
+		pdfs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-id")
 		accountList=excelAccount.objects.all()
 		set_loai_ct=set()
 		for pdf in pdfs:
@@ -147,14 +147,14 @@ def signedDocs(request):
 			first_qs=pdfFile.objects.none()
 			if  request.GET.getlist("list_ac"):
 				if  'All' in request.GET.getlist("list_ac"):
-					first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
+					first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-id")
 				else:
 					for f in request.GET.getlist("list_ac"):
 						account=excelAccount.objects.get(account=f)
-						current_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True,account=account).order_by("-SignedTime")
+						current_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True,account=account).order_by("-id")
 						first_qs=first_qs|current_qs 
 			else:
-				first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-SignedTime")
+				first_qs=pdfFile.objects.filter(confirmed=True,signed=True,sended=True).order_by("-id")
 			if request.GET.getlist("list_ct"):
 				second_qs=pdfFile.objects.none()
 				if  'All' in request.GET.getlist("list_ct"):
@@ -474,6 +474,7 @@ def sign_and_send_pdf(request):
 									pdf.sended=True
 									pdf.signed=True
 									pdf.SignedTime=datetime.now()
+									pdf.sendingTime=datetime.now()
 									pdf.save()
 									fileurl= settings.URL+"/"+str(pdf.slaveFile)
 								listfile.append(fileurl)
