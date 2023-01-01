@@ -165,7 +165,7 @@ def send_report():
 	
 	last_month = datetime.today().month - 1
 	if last_month == 0:
-		last_month == 12
+		last_month = 12
 	subject = "Report File hàng tháng - Psign tháng {}".format(last_month)
 	date_range=get_date_range(get_lapse())
 	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)|(pdfFile.objects.filter(sendingTime__date__gte=date_range[0].strftime("%Y-%m-%d"),sendingTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)))
