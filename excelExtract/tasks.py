@@ -6,3 +6,7 @@ from .auto_email_report import send_report
 def email_report_and_telegram_annouce():
 	send_report()
 	kc_project_alert()
+
+@shared_task
+def add(x,y):
+	return x+y

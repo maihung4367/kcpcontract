@@ -19,6 +19,9 @@ def is_leap_year(year):
 def get_lapse():
 	last_month = datetime.today().month - 1
 	current_year = datetime.today().year
+	if last_month == 0 :
+		last_month == 12
+		current_year = datetime.today().year -1
 
 	#is last month a month with 30 days?
 	if last_month in [9, 4, 6, 11]:
@@ -39,10 +42,16 @@ def get_lapse():
 def get_date_range(lapse):
 	year= datetime.today().year
 	last_month = datetime.today().month - 1
+	if last_month == 0:
+		last_month = 12
+		year = datetime.today().year -1
 	first_date = datetime(year, last_month, 1)
-
 	end_date = datetime(year, last_month, int(lapse))
-	first_date_new_month=datetime(year, datetime.today().month, 1)
+	first_date_new_month = datetime(1,1,1,0,0)
+	if last_month ==  12 :	
+		first_date_new_month=datetime( datetime.today().year, datetime.today().month, 1)
+	else:
+		first_date_new_month=datetime(year, datetime.today().month, 1)
 	return first_date,end_date,first_date_new_month
 def auto_report_excel(from_date,to_date):
 	col_names = ["","Account","Category","File","CreatedTime","ConfirmedTime","SendedTime","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
@@ -152,7 +161,10 @@ def auto_report_excel(from_date,to_date):
 					c.style = normal_format		
 	return wb
 def send_report():
+	
 	last_month = datetime.today().month - 1
+	if last_month == 0:
+		last_month == 12
 	subject = "Report File hàng tháng - Psign tháng {}".format(last_month)
 	date_range=get_date_range(get_lapse())
 	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True))
