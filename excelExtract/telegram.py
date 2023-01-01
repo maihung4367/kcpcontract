@@ -38,7 +38,8 @@ def kc_project_alert():
         first_date_new_month = datetime(datetime.today().year, datetime.today().month, 1)
     else:
         first_date_new_month = datetime(year, datetime.today().month, 1)
-    nums_files_month = len(pdfFile.objects.filter(SignedTime__date__gte=first_date.strftime("%Y-%m-%d"),SignedTime__date__lte=first_date_new_month.strftime("%Y-%m-%d"),signed=True))
+    print(first_date,first_date_new_month)
+    nums_files_month = len(pdfFile.objects.filter(SignedTime__date__gte=first_date.strftime("%Y-%m-%d"),SignedTime__date__lte=first_date_new_month.strftime("%Y-%m-%d"),signed=True)|pdfFile.objects.filter(sendingTime__date__gte=first_date.strftime("%Y-%m-%d"),sendingTime__date__lte=first_date_new_month.strftime("%Y-%m-%d"),signed=True))
     total_files= len(pdfFile.objects.filter(signed=True))
     mess = f'''
         https://psign.kcvn.vn

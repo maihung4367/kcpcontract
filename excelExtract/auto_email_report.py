@@ -20,9 +20,9 @@ def get_lapse():
 	last_month = datetime.today().month - 1
 	current_year = datetime.today().year
 	if last_month == 0 :
-		last_month == 12
+		last_month = 12
 		current_year = datetime.today().year -1
-
+	print(last_month)
 	#is last month a month with 30 days?
 	if last_month in [9, 4, 6, 11]:
 		lapse = 30
@@ -30,7 +30,7 @@ def get_lapse():
 	#is last month a month with 31 days?
 	elif last_month in [1, 3, 5, 7, 8, 10, 12]:
 		lapse = 31
-
+		print("31",lapse)
 	#is last month February?
 	else:
 		if is_leap_year(current_year):
@@ -40,6 +40,7 @@ def get_lapse():
 
 	return lapse
 def get_date_range(lapse):
+	print(lapse)
 	year= datetime.today().year
 	last_month = datetime.today().month - 1
 	if last_month == 0:
@@ -55,7 +56,7 @@ def get_date_range(lapse):
 	return first_date,end_date,first_date_new_month
 def auto_report_excel(from_date,to_date):
 	col_names = ["","Account","Category","File","CreatedTime","ConfirmedTime","SendedTime","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
-	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)
+	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)|pdfFile.objects.filter(sendingTime__date__gte=from_date,sendingTime__date__lte=to_date,signed=True)
 
 	wb = openpyxl.Workbook()
 	wb.iso_dates = True
@@ -167,7 +168,7 @@ def send_report():
 		last_month == 12
 	subject = "Report File hàng tháng - Psign tháng {}".format(last_month)
 	date_range=get_date_range(get_lapse())
-	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True))
+	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)|(pdfFile.objects.filter(sendingTime__date__gte=date_range[0].strftime("%Y-%m-%d"),sendingTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)))
 	html_message = get_template("template_email_summary_report.html").render({"first_date":date_range[0].strftime("%d/%m/%Y"),"end_date":date_range[1].strftime("%d/%m/%Y"),"file_nums":len_query})
 
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=['longnld@pvs.com.vn','dk@pvs.com.vn'])
