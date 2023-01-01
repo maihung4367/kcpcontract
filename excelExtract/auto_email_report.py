@@ -169,7 +169,7 @@ def send_report():
 	subject = "Report File hàng tháng - Psign tháng {}".format(last_month)
 	date_range=get_date_range(get_lapse())
 	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)|(pdfFile.objects.filter(sendingTime__date__gte=date_range[0].strftime("%Y-%m-%d"),sendingTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)))
-	html_message = get_template("template_email_summary_report.html").render({"first_date":date_range[0].strftime("%d/%m/%Y"),"end_date":date_range[1].strftime("%d/%m/%Y"),"file_nums":len_query})
+	html_message = get_template("template_email_summary_report.html").render({"last_month":last_month,"first_date":date_range[0].strftime("%d/%m/%Y"),"end_date":date_range[1].strftime("%d/%m/%Y"),"file_nums":len_query})
 
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=['longnld@pvs.com.vn','dk@pvs.com.vn'])
 	msg.content_subtype = "html"
