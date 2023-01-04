@@ -169,7 +169,7 @@ def signedDocs(request):
 				daterange=request.GET.get('daterange').split(' - ')
 				start_date=datetime.strptime(daterange[0], '%m/%d/%Y')
 				end_date=datetime.strptime(daterange[1], '%m/%d/%Y')
-				third_qs=second_qs.filter(SignedTime__gte=start_date,SignedTime__lte=end_date)
+				third_qs=second_qs.filter(SignedTime__gte=start_date,SignedTime__lte=end_date)|second_qs.filter(sendingTime__gte=start_date,sendingTime__lte=end_date)
 			else:
 				third_qs=second_qs
 			number_qr=len(third_qs)
