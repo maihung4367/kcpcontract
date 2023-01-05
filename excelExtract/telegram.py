@@ -25,6 +25,12 @@ def send_message_alert_project(message, chatID):
 
     telegram_bot_sendtext(message,token,chatID)
 
+def test_msg():
+    chat_ID='1273428305'
+    mess = f'''
+        test
+    '''
+    send_message_alert_project(mess, chat_ID)
 def kc_project_alert():
     chatID = "-404313724"
     year = datetime.today().year

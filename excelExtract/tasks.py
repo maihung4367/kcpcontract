@@ -1,6 +1,6 @@
 from celery import  Celery
 from celery import shared_task
-from .telegram import kc_project_alert
+from .telegram import kc_project_alert,test_msg
 from .auto_email_report import send_report
 @shared_task
 def email_report_and_telegram_annouce():
@@ -8,5 +8,5 @@ def email_report_and_telegram_annouce():
 	kc_project_alert()
 
 @shared_task
-def add(x,y):
-	return x+y
+def test_msg_task():
+	test_msg()
