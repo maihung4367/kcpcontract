@@ -36,7 +36,7 @@ def get_lapse():
 		if is_leap_year(current_year):
 			lapse = 29
 		else:
-			lapse = 30
+			lapse = 28
 
 	return lapse
 def get_date_range(lapse):
