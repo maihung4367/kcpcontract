@@ -55,7 +55,7 @@ def get_date_range(lapse):
 		first_date_new_month=datetime(year, datetime.today().month, 1)
 	return first_date,end_date,first_date_new_month
 def auto_report_excel(from_date,to_date):
-	col_names = ["","Account","Category","File","CreatedTime","ConfirmedTime","SendedTime","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
+	col_names = ["","Account","Category","File","Created time","Signed Time","Last sending time","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
 	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)
 
 	wb = openpyxl.Workbook()
@@ -122,7 +122,7 @@ def auto_report_excel(from_date,to_date):
 				c.style = normal_format
 			elif col_names[col] == "Signed Time":
 				if ticket.confirmedTime:
-					c = ws.cell(column=col,row=row,value=str(ticket.confirmedTime.date()))
+					c = ws.cell(column=col,row=row,value=str(ticket.SignedTime.date()))
 				else:
 					c = ws.cell(column=col,row=row,value="")
 				c.style = normal_format
