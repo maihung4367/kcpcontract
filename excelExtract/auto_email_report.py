@@ -56,7 +56,7 @@ def get_date_range(lapse):
 	return first_date,end_date,first_date_new_month
 def auto_report_excel(from_date,to_date):
 	col_names = ["","Account","Category","File","CreatedTime","ConfirmedTime","SendedTime","Creator","Confirmer","Sender","Confirmed","Signed","Sended"]
-	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)|pdfFile.objects.filter(sendingTime__date__gte=from_date,sendingTime__date__lte=to_date,signed=True)
+	actlogs = pdfFile.objects.filter(SignedTime__date__gte=from_date,SignedTime__date__lte=to_date,signed=True)
 
 	wb = openpyxl.Workbook()
 	wb.iso_dates = True
@@ -114,19 +114,19 @@ def auto_report_excel(from_date,to_date):
 			elif col_names[col] == "Creator":
 				c = ws.cell(column=col,row=row,value=str(ticket.creator))
 				c.style = date_format
-			elif col_names[col] == "CreatedTime":
+			elif col_names[col] == "Created time":
 				if ticket.createdTime:
 					c = ws.cell(column=col,row=row,value=str(ticket.createdTime.date()))
 				else:
 					c = ws.cell(column=col,row=row,value="")
 				c.style = normal_format
-			elif col_names[col] == "ConfirmedTime":
+			elif col_names[col] == "Signed Time":
 				if ticket.confirmedTime:
 					c = ws.cell(column=col,row=row,value=str(ticket.confirmedTime.date()))
 				else:
 					c = ws.cell(column=col,row=row,value="")
 				c.style = normal_format
-			elif col_names[col] == "SendedTime":
+			elif col_names[col] == "Last sending time":
 				if ticket.sendingTime:
 					c = ws.cell(column=col,row=row,value=str(ticket.sendingTime.date()))
 					c.style = normal_format
@@ -168,7 +168,7 @@ def send_report():
 		last_month = 12
 	subject = "Report File hàng tháng - Psign tháng {}".format(last_month)
 	date_range=get_date_range(get_lapse())
-	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)|(pdfFile.objects.filter(sendingTime__date__gte=date_range[0].strftime("%Y-%m-%d"),sendingTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True)))
+	len_query = len(pdfFile.objects.filter(SignedTime__date__gte=date_range[0].strftime("%Y-%m-%d"),SignedTime__date__lte=date_range[2].strftime("%Y-%m-%d"),signed=True))
 	html_message = get_template("template_email_summary_report.html").render({"last_month":last_month,"first_date":date_range[0].strftime("%d/%m/%Y"),"end_date":date_range[1].strftime("%d/%m/%Y"),"file_nums":len_query})
 
 	msg = EmailMessage(subject,html_message,settings.EMAIL_HOST_USER,to=['longnld@pvs.com.vn','dk@pvs.com.vn'])
