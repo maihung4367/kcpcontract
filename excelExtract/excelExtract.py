@@ -11,6 +11,8 @@ from user.models import Profile
 from fpdf import FPDF, HTMLMixin
 from datetime import datetime
 import re
+import logging
+debug = logging.getLogger("read_excel")
 class PDF(FPDF, HTMLMixin):
 	# FPDF("L", "mm", "A4")
 	
@@ -49,7 +51,7 @@ def importDataExcel(path, user=None):
 					count=count+1
 			lineEnd=count+3
 			print("lineEnd" +"{}: {}".format(str(f),lineEnd))
-			#import data
+		
 			rangeline=lineEnd
 			
 			for i,row in enumerate(ws.iter_rows(min_row=4,max_col=70,values_only=True),start=4):
@@ -114,6 +116,7 @@ def importDataExcel(path, user=None):
 						print(acc)
 						if acc:
 							try:
+						
 								excel.objects.create(filename=file,group=row[0],account=acc[0],postStartDate=row[4],postEndDate=row[5],product=row[10],mechanicsGetORDiscount=row[12],noiDungChuongTrinh=row[57],budgetRir=row[59],loaiCt=row[68])	
 							except:
 								if isinstance(row[4],str) and isinstance(row[5],str):
