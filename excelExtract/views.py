@@ -1,9 +1,18 @@
-from django.shortcuts import render,redirect
 import sys
+import re
+import os
+import zipfile
+import io
+import requests
+import json
+import fitz
+import openpyxl
+import logging
+from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view
 from excelExtract.forms import uploadDocumentForm
 from excelExtract.models import accountEmail, document, excelAccount,pdfFile, excel
-from . import excelExtract
+from . import utils
 from user.models import Profile, User
 from django.db import transaction
 from rest_framework import status
@@ -13,23 +22,18 @@ from rest_framework.response import Response
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from utils import send_email
 from datetime import datetime
-import requests
-import json
 from django.core.files import File
 from django.db.models import Q
-import fitz
-import openpyxl
 from openpyxl.styles import Alignment,NamedStyle,PatternFill,Font
 from openpyxl.writer.excel import save_virtual_workbook
 from user.forms import LoginForm
-import os
-import zipfile
-import io
+
+
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
-import logging
+
 from itertools import chain
-import re
+
 logger = logging.getLogger("debug_purposes")
 #Function to find the position of texte, and then return the coordinate of its to insert the signature
 def detect_position(pdf_file_location):
@@ -70,19 +74,19 @@ def kcToolPage(request):
 		files=document.objects.all().order_by("-id")
 		num_files=len(files)
 		if request.method=='POST':
-			# with transaction.atomic():
-			# 	try:
+			with transaction.atomic():
+				try:
 					file=request.FILES['Excel_File']
 					print(file)
 					if file:
 						try:
 							user=request.user
 							profile=Profile.objects.get(user=user)
-							excelExtract.importDataExcel(file, user=profile)
+							utils.importDataExcel(file, user=profile)
 						except:
-							excelExtract.importDataExcel(file)
-				# except:
-				# 	pass
+							utils.importDataExcel(file)
+				except:
+					pass
 		return render(request,"index.html",{"form":form,"files":files,"num_files":num_files, "active_id":1})
 	else :
 		form = LoginForm()
@@ -302,15 +306,15 @@ def delete_profile(request):
 def create_pdf(request):
 	try:
 		with transaction.atomic():
-			print(request.data)
 			id_excel = int(request.data["pk_excel"])
 			values_category = request.data["values_category"]
 			values_account = request.data["values_account"]
-			print(values_account)
-			print(values_category)
-			user=request.user
+			user =request.user
 			profile = Profile.objects.get(user=user)
-			annouce=excelExtract.exportFiles(loaict=values_category,fileID=id_excel,loaiAccount=values_account,user=profile) 
+			print(request.data)
+			annouce = utils.exportFiles(fileId=id_excel,user=profile,
+										selectedCatergoryOptions=values_category,
+										selectedAccountOptions=values_account) 
 			if values_account != "all":
 				listAccount=values_account.split(",")
 				listEmail=[]
@@ -324,7 +328,6 @@ def create_pdf(request):
 					except:
 						pass
 				send_email.send_noti_to_confirmer(listEmail)
-				print(listEmail)
 			else:
 				
 				file=document.objects.get(pk=id_excel)
@@ -641,10 +644,7 @@ def export_virtual_excel(from_date, to_date):
 	ws.column_dimensions['H'].width = 20
 	ws.column_dimensions['l'].width = 20
 
-	# create content
-	# now = pytz.utc.localize(datetime.utcnow())
-	# now = now.replace(tzinfo=None)
-	# print(now)
+
 	for row, ticket in enumerate(actlogs, start=2):
 		for col in range(1,13):		
 			if col_names[col] == "Account" :
@@ -730,7 +730,7 @@ def updateProfile(request): ##manage staff
 			preAccountLists= excelAccount.objects.filter(responsibleBy=staff).distinct()
 			list_preAccountLists=[str(f.account) for  f in preAccountLists]
 			print(list_preAccountLists)
-			for account in preAccountLists: #xử lí các account bỏ tick
+			for account in preAccountLists: # xử lí các account bỏ tick
 				if str(account) not in data['account_list_array'].split(","):
 					account.responsibleBy=None
 					account.save()

@@ -10,10 +10,13 @@ def updateAllStandardName(self, request, queryset):
 class ExcelAcountAdmin(admin.ModelAdmin):
     model =excelAccount
     actions = [updateAllStandardName] 
-
-    
+    list_display = ('account','responsibleBy',)
+class AccountEmailAdmin(admin.ModelAdmin):
+    list_display = ('email','account',)  # Add the fields you want to display here
+class pdfFileAdmin(admin.ModelAdmin):
+    list_display = ('__str__','account','loaict','confirmed','signed','sended','is_deleted')  # Add the fields you want to display here    
 admin.site.register(document)
 admin.site.register(excel)
-admin.site.register(pdfFile)
+admin.site.register(pdfFile,pdfFileAdmin)
 admin.site.register(excelAccount,ExcelAcountAdmin)
-admin.site.register(accountEmail)
+admin.site.register(accountEmail,AccountEmailAdmin)

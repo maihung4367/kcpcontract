@@ -4,6 +4,9 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email')
+
 class CustomUserAdmin(UserAdmin):
 	
     add_form = CustomUserCreationForm
@@ -29,4 +32,4 @@ class CustomUserAdmin(UserAdmin):
     group.short_description = "Groups"
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Profile)
+admin.site.register(Profile,ProfileAdmin)
