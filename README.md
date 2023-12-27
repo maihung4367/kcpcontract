@@ -295,7 +295,7 @@ URL = http://127.0.0.1:8000
 We will run celery worker in background following this documentation 
 [Daemonizing Celery](https://docs.celeryq.dev/en/stable/userguide/daemonizing.html)
 
-* Product https://psign.kcvn.vn/ is using systemd for daemons
+* Product https://psign.kcvn.vn/ is using supervisord for daemons
 
 
 # How to support client
