@@ -39,6 +39,8 @@ pip install -U PyMuPDF
 ```
 There is a package named fitz on PyPI. Because PyMuPDF uses the same name, fitz, as its top-level text, both packages cannot co-exist in the same Python - except with the aforementioned change.
 
+
+Also create **logging** folder, otherwise it will be ValueError: Unable to configure handler at logging
 ### Configuration
 ### 1. settings.py  
 <bold>Put this in Kctool folder</bold>
