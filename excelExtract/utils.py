@@ -398,7 +398,7 @@ def exportFiles(fileId,user,selectedCatergoryOptions,selectedAccountOptions):
 			print(f"{account:<15} {selectedCatergoryOptions}")
 			
 
-			pdf = generateContent(selectedAccountOptions,account)
+			pdf = generateContent(selectedCatergoryOptions,account)
 			pos = "{}x{}".format(round(pdf.get_x()),round(pdf.get_y()))
 			maxpageIndex = pdf.page-1
 			pdf.output("pdffile.pdf")
