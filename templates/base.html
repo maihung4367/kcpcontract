@@ -475,6 +475,19 @@ id="page--delete"
              console.log(url);      
              window.location.replace(url);
          })
+        
+         $('.select-account, .select-category').on('change', function() {
+            var selectedValues = $(this).val();
+            // If 'all' is selected, keep only 'all', unselect other values, and disable them
+            if (selectedValues && selectedValues.includes('all')) {
+                $(this).val(['all']).trigger('change.select2');
+                $(this).find('option').not(':selected').prop('disabled', true);
+                $('.select-account, .select-category').select2('close'); 
+            } else {
+                // If not 'all', enable all options
+                $(this).find('option').prop('disabled', false);
+            }
+        });
          
      }); // end ready
     
