@@ -262,9 +262,8 @@ id="page--delete"
                         </div>
                         <div class="input-item">
                             <p class="modal-label">Loại Account</p>
-                            <select class="select-account" multiple="multiple">
+                            <select class="select-account" multiple="multiple" >
                                 {% comment %}
-                                    <option value="All">Tất cả</option>
                                     <option value="Ecom">Ecom</option>
                                     <option value="Toan Thi">Toan Thi</option>
                                     <option value="E-MART">E-MART</option>
@@ -411,7 +410,7 @@ id="page--delete"
             allowClear: true,
             tags: true
         });
-    </script>
+            </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hideshowpassword/2.0.8/hideShowPassword.min.js"></script>
     <script>
         // toggle password visibility
@@ -461,7 +460,7 @@ id="page--delete"
  </script>
  <script>
     $(document).ready(function() {  
-         $("#actlog").click(function(){        
+        $("#actlog").click(function(){        
              var fromdate = $("#fromdate2").val();
              var todate = $("#todate2").val();
              var url = "{% url 'KCTool:signedDocs' %}?";
@@ -474,23 +473,18 @@ id="page--delete"
              }
              console.log(url);      
              window.location.replace(url);
-         })
-        
-         $('.select-account, .select-category').on('change', function() {
-            var selectedValues = $(this).val();
-            // If 'all' is selected, keep only 'all', unselect other values, and disable them
-            if (selectedValues && selectedValues.includes('all')) {
-                $(this).val(['all']).trigger('change.select2');
-                $(this).find('option').not(':selected').prop('disabled', true);
-                $('.select-account, .select-category').select2('close'); 
-            } else {
-                // If not 'all', enable all options
-                $(this).find('option').prop('disabled', false);
+        });
+
+        $(".select-account, .select-category").on("change", function () {
+            var selectedValue = $(this).val();
+
+            if (selectedValue && selectedValue.includes("all")) {
+                $(this).val(["all"]).trigger("change.select2");
             }
         });
          
      }); // end ready
-    
+
  </script> 
  <script>
     function create_pdf_function(id){
@@ -510,7 +504,7 @@ id="page--delete"
             
             success: function(resp) {
                 $(".select-category").html(`${resp.list_loaiCt}`)
-                $(".select-account").html(`${resp.list_accounts}`)
+                $(".select-account").html(`${resp.list_accounts}`);
             },
             error:function(xhr, status, error){            
                 alert(status,error); 
